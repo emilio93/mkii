@@ -1,9 +1,11 @@
 # MKII
 
-## Getting started
+## Specifications
+
+## Getting Started
 
 ## Running the tests
 
 ## Contributors
-  Emilio Rojas Álvarez `@emilio93 `
-  Brian Morera Madriz `@BRJMM`
+- Emilio Rojas Álvarez `@emilio93`
+- Brian Morera Madriz `@BRJMM`

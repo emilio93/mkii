@@ -1,0 +1,3 @@
+[submodule "lib/MSP432P4xx"]
+	path = lib/MSP432P4xx
+	url = git@gitlab.com:programming_on_embedded_system/driverlib.git
