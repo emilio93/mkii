@@ -2,9 +2,10 @@
 #ifndef MKII_TIM32_H
 #define MKII_TIM32_H
 
-#include "driverlib.h"
 #include <stdint.h>
 #include <stdbool.h>
+
+#include "driverlib.h"
 
 typedef uint32_t mkii_timer32;
 

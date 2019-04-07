@@ -1,7 +1,9 @@
 
-#include "driverlib.h"
 #include <stdint.h>
-#include "mkii_tim32.hpp"
+
+#include "driverlib.h"
+
+#include <peripheral/mkii_tim32.hpp>
 
 Timer32::Timer32(mkii_timer32 i_mkiiTimer, uint32_t i_u32PreScaler,
 		uint32_t i_u32Resolution, uint32_t i_u32OperationMode)
