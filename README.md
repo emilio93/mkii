@@ -14,7 +14,7 @@ $ git submodule update
 ## Running
 Follow the next indications:
 
-- Create a new CCS Project.
+- Create a new CCS Project in `[repo]/project` directory.
 - Set target: MSP432P401R.
 - Set project name.
 - Select empty project.
