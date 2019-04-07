@@ -12,6 +12,14 @@ $ git submodule update
 ```
 
 ## Running
+### Add files to include dir
+- Right click on project name.
+- Select Build.
+- Select ARM Compiler.
+- Select Include Options.
+- Add the include directory.
+
+### Setup the environment
 Follow the next indications:
 
 - Create a new CCS Project in `[repo]/project` directory.
