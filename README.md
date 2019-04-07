@@ -18,9 +18,9 @@ Follow the next indications:
 - Set target: MSP432P401R.
 - Set project name.
 - Select empty project.
-- Add the files into `[repo]/lib/MSP432P4xx/driverlib/MSP432P4xx/` to the project.
+- Add the files in `[repo]/lib/MSP432P4xx/driverlib/MSP432P4xx/` to the project.
 - Add the file `[repo]/src/definitions.hpp` to the project.
-- Add the files `[repo]/src/mkii_*.{hpp,cpp}` to the project.
+- Add the files `[repo]/src/peripheral` to the project.
 - Build project.
 
 ### Running a test
