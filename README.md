@@ -25,7 +25,8 @@ Follow the next indications:
 
 ### Running a test
 #### Blink a led with the Timer32
-Add the file `[repo]/src/blink_p1_timer32.cpp` to the project and build it.
+Add the file `[repo]/test/blink_p1_timer32.cpp` and use it like the `main.cpp`
+of the project and build it.
 
 ## Contributors
 - Emilio Rojas Álvarez `@emilio93`
