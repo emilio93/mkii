@@ -7,8 +7,8 @@
 ### Get git submodules
 Run the follow commands:
 ```bash
-$ git submodule init
-$ git submodule update
+git submodule init
+git submodule update
 ```
 
 ## Running
