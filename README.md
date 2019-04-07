@@ -4,7 +4,28 @@
 
 ## Getting Started
 
-## Running the tests
+### Get git submodules
+Run the follow commands:
+```
+$ git submodule init
+$ git submodule update
+```
+
+## Running
+Follow the next indications:
+
+- Create a new CCS Project.
+- Set target: MSP432P401R.
+- Set project name.
+- Select empty project.
+- Add the files into `[repo]/lib/MSP432P4xx/driverlib/MSP432P4xx/` to the project.
+- Add the file `[repo]/src/definitions.hpp` to the project.
+- Add the files `[repo]/src/mkii_*.{hpp,cpp}` to the project.
+- Build project.
+
+### Running a test
+#### Blink a led with the Timer32
+Add the file `[repo]/src/blink_p1_timer32.cpp` to the project and build it.
 
 ## Contributors
 - Emilio Rojas Álvarez `@emilio93`
