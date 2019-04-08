@@ -5,7 +5,7 @@
 
 #include <peripheral/Timer32.hpp>
 
-Timer32::Timer32(mkii_timer32 i_mkiiTimer, uint32_t i_u32PreScaler,
+peripheral::Timer32::Timer32(mkii_timer32 i_mkiiTimer, uint32_t i_u32PreScaler,
 		uint32_t i_u32Resolution, uint32_t i_u32OperationMode)
 	: m_mkiiTimer(i_mkiiTimer), m_bHasInterrupt(false)
 {
@@ -13,27 +13,27 @@ Timer32::Timer32(mkii_timer32 i_mkiiTimer, uint32_t i_u32PreScaler,
 	Timer32_startTimer(this->m_mkiiTimer, false); // TODO: [brjmm] considers enable the one shot
 }
 
-Timer32::~Timer32()
+peripheral::Timer32::~Timer32()
 {
 	Timer32_haltTimer(this->m_mkiiTimer);
 	if(this->m_bHasInterrupt)
 	{
-		RegisterInterrupt(false); // unregister the interruption
+		this->RegisterInterrupt(false); // unregister the interruption
 	}
 }
 
-void Timer32::SetCounter(const uint32_t i_u32Count)
+void peripheral::Timer32::SetCounter(const uint32_t i_u32Count)
 {
 	Timer32_setCount(this->m_mkiiTimer, i_u32Count);
 	Timer32_setCountInBackground(this->m_mkiiTimer, i_u32Count);
 }
 
-uint32_t Timer32::GetCurrentValue(void)
+uint32_t peripheral::Timer32::GetCurrentValue(void)
 {
 	return Timer32_getValue(this->m_mkiiTimer);
 }
 
-void Timer32::EnableInterrupt(const bool i_bEnable)
+void peripheral::Timer32::EnableInterrupt(const bool i_bEnable)
 {
 	if(i_bEnable)
 	{
@@ -45,12 +45,12 @@ void Timer32::EnableInterrupt(const bool i_bEnable)
 	}
 }
 
-void Timer32::ClearInterruptionFlag(void)
+void peripheral::Timer32::ClearInterruptFlag(void)
 {
 	Timer32_clearInterruptFlag(this->m_mkiiTimer);
 }
 
-void Timer32::RegisterInterrupt(const bool i_bRegister, void (*i_funcInterruptHandler)(void))
+void peripheral::Timer32::RegisterInterrupt(const bool i_bRegister, void (*i_funcInterruptHandler)(void))
 {
 	uint32_t l_u32TimerInterrupt = 0;
 

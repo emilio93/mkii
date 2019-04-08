@@ -10,7 +10,7 @@
 #define LUNAV_LED_PIN GPIO_PIN0
 #define LUNAV_LED_PORT GPIO_PORT_P1
 
-Timer32 timer(TIMER32_0_BASE, TIMER32_PRESCALER_1, TIMER32_16BIT, TIMER32_PERIODIC_MODE);
+peripheral::Timer32 timer(TIMER32_0_BASE, TIMER32_PRESCALER_1, TIMER32_16BIT, TIMER32_PERIODIC_MODE);
 
 void initLed(void) {
     MAP_GPIO_setAsOutputPin((uint_fast8_t) LUNAV_LED_PORT, (uint_fast16_t) LUNAV_LED_PIN);
@@ -26,7 +26,7 @@ void toggleLed(void) {
 }
 void T32_INT1_IRQHandler(void)
 {
-    timer.ClearInterruptionFlag();
+    timer.ClearInterruptFlag();
     toggleLed();
 }
 void main(void)
