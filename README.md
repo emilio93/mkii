@@ -6,15 +6,23 @@
 
 ### Get git submodules
 Run the follow commands:
-```
-$ git submodule init
-$ git submodule update
+```bash
+git submodule init
+git submodule update
 ```
 
 ## Running
+### Add files to include dir
+- Right click on project name.
+- Select Build.
+- Select ARM Compiler.
+- Select Include Options.
+- Add the include directory.
+
+### Setup the environment
 Follow the next indications:
 
-- Create a new CCS Project.
+- Create a new CCS Project in `[repo]/project` directory.
 - Set target: MSP432P401R.
 - Set project name.
 - Select empty project.
