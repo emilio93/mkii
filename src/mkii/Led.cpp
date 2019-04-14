@@ -2,32 +2,27 @@
 
 #include "Top.hpp"
 #include "mkii/Led.hpp"
+#include "peripheral/GPIO.hpp"
 #include "peripheral/Timer32.hpp"
+#include "peripheral/gpio/OutputGPIO.hpp"
 
 bool mkii::Led::m_bIsBlinking = false;
 uint32_t mkii::Led::m_u32BlinkCount = 0;
 uint32_t mkii::Led::m_u32TimerCount = 0;
 bool mkii::Led::m_bBlinkCountHasToggle = false;
 
-mkii::Led::Led(uint32_t i_u32Port, uint32_t i_u32Pin) {
-	this->m_u32Port = i_u32Port;
-	this->m_u32Pin = i_u32Pin;
+mkii::Led::Led() {
+	this->m_LedGPIO =
+	    new peripheral::gpio::OutputGPIO(mkii::LED_PORT, mkii::LED_PIN);
 }
 
 void mkii::Led::SetState(bool i_bState) {
-	// TODO [emilio]
-	;
+	this->m_LedGPIO->SetOutput(i_bState);
 }
 
-bool mkii::Led::GetState(void) {
-	// TODO [emilio]
-	return true;
-}
+bool mkii::Led::GetState(void) { return this->m_LedGPIO->GetOutput(); }
 
-void mkii::Led::Toggle() {
-	// TODO [emilio]
-	this->SetState(!this->GetState());
-}
+void mkii::Led::Toggle() { this->m_LedGPIO->Toggle(); }
 
 void mkii::Led::Blink(uint32_t i_u32BlinkCount, uint32_t i_u32TimerCount) {
 	if (mkii::Led::m_bIsBlinking) {
@@ -44,12 +39,12 @@ void mkii::Led::Blink(uint32_t i_u32BlinkCount, uint32_t i_u32TimerCount) {
 	// Set blinking initial settings
 	mkii::Led::m_bIsBlinking = true;
 	mkii::Led::m_bBlinkCountHasToggle = false;
-	mkii::Led::m_u32BlinkCount = i_u32BlinkCount;
+	mkii::Led::m_u32BlinkCount = i_u32BlinkCount - 1;
 	mkii::Led::m_u32TimerCount = i_u32TimerCount;
 
 	// Set interrupt handler
-	Top::GetTop()->GetTimer32()->RegisterInterrupt(true,
-	                                               this->BlinkInterruptHandler);
+	Top::GetTop()->GetTimer32()->RegisterInterrupt(
+	    true, mkii::Led::BlinkInterruptHandler);
 
 	// First call as soon as posible
 	mkii::Led::BlinkInterruptHandler();
