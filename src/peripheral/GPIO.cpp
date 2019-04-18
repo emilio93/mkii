@@ -59,11 +59,11 @@ void peripheral::GPIO::SetAsPeripheralModuleFunctionInput() {
 }
 
 void peripheral::GPIO::SetAsInputWithPullDownResistor() {
-	// TODO [emilio]
+	GPIO_setAsInputPinWithPullDownResistor(this->GetPort(), this->GetPin());
 }
 
 void peripheral::GPIO::SetAsInputWithPullUpResistor() {
-	// TODO [emilio]
+	GPIO_setAsInputPinWithPullUpResistor(this->GetPort(), this->GetPin());
 }
 
 void peripheral::GPIO::EnableInterrupt() {

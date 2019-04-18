@@ -6,7 +6,7 @@
 
 peripheral::gpio::InputGPIO::InputGPIO(uint8_t i_u8Port, uint32_t i_u32Pin)
     : peripheral::GPIO(i_u8Port, i_u32Pin) {
-      this->SetAsInput();
+      this->SetAsInputWithPullUpResistor();
 }
 
 bool peripheral::gpio::InputGPIO::ReadValue() {
