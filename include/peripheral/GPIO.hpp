@@ -100,30 +100,26 @@ class GPIO {
 	GPIO(uint8_t i_u8Port, uint32_t u32Pin, peripheral::gpio::Mode i_eMode);
 
 	/**
-	 * @brief Obtain the GPIO's Port.
+	 * Obtain the GPIO's Port.
 	 *
 	 * @return uint8_t The GPIO's Port.
 	 */
 	uint8_t GetPort();
 
 	/**
-	 * @brief Obtain the GPIO's Pin.
+	 * Obtain the GPIO's Pin.
 	 *
 	 * @return uint32_t The GPIO's Pin.
 	 */
 	uint32_t GetPin();
 
 	/**
-	 * @breif
-	 *
-	 * @TODO [emilio]
+	 * Set given GPIO as ouptut pin.
 	 */
 	void SetAsOutput();
 
 	/**
-	 * @breif
-	 *
-	 * @TODO [emilio]
+	 * Set given GPIO as input pin.
 	 */
 	void SetAsInput();
 
@@ -156,16 +152,12 @@ class GPIO {
 	void SetAsInputWithPullUpResistor();
 
 	/**
-	 * @breif
-	 *
-	 * @TODO [emilio]
+	 * Enables the GPIO's port interrupt.
 	 */
 	void enableInterrupt();
 
 	/**
-	 * @breif
-	 *
-	 * @TODO [emilio]
+	 * Disables the GPIO's port interrupt.
 	 */
 	void disableInterrupt();
 
@@ -225,6 +217,7 @@ class GPIO {
 	 */
 	static void RegisterInterrupt(uint_fast8_t selectedPort,
 	                              void (*intHandler)(void));
+
 	/**
 	 * @breif
 	 *
@@ -233,14 +226,18 @@ class GPIO {
 	static void RegisterInterrupt(GPIO* i_pGPIO, void (*intHandler)(void));
 
 	/**
-	 * @breif
+	 * Unregisters the interrupt handler and its call for the port in the given
+	 * port.
+	 *
+	 * @param i_u8SelectedPort Port whose interrupt handler is unregistered.
 	 */
-	static void UnregisterInterrupt(uint_fast8_t selectedPort);
+	static void UnregisterInterrupt(uint_fast8_t i_u8SelectedPort);
 
 	/**
-	 * @breif
+	 * Unregisters the interrupt handler and its call for the port in the given
+	 * GPIO.
 	 *
-	 * @TODO [emilio]
+	 * @param i_pGPIO GPIO whose port interrupt handler is unregistered.
 	 */
 	static void UnregisterInterrupt(GPIO* i_pGPIO);
 
@@ -254,6 +251,15 @@ class GPIO {
 	 * Gpio's Pin.
 	 */
 	uint32_t m_u32Pin;
+
+	/**
+	 * Indicates if GPIOs port has interrupt capability. Only ports 1, 2 and A do.
+	 *
+	 * @return true Indicates that the GPIOs port has interrupt capability.
+	 * @return false Indicates that the GPIOs port doesn't have interrupt
+	 * capability.
+	 */
+	bool hasInterruptFunction();
 };
 
 }  // namespace peripheral

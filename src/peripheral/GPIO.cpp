@@ -61,27 +61,39 @@ void peripheral::GPIO::SetAsPeripheralModuleFunctionInput() {
 void peripheral::GPIO::SetAsInputWithPullDownResistor() {
 	// TODO [emilio]
 }
+
 void peripheral::GPIO::SetAsInputWithPullUpResistor() {
 	// TODO [emilio]
 }
 
 void peripheral::GPIO::enableInterrupt() {
-	// TODO [emilio]
+	if (this->hasInterruptFunction()) {
+		GPIO_enableInterrupt(this->GetPort(), this->GetPin());
+	}
 }
+
 void peripheral::GPIO::disableInterrupt() {
-	// TODO [emilio]
+	if (this->hasInterruptFunction()) {
+		GPIO_getInterruptStatus(this->GetPort(), this->GetPin());
+	}
 }
 
 uint_fast16_t peripheral::GPIO::getInterruptStatus() {
-	// TODO [emilio]
+	if (this->hasInterruptFunction()) {
+		return GPIO_getInterruptStatus(this->GetPort(), this->GetPin());
+	} else {
+		return 0xff;
+	}
 }
 
 void peripheral::GPIO::clearInterruptFlag() {
-	// TODO [emilio]
+	if (this->hasInterruptFunction()) {
+		GPIO_clearInterrupt(this->GetPort(), this->GetPin());
+	}
 }
 
 void peripheral::GPIO::interruptEdgeSelect(uint_fast8_t edgeSelect) {
-	// TODO [emilio]
+	GPIO_interruptEdgeSelect(this->GetPort(), this->GetPin(), edgeSelect);
 }
 
 void peripheral::GPIO::setDriveStrengthHigh() {
@@ -92,30 +104,39 @@ void peripheral::GPIO::setDriveStrengthLow() {
 	GPIO_setDriveStrengthHigh(this->m_u8Port, this->m_u32Pin);
 }
 
+bool peripheral::GPIO::hasInterruptFunction() {
+	return this->GetPort() == peripheral::gpio::Port::PORT1 ||
+	       this->GetPort() == peripheral::gpio::Port::PORT2 ||
+	       this->GetPort() == peripheral::gpio::Port::PORTA;
+}
+
 /******************
  * STATIC FUNCTIONS
  ******************/
 
 uint_fast16_t peripheral::GPIO::getEnabledInterruptStatus(
-    uint_fast8_t selectedPort) {
-	// TODO [emilio]
+    uint_fast8_t i_u8SelectedPort) {
+	return GPIO_getEnabledInterruptStatus(i_u8SelectedPort);
 }
+
 uint_fast16_t peripheral::GPIO::getEnabledInterruptStatus(GPIO* i_pGPIO) {
-	// TODO [emilio]
+	return peripheral::GPIO::getEnabledInterruptStatus(i_pGPIO->GetPort());
 }
 
-void peripheral::GPIO::RegisterInterrupt(uint_fast8_t selectedPort,
-                                         void (*intHandler)(void)) {
-	// TODO [emilio]
+void peripheral::GPIO::RegisterInterrupt(uint_fast8_t i_u8SelectedPort,
+                                         void (*i_fIntHandler)(void)) {
+	GPIO_registerInterrupt(i_u8SelectedPort, i_fIntHandler);
 }
+
 void peripheral::GPIO::RegisterInterrupt(GPIO* i_pGPIO,
-                                         void (*intHandler)(void)) {
-	// TODO [emilio]
+                                         void (*i_fIntHandler)(void)) {
+	peripheral::GPIO::RegisterInterrupt(i_pGPIO->GetPort(), i_fIntHandler);
 }
 
-void peripheral::GPIO::UnregisterInterrupt(uint_fast8_t selectedPort) {
-	// TODO [emilio]
+void peripheral::GPIO::UnregisterInterrupt(uint_fast8_t i_u8SelectedPort) {
+	GPIO_unregisterInterrupt(i_u8SelectedPort);
 }
+
 void peripheral::GPIO::UnregisterInterrupt(GPIO* i_pGPIO) {
-	// TODO [emilio]
+	peripheral::GPIO::UnregisterInterrupt(i_pGPIO->GetPort());
 }
