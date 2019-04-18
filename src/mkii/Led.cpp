@@ -59,7 +59,7 @@ bool mkii::Led::IsBlinking() { return mkii::Led::m_bIsBlinking; }
 
 void mkii::Led::BlinkInterruptHandler(void) {
 	if (mkii::Led::m_bIsBlinking) {
-		if (mkii::Led::m_u32BlinkCount == 0 && mkii::Led::m_bBlinkCountHasToggle) {
+		if (mkii::Led::m_u32BlinkCount <= 1 && mkii::Led::m_bBlinkCountHasToggle) {
 			// Stop condition: counter has reached 0 and both toggles for last blink
 			// have happened.
 			// No further interrupt is done and handler is unregistered. Blinking
