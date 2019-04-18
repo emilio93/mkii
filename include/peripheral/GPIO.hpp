@@ -154,61 +154,61 @@ class GPIO {
 	/**
 	 * Enables the GPIO's port interrupt.
 	 */
-	void enableInterrupt();
+	void EnableInterrupt();
 
 	/**
 	 * Disables the GPIO's port interrupt.
 	 */
-	void disableInterrupt();
+	void DisableInterrupt();
 
 	/**
 	 * @breif
 	 *
 	 * @TODO [emilio]
 	 */
-	uint_fast16_t getInterruptStatus();
+	uint_fast16_t GetInterruptStatus();
 
 	/**
 	 * @breif
 	 *
 	 * @TODO [emilio]
 	 */
-	void clearInterruptFlag();
+	void ClearInterruptFlag();
 
 	/**
 	 * @breif
 	 *
 	 * @TODO [emilio]
 	 */
-	void interruptEdgeSelect(uint_fast8_t edgeSelect);
+	void InterruptEdgeSelect(uint_fast8_t edgeSelect);
 
 	/**
 	 * @breif
 	 *
 	 * @TODO [emilio]
 	 */
-	void setDriveStrengthHigh();
+	void SetDriveStrengthHigh();
 
 	/**
 	 * @breif
 	 *
 	 * @TODO [emilio]
 	 */
-	void setDriveStrengthLow();
+	void SetDriveStrengthLow();
 
 	/**
 	 * @breif
 	 *
 	 * @TODO [emilio]
 	 */
-	static uint_fast16_t getEnabledInterruptStatus(uint_fast8_t selectedPort);
+	static uint_fast16_t GetEnabledInterruptStatus(uint_fast8_t selectedPort);
 
 	/**
 	 * @breif
 	 *
 	 * @TODO [emilio]
 	 */
-	static uint_fast16_t getEnabledInterruptStatus(GPIO* i_pGPIO);
+	static uint_fast16_t GetEnabledInterruptStatus(GPIO* i_pGPIO);
 
 	/**
 	 * @breif
@@ -259,7 +259,7 @@ class GPIO {
 	 * @return false Indicates that the GPIOs port doesn't have interrupt
 	 * capability.
 	 */
-	bool hasInterruptFunction();
+	bool HasInterruptFunction();
 };
 
 }  // namespace peripheral
