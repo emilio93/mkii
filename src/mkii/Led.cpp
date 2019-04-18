@@ -13,17 +13,17 @@ peripheral::Timer32* mkii::Led::m_pBlinkTimer32 = NULL;
 mkii::Led* mkii::Led::m_pBlinkLed = NULL;
 
 mkii::Led::Led() {
-	this->m_LedGPIO =
+	this->m_pLedGPIO =
 	    new peripheral::gpio::OutputGPIO(mkii::LED_PORT, mkii::LED_PIN);
 }
 
 void mkii::Led::SetState(bool i_bState) {
-	this->m_LedGPIO->SetOutput(i_bState);
+	this->m_pLedGPIO->SetOutput(i_bState);
 }
 
-bool mkii::Led::GetState(void) { return this->m_LedGPIO->GetOutput(); }
+bool mkii::Led::GetState(void) { return this->m_pLedGPIO->GetOutput(); }
 
-void mkii::Led::Toggle() { this->m_LedGPIO->Toggle(); }
+void mkii::Led::Toggle() { this->m_pLedGPIO->Toggle(); }
 
 void mkii::Led::Blink(uint32_t i_u32BlinkCount, uint32_t i_u32TimerCount,
                       peripheral::Timer32* i_pTimer32) {

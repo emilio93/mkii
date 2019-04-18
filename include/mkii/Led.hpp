@@ -67,7 +67,7 @@ class Led {
 	/**
 	 * GPIO of the Led.
 	 */
-	peripheral::gpio::OutputGPIO* m_LedGPIO;
+	peripheral::gpio::OutputGPIO* m_pLedGPIO;
 
 	/**
 	 * Indicates wheter the LED is set to not writable.
