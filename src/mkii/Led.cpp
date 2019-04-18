@@ -41,7 +41,7 @@ void mkii::Led::Blink(uint32_t i_u32BlinkCount, uint32_t i_u32TimerCount,
 	// These act as parameters for the handler
 	mkii::Led::m_bIsBlinking = true;
 	mkii::Led::m_bBlinkCountHasToggle = false;
-	mkii::Led::m_u32BlinkCount = i_u32BlinkCount - 1;
+	mkii::Led::m_u32BlinkCount = i_u32BlinkCount;
 	mkii::Led::m_u32TimerCount = i_u32TimerCount;
 	mkii::Led::m_pBlinkTimer32 = i_pTimer32;
 	mkii::Led::m_pBlinkLed = this;
@@ -49,7 +49,7 @@ void mkii::Led::Blink(uint32_t i_u32BlinkCount, uint32_t i_u32TimerCount,
 	// Set interrupt handler
 	mkii::Led::m_pBlinkTimer32->RegisterInterrupt(
 	    true, mkii::Led::BlinkInterruptHandler);
-
+	mkii::Led::m_pBlinkTimer32->SetCounter(mkii::Led::m_u32TimerCount);
 	// First call as soon as posible
 	// This call will manage following calls
 	mkii::Led::BlinkInterruptHandler();
@@ -59,20 +59,21 @@ bool mkii::Led::IsBlinking() { return mkii::Led::m_bIsBlinking; }
 
 void mkii::Led::BlinkInterruptHandler(void) {
 	if (mkii::Led::m_bIsBlinking) {
-		// Always toggle led and clear interrupt flag
-		mkii::Led::m_pBlinkLed->Toggle();
-		mkii::Led::m_pBlinkTimer32->ClearInterruptFlag();
-
 		if (mkii::Led::m_u32BlinkCount == 0 && mkii::Led::m_bBlinkCountHasToggle) {
 			// Stop condition: counter has reached 0 and both toggles for last blink
 			// have happened.
 			// No further interrupt is done and handler is unregistered. Blinking
 			// state is turned off.
+			mkii::Led::m_pBlinkTimer32->ClearInterruptFlag();
 			mkii::Led::m_pBlinkTimer32->EnableInterrupt(false);
 			mkii::Led::m_pBlinkTimer32->RegisterInterrupt(false);
 			mkii::Led::m_bIsBlinking = false;
 			return;
 		} else {
+			// toggle led and clear interrupt flag
+			mkii::Led::m_pBlinkLed->Toggle();
+			mkii::Led::m_pBlinkTimer32->ClearInterruptFlag();
+
 			// Regular operation: do both toggles for each count and reset timer and
 			// interrupt.
 			if (mkii::Led::m_bBlinkCountHasToggle) {
