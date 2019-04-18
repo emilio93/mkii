@@ -27,7 +27,6 @@ class InputGPIO : public GPIO {
 	 */
 	InputGPIO(uint8_t i_u8Port, uint32_t i_u32Pin);
 
-
 	/**
 	 * Obtains the current value at the pin.
 	 *
