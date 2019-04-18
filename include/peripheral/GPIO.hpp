@@ -95,7 +95,7 @@ class GPIO {
 	 *
 	 * @param i_u8Port
 	 * @param u32Pin
-	 * @param i_e32Mode
+	 * @param i_eMode
 	 */
 	GPIO(uint8_t i_u8Port, uint32_t u32Pin, peripheral::gpio::Mode i_eMode);
 
