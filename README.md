@@ -27,8 +27,8 @@ Follow the next indications:
 - Set project name.
 - Select empty project.
 - Add the files in `[repo]/lib/MSP432P4xx/driverlib/MSP432P4xx/` to the project.
-- Add the file `[repo]/src/definitions.hpp` to the project.
 - Add the files `[repo]/src/peripheral` to the project.
+- Add `[repo]/include` directory to include path.
 - Build project.
 
 ### Running a test
