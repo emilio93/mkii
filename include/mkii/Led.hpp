@@ -52,13 +52,22 @@ class Led {
 	 * @param i_u32BlinkCount Quantity of times the led blinks.
 	 * @param i_u32TimerCount Timer Count.
 	 */
-	void Blink(uint32_t i_u32BlinkCount, uint32_t i_u32TimerCount);
+	void Blink(uint32_t i_u32BlinkCount, uint32_t i_u32TimerCount,
+	           peripheral::Timer32* i_pTimer32);
+
+	/**
+	 * Indicates if there is an ongoing blinking event.
+	 *
+	 * @return true A blinking envent is ongoing.
+	 * @return false No blinking envent is ongoing.
+	 */
+	bool IsBlinking();
 
  private:
 	/**
 	 * GPIO of the Led.
 	 */
-	peripheral::gpio::OutputGPIO* m_LedGPIO;
+	peripheral::gpio::OutputGPIO* m_pLedGPIO;
 
 	/**
 	 * Indicates wheter the LED is set to not writable.
@@ -107,6 +116,16 @@ class Led {
 	 * event.
 	 */
 	static bool m_bBlinkCountHasToggle;
+
+	/**
+	 * Timer used for the blinking event.
+	 */
+	static peripheral::Timer32* m_pBlinkTimer32;
+
+	/**
+	 * Led used for the blinking event.
+	 */
+	static mkii::Led* m_pBlinkLed;
 
 	/**
 	 * The blink interrupt handler.
