@@ -3,9 +3,8 @@
 peripheral::gpio::InputGPIO::InputGPIO(uint8_t i_u8Port, uint32_t i_u32Pin,
                                        peripheral::gpio::InputMode i_eInputMode)
     : peripheral::GPIO(i_u8Port, i_u32Pin) {
-	switch (i_eInputMode)
-	{
-		case peripheral::gpio::InputMode::NONE:
+	switch (i_eInputMode) {
+		case peripheral::gpio::InputMode::REGULAR:
 			this->SetAsInput();
 			break;
 		case peripheral::gpio::InputMode::PULL_DOWN_RESISTOR:

@@ -13,7 +13,7 @@ namespace gpio {
 /**
  * Types of input mode.
  */
-enum InputMode { NONE, PULL_UP_RESISTOR, PULL_DOWN_RESISTOR };
+enum InputMode { REGULAR, PULL_UP_RESISTOR, PULL_DOWN_RESISTOR };
 
 /**
  * The output GPIO represents a GPIO pin(s) which is(are) set to be used as an
