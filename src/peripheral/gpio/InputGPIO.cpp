@@ -10,5 +10,5 @@ peripheral::gpio::InputGPIO::InputGPIO(uint8_t i_u8Port, uint32_t i_u32Pin)
 }
 
 bool peripheral::gpio::InputGPIO::ReadValue() {
-	GPIO_getInputPinValue(this->GetPort(), this->GetPin());
+	return GPIO_getInputPinValue(this->GetPort(), this->GetPin());
 }
