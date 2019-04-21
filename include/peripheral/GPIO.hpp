@@ -125,18 +125,6 @@ class GPIO {
 
 	/**
 	 * Set given GPIO as input pin with pull down resistor.
-	 *
-	 * @TODO [emilio]
-	 */
-	void SetAsPeripheralModuleFunctionOutput();
-
-	/**
-	 * @breif
-	 *
-	 * @TODO [emilio]
-	 */
-	void SetAsPeripheralModuleFunctionInput();
-
 	 */
 	void SetAsInputWithPullDownResistor();
 
