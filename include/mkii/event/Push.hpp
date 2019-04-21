@@ -13,8 +13,12 @@ class Button;
 namespace event {
 
 namespace push {
+/**
+ * The counts the timer does as guard before another button push triggers the
+ * event.
+ */
 const uint32_t TIMEOUT_COUNT = 500;
-}
+}  // namespace push
 
 /****************************************************************************
  *                                                                          *
@@ -33,15 +37,51 @@ const uint32_t TIMEOUT_COUNT = 500;
  ****************************************************************************/
 class Push : public mkii::IEvent {
  public:
+	/**
+	 * Assign values and obtain instance of Push Event.
+	 *
+	 * @param i_pButton The button to track.
+	 * @param i_pLed The led to toggle.
+	 * @param i_pTimer32 The timer to use.
+	 * @return mkii::event::Push* The Push Event.
+	 */
 	static mkii::event::Push* GetPush(mkii::Button* i_pButton, mkii::Led* i_pLed,
 	                                  peripheral::Timer32* i_pTimer32);
+
+	/**
+	 * Obtain Push Event with previously set  properties, or NULL if class has not
+	 * been instanciated.
+	 *
+	 * @return mkii::event::Push* The Push Event.
+	 */
 	static mkii::event::Push* GetPush();
+
+	/**
+	 * Initializes the variables for the handler and sets up the interrupt. Tracks
+	 * a push on the button.
+	 */
 	virtual void Init();
+
+	/**
+	 * Manages an interruption. Toggles the Led.
+	 */
 	virtual void Handler();
+
+	/**
+	 * Calls the actual handler.
+	 */
 	static void HandlerCaller();
+
+	/**
+	 * Stop tracking a push in the button and reset variables to initial state.
+	 */
 	virtual void End();
 
  private:
+
+	/**
+	 * Singleton instance of the Push Event.
+	 */
 	static mkii::event::Push* m_pInstance;
 
 	/**
@@ -83,6 +123,13 @@ class Push : public mkii::IEvent {
 	mkii::Led* m_pLed;
 	static mkii::Led* m_pStaticLed;
 
+	/**
+	 * Construct a new Push object with given properties.
+	 *
+	 * @param i_pButton The button to use.
+	 * @param i_pLed The led to use.
+	 * @param i_pTimer32 The timer to use.
+	 */
 	Push(mkii::Button* i_pButton, mkii::Led* i_pLed,
 	     peripheral::Timer32* i_pTimer32);
 

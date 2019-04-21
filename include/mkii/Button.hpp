@@ -14,8 +14,7 @@ namespace mkii {
 namespace button {
 
 /**
- * @brief
- *
+ * Existing buttons.
  */
 enum ButtonId { S1, S2 };
 }  // namespace button
@@ -45,14 +44,39 @@ class Button {
 	 */
 	Button(mkii::button::ButtonId i_eButtonId);
 
+	/**
+	 * Obtains the Button's GPIO.
+	 *
+	 * @return peripheral::gpio::InputGPIO* Button's GPIO.
+	 */
 	peripheral::gpio::InputGPIO* GetGPIO();
 
+	/**
+	 * Sets the button ID.
+	 *
+	 * @param i_eButtonId The button ID.
+	 */
 	void SetButtonId(mkii::button::ButtonId i_eButtonId);
 
+	/**
+	 * Obtain the button ID.
+	 *
+	 * @return mkii::button::ButtonId The button ID.
+	 */
 	mkii::button::ButtonId GetButtonId();
 
+	/**
+	 * Start listening for a button push to trigger an interrupt which will
+	 * trigger the Push Event.
+	 *
+	 * @param i_pLed The led to toggle on push.
+	 * @param i_pTimer32 The timer used.
+	 */
 	void TrackButtonPush(mkii::Led* i_pLed, peripheral::Timer32* i_pTimer32);
 
+	/**
+	 * Disables the interrupts for the Push Event and reset it's variables.
+	 */
 	void IgnoreButtonPush();
 
  private:
