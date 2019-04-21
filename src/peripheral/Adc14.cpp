@@ -12,7 +12,7 @@ peripheral::Adc14::Adc14(uint32_t i_u32ClockSource,
     : m_bHasInterrupt(false),
       m_uf64InterruptMask(0),
       m_u32SimpleMemoryMap(0),
-      m_u32AnalogMeasureDevice(peripheral::AnalogInputDevice::NONE) {
+      m_u32AnalogMeasureDevice(peripheral::adc::AnalogInputDevice::NONE) {
 	bool l_bAdcStarted = false;
 	bool l_bAdcPowered = false;
 
@@ -57,7 +57,7 @@ void peripheral::Adc14::SetResolution(uint32_t i_u32Resolution) {
 }
 
 void peripheral::Adc14::SetAnalogMeasureDevice(
-    peripheral::AnalogInputDevice i_eAnalogMeasure) {
+    peripheral::adc::AnalogInputDevice i_eAnalogMeasure) {
 	this->m_u32AnalogMeasureDevice = i_eAnalogMeasure;
 }
 
@@ -77,7 +77,7 @@ uint_fast16_t peripheral::Adc14::GetSimpleSampleModeResult() {
 
 bool peripheral::Adc14::ConfigureDeviceMemory(const uint32_t i_u32VoltageRef) {
 	if (!this->m_u32AnalogMeasureDevice ||
-	    peripheral::AnalogInputDevice::NONE == this->m_u32AnalogMeasureDevice) {
+	    peripheral::adc::AnalogInputDevice::NONE == this->m_u32AnalogMeasureDevice) {
 		return false;
 	}
 
@@ -85,24 +85,24 @@ bool peripheral::Adc14::ConfigureDeviceMemory(const uint32_t i_u32VoltageRef) {
 	bool l_bDifferentialMode = false;
 
 	switch (this->m_u32AnalogMeasureDevice) {
-		case peripheral::AnalogInputDevice::NONE:
+		case peripheral::adc::AnalogInputDevice::NONE:
 			return false;
-		case peripheral::AnalogInputDevice::JOYSTICK_HOR_X:
+		case peripheral::adc::AnalogInputDevice::JOYSTICK_HOR_X:
 			// TODO: [brjmm] define an action
 			return false;
-		case peripheral::AnalogInputDevice::JOYSTICK_VER_Y:
+		case peripheral::adc::AnalogInputDevice::JOYSTICK_VER_Y:
 			// TODO: [brjmm] define an action
 			return false;
-		case peripheral::AnalogInputDevice::ACCELEREROMETER_X:
+		case peripheral::adc::AnalogInputDevice::ACCELEREROMETER_X:
 			// TODO: [brjmm] define an action
 			return false;
-		case peripheral::AnalogInputDevice::ACCELEREROMETER_Y:
+		case peripheral::adc::AnalogInputDevice::ACCELEREROMETER_Y:
 			// TODO: [brjmm] define an action
 			return false;
-		case peripheral::AnalogInputDevice::ACCELEREROMETER_Z:
+		case peripheral::adc::AnalogInputDevice::ACCELEREROMETER_Z:
 			// TODO: [brjmm] define an action
 			return false;
-		case peripheral::AnalogInputDevice::MICROPHONE:
+		case peripheral::adc::AnalogInputDevice::MICROPHONE:
 			l_u32AdcInput = ADC_INPUT_A10;
 			l_bDifferentialMode = false;  // microphone is a single input
 
@@ -113,10 +113,10 @@ bool peripheral::Adc14::ConfigureDeviceMemory(const uint32_t i_u32VoltageRef) {
 			MAP_GPIO_setAsPeripheralModuleFunctionInputPin(
 			    GPIO_PORT_P4, GPIO_PIN3, GPIO_TERTIARY_MODULE_FUNCTION);
 			break;
-		case peripheral::AnalogInputDevice::TEMP_SENSOR:
+		case peripheral::adc::AnalogInputDevice::TEMP_SENSOR:
 			// TODO: [brjmm] define an action
 			return false;
-		case peripheral::AnalogInputDevice::AMBIENT_LIGHT:
+		case peripheral::adc::AnalogInputDevice::AMBIENT_LIGHT:
 			// TODO: [brjmm] define an action
 			return false;
 		default:

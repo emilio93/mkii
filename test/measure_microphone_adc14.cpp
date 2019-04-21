@@ -36,7 +36,7 @@ void ADC14_IRQHandler(void) {
 	if (l_u64InterruptStatus & converter.m_uf64InterruptMask) {
 		l_u64Result = converter.GetSimpleSampleModeResult();
 
-		if ((peripheral::MaxConvertionValue::SingleEndedMode) / 2 <= l_u64Result) {
+		if ((peripheral::adc::MaxConvertionValue::SingleEndedMode) / 2 <= l_u64Result) {
 			toggleLed();
 		}
 	}
@@ -50,7 +50,7 @@ void main(void) {
 
 	// set information
 	converter.SetResolution(ADC_14BIT);
-	converter.SetAnalogMeasureDevice(peripheral::AnalogInputDevice::MICROPHONE);
+	converter.SetAnalogMeasureDevice(peripheral::adc::AnalogInputDevice::MICROPHONE);
 
 	// configure work mode and memory
 	converter.ConfigureDeviceMemory(ADC_VREFPOS_AVCC_VREFNEG_VSS);

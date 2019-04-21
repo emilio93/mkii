@@ -6,6 +6,8 @@
 
 namespace peripheral {
 
+namespace adc {
+
 enum MaxConvertionValue { SingleEndedMode = 16384, DifferentialMode = 8192 };
 
 enum AnalogInputDevice {
@@ -20,6 +22,8 @@ enum AnalogInputDevice {
 	AMBIENT_LIGHT
 };
 
+} // namespace adc
+
 class Adc14 {
  public:
 	uint_fast64_t m_uf64InterruptMask;
@@ -33,7 +37,7 @@ class Adc14 {
 	void SetSimpleSampleMode(const bool i_bRepeat);
 	uint_fast16_t GetSimpleSampleModeResult(void);
 	void SetAnalogMeasureDevice(
-	    const peripheral::AnalogInputDevice i_eAnalogMeasure);
+	    const peripheral::adc::AnalogInputDevice i_eAnalogMeasure);
 
 	// Return true if the memory configuration is success
 	bool ConfigureDeviceMemory(const uint32_t i_u32VoltageRef);
@@ -49,7 +53,7 @@ class Adc14 {
  private:
 	bool m_bHasInterrupt;
 	uint32_t m_u32SimpleMemoryMap;
-	peripheral::AnalogInputDevice m_u32AnalogMeasureDevice;
+	peripheral::adc::AnalogInputDevice m_u32AnalogMeasureDevice;
 
 	void SetMemoryMap(const uint32_t i_u32MemoryMap);
 	void SetInterruptMask(const uint_fast64_t i_uf64InterruptMask);
