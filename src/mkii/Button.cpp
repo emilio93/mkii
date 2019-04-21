@@ -5,11 +5,13 @@ mkii::Button::Button(mkii::button::ButtonId i_eButtonId) {
 	switch (this->GetButtonId()) {
 		case mkii::button::ButtonId::S1:
 			this->m_pButtonGPIO = new peripheral::gpio::InputGPIO(
-			    mkii::BUTTON_PORT, mkii::BUTTON_S1_PIN);
+			    mkii::BUTTON_PORT, mkii::BUTTON_S1_PIN,
+			    peripheral::gpio::InputMode::PULL_UP_RESISTOR);
 			break;
 		case mkii::button::ButtonId::S2:
 			this->m_pButtonGPIO = new peripheral::gpio::InputGPIO(
-			    mkii::BUTTON_PORT, mkii::BUTTON_S2_PIN);
+			    mkii::BUTTON_PORT, mkii::BUTTON_S2_PIN,
+			    peripheral::gpio::InputMode::PULL_UP_RESISTOR);
 			break;
 		default:
 			break;
