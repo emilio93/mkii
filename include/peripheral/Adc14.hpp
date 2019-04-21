@@ -6,32 +6,52 @@
 
 namespace peripheral {
 
-typedef uint32_t mkii_adc14;
+enum MaxConvertionValue {
+	SingleEndedMode = 16384,
+	DifferentialMode = 8192
+};
 
-//enum MaxConvertionValue = {SingleEndedMode = 16384, DifferentialMode = 8192};
-
-/*
-enum AnalogInputDevice = {
-    JOYSTICK_HOR_X, JOYSTICK_VER_Y, ACCELEREROMETER_X, ACCELEREROMETER_Y,
-    ACCELEREROMETER_Z, MICROPHONE, TEMP_SENSOR, AMBIENT_LIGHT};
-*/
+enum AnalogInputDevice {
+		NONE,
+		JOYSTICK_HOR_X,
+		JOYSTICK_VER_Y,
+		ACCELEREROMETER_X,
+		ACCELEREROMETER_Y,
+		ACCELEREROMETER_Z,
+		MICROPHONE,
+		TEMP_SENSOR,
+		AMBIENT_LIGHT
+};
 
 class Adc14 {
  public:
+	uint_fast64_t m_uf64InterruptMask;
+
 	Adc14(uint32_t i_u32ClockSource, uint32_t i_u32ClockPredivider,
 	      uint32_t i_u32ClockDivider, uint32_t i_u32InternalChannelMask);
 	~Adc14();
 
-	void SetResolution(uint32_t i_u32Resolution);
-	uint_fast32_t GetResolution(void);
 	void waitForAdcModule(void);
-	void SetInterruptMask(uint_fast64_t i_uf64InterruptMask);
+	void SetMemoryMap(const uint32_t i_u32MemoryMap);
+	void SetResolution(const uint32_t i_u32Resolution);
+	void SetSimpleSampleMode(const bool i_bRepeat);
+	uint_fast16_t GetSimpleSampleModeResult(void);
+	void SetAnalogMeasureDevice(const peripheral::AnalogInputDevice i_eAnalogMeasure);
+
+	// Return true if the memory configuration is success
+	bool ConfigureDeviceMemory(const uint32_t i_u32VoltageRef, const bool i_bDifferentialMode);
+	void EnableAndTriggerConvertion(void);
+
+	uint_fast32_t GetResolution(void);
+	void SetInterruptMask(const uint_fast64_t i_uf64InterruptMask);
 	void EnableAndRegisterInterrupt(void (*i_funcInterruptHandler)(void) = 0);
 	void ClearInterruptMask(void);
+	uint_fast64_t GetInterruptStatus(void);
 
  private:
 	bool m_bHasInterrupt;
-	uint_fast64_t m_uf64InterruptMask;
+	uint32_t m_u32SimpleMemoryMap;
+	peripheral::AnalogInputDevice m_u32AnalogMeasureDevice;
 };
 
 }  // namespace peripheral

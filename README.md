@@ -36,8 +36,8 @@ Follow the next indications:
 Add the file `[repo]/test/blink_p1_timer32.cpp` and use it like the `main.cpp`
 of the project and build it.
 
-#### Simple analog measure with Adc14
-Add the file `[repo]/test/analog_measure_adc14.cpp` and use it like the `main.cpp`
+#### Read the microphone with the adc14
+Add the file `[repo]/test/measure_microphone_adc14.cpp` and use it like the `main.cpp`
 of the project and build it.
 
 ## Contributors
