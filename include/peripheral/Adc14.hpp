@@ -8,11 +8,13 @@ namespace peripheral {
 
 typedef uint32_t mkii_adc14;
 
-enum MaxConvertionValue = {SingleEndedMode = 16384, DifferentialMode = 8192};
+//enum MaxConvertionValue = {SingleEndedMode = 16384, DifferentialMode = 8192};
 
+/*
 enum AnalogInputDevice = {
-    JOYSTICK_HOR_X,    JOYSTICK_VER_Y, ACCELEREROMETER_X, ACCELEREROMETER_Y,
-    ACCELEREROMETER_Z, MICROPHONE,     TEMP_SENSOR,       AMBIENT_LIGHT};
+    JOYSTICK_HOR_X, JOYSTICK_VER_Y, ACCELEREROMETER_X, ACCELEREROMETER_Y,
+    ACCELEREROMETER_Z, MICROPHONE, TEMP_SENSOR, AMBIENT_LIGHT};
+*/
 
 class Adc14 {
  public:

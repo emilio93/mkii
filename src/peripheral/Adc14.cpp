@@ -3,7 +3,7 @@
 
 #include <peripheral/Adc14.hpp>
 
-void peripheral::Adc14::Adc14(uint32_t i_u32ClockSource,
+peripheral::Adc14::Adc14(uint32_t i_u32ClockSource,
                               uint32_t i_u32ClockPredivider,
                               uint32_t i_u32ClockDivider,
                               uint32_t i_u32InternalChannelMask)
@@ -26,7 +26,7 @@ void peripheral::Adc14::Adc14(uint32_t i_u32ClockSource,
 	} while (false == l_bAdcStarted);
 }
 
-void peripheral::Adc14::~Adc14() {
+peripheral::Adc14::~Adc14() {
 	bool l_bAdcDisabled = false;
 
 	if (this->m_bHasInterrupt) {
