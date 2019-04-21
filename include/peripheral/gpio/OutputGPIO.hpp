@@ -31,7 +31,7 @@ class OutputGPIO : public GPIO {
 	 *
 	 * @param value Output value of the gpio.
 	 */
-	void SetOutput(bool value);
+	void SetOutput(bool i_bValue);
 
 	/**
 	 * Get the Output value of the gpio.
