@@ -19,6 +19,11 @@ class IEvent {
 	 * Handler for the event.
 	 */
 	virtual void Handler(void) = 0;
+
+	/**
+	 * Cleans up the Event and disable the interruption.
+	 */
+	virtual void End(void) = 0;
 };
 
 }  // namespace mkii

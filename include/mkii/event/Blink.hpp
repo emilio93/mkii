@@ -65,6 +65,8 @@ class Blink : public mkii::IEvent {
 	virtual void Handler(void) final override;
 	static void HandlerCaller(void);
 
+	virtual void End(void) final override;
+
 	/**
 	 * Indicates if a blinking is ongoing.
 	 *

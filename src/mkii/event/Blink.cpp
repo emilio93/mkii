@@ -71,6 +71,13 @@ void mkii::event::Blink::HandlerCaller(void) {
 	mkii::event::Blink::GetBlink()->Handler();
 }
 
+void mkii::event::Blink::End(void) {
+	mkii::event::Blink::m_pStaticBlinkTimer32->ClearInterruptFlag();
+	mkii::event::Blink::m_pStaticBlinkTimer32->EnableInterrupt(false);
+	mkii::event::Blink::m_pStaticBlinkTimer32->RegisterInterrupt(false);
+	mkii::event::Blink::m_bStaticIsBlinking = false;
+}
+
 void mkii::event::Blink::Handler(void) {
 	if (mkii::event::Blink::m_bStaticIsBlinking) {
 		if (mkii::event::Blink::m_u32StaticBlinkCount <= 1 &&
@@ -79,10 +86,7 @@ void mkii::event::Blink::Handler(void) {
 			// have happened.
 			// No further interrupt is done and handler is unregistered. Blinking
 			// state is turned off.
-			mkii::event::Blink::m_pStaticBlinkTimer32->ClearInterruptFlag();
-			mkii::event::Blink::m_pStaticBlinkTimer32->EnableInterrupt(false);
-			mkii::event::Blink::m_pStaticBlinkTimer32->RegisterInterrupt(false);
-			mkii::event::Blink::m_bStaticIsBlinking = false;
+			mkii::event::Blink::End();
 			return;
 		} else {
 			// toggle led and clear interrupt flag
