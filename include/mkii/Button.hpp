@@ -1,7 +1,7 @@
 #ifndef MKII_MKII_BUTTON_H
 #define MKII_MKII_BUTTON_H
 
-#include <string>
+#include <cstddef>
 
 #include "mkii/Led.hpp"
 #include "peripheral/GPIO.hpp"

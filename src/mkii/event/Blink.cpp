@@ -1,5 +1,3 @@
-#include <string>
-
 #include "mkii/event/Blink.hpp"
 
 bool mkii::event::Blink::m_bStaticIsBlinking = false;

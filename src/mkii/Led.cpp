@@ -1,10 +1,4 @@
-#include <string>
-
 #include "mkii/Led.hpp"
-#include "mkii/event/Blink.hpp"
-#include "peripheral/GPIO.hpp"
-#include "peripheral/Timer32.hpp"
-#include "peripheral/gpio/OutputGPIO.hpp"
 
 mkii::Led::Led() {
 	this->m_pLedGPIO =

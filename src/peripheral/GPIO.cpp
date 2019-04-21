@@ -1,8 +1,3 @@
-#include <stdio.h>
-#include <iostream>
-
-#include "driverlib.h"
-
 #include "peripheral/GPIO.hpp"
 
 peripheral::GPIO::GPIO(uint8_t i_u8Port, uint32_t i_u32Pin) {

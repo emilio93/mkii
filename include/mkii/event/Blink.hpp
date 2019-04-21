@@ -1,11 +1,15 @@
 #ifndef MKII_MKII_EVENT_BLINK_H
 #define MKII_MKII_EVENT_BLINK_H
 
+#include <cstddef>
+
 #include "mkii/IEvent.hpp"
 #include "mkii/Led.hpp"
 #include "peripheral/Timer32.hpp"
 
 namespace mkii {
+
+class Led;
 
 namespace event {
 

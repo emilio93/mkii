@@ -1,8 +1,3 @@
-
-#include <stdint.h>
-
-#include "driverlib.h"
-
 #include <peripheral/Timer32.hpp>
 
 peripheral::Timer32::Timer32(mkii_timer32 i_mkiiTimer, uint32_t i_u32PreScaler,

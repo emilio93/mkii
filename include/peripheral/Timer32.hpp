@@ -2,9 +2,6 @@
 #ifndef MKII_TIMER32_H
 #define MKII_TIMER32_H
 
-#include <stdbool.h>
-#include <stdint.h>
-
 #include "driverlib.h"
 
 namespace peripheral {

@@ -1,9 +1,9 @@
 #ifndef MKII_MKII_LED_H
 #define MKII_MKII_LED_H
 
-#include <string>
+#include <cstddef>
 
-#include "peripheral/GPIO.hpp"
+#include "mkii/event/Blink.hpp"
 #include "peripheral/Timer32.hpp"
 #include "peripheral/gpio/OutputGPIO.hpp"
 
