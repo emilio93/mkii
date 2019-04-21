@@ -1,6 +1,6 @@
 
-#ifndef MKII_PERIPHERAL_GPIO_OUTPUT_GPIO_H
-#define MKII_PERIPHERAL_GPIO_OUTPUT_GPIO_H
+#ifndef MKII_PERIPHERAL_GPIO_OUTPUTGPIO_H
+#define MKII_PERIPHERAL_GPIO_OUTPUTGPIO_H
 
 #include "driverlib.h"
 
@@ -60,4 +60,4 @@ class OutputGPIO : public GPIO {
 }  // namespace gpio
 }  // namespace peripheral
 
-#endif /* MKII_PERIPHERAL_GPIO_OUTPUT_GPIO_H */
+#endif /* MKII_PERIPHERAL_GPIO_OUTPUTGPIO_H */
