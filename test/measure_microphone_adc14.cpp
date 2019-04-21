@@ -26,22 +26,21 @@ void toggleLed(void) {
 	MAP_GPIO_toggleOutputOnPin(LUNAV_LED_PORT, LUNAV_LED_PIN);
 }
 
-void ADC14_IRQHandler(void)
-{
-    uint64_t l_u64InterruptStatus = 0;
-    uint64_t l_u64Result = 0;
+void ADC14_IRQHandler(void) {
+	uint64_t l_u64InterruptStatus = 0;
+	uint64_t l_u64Result = 0;
 
-    l_u64InterruptStatus = converter.GetInterruptStatus();
-    converter.ClearInterruptMask();
+	l_u64InterruptStatus = converter.GetInterruptStatus();
+	converter.ClearInterruptMask();
 
-    if(l_u64InterruptStatus & converter.m_uf64InterruptMask)
-    {
-        l_u64Result = converter.GetSimpleSampleModeResult();
+	if (l_u64InterruptStatus & converter.m_uf64InterruptMask) {
+		l_u64Result = converter.GetSimpleSampleModeResult();
 
-        if(100 <= l_u64Result) {
-        	toggleLed();
-        }
-    }
+		if ((peripheral::MaxConvertionValue::SingleEndedMode) / 2 <= l_u64Result) {
+			toggleLed();
+		}
+	}
+	converter.JustTriggerConvertion();
 }
 
 void main(void) {
@@ -51,16 +50,16 @@ void main(void) {
 
 	// set information
 	converter.SetResolution(ADC_14BIT);
-	converter.SetMemoryMap(ADC_MEM0);
 	converter.SetAnalogMeasureDevice(peripheral::AnalogInputDevice::MICROPHONE);
 
 	// configure work mode and memory
-	converter.SetSimpleSampleMode(false); // no repeat
-	converter.ConfigureDeviceMemory(ADC_VREFPOS_AVCC_VREFNEG_VSS, false); // no differential inputs
+	converter.ConfigureDeviceMemory(ADC_VREFPOS_AVCC_VREFNEG_VSS);
+	converter.SetSimpleSampleMode(false);  // no repeat
+	converter.SetSampleManualTimer();
 
 	// set interrupt and convertion and start to convert
-	converter.EnableAndRegisterInterrupt(ADC14_IRQHandler);
 	converter.EnableAndTriggerConvertion();
+	converter.EnableAndRegisterInterrupt(ADC14_IRQHandler);
 
 	while (true) {
 	};
