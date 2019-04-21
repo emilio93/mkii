@@ -1,5 +1,3 @@
-#include <string>
-
 #include "mkii/Button.hpp"
 
 bool mkii::Button::m_bIsTrackingS1 = false;

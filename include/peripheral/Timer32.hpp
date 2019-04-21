@@ -1,9 +1,6 @@
 
-#ifndef MKII_TIMER32_H
-#define MKII_TIMER32_H
-
-#include <stdbool.h>
-#include <stdint.h>
+#ifndef MKII_PERIPHERAL_TIMER32_H
+#define MKII_PERIPHERAL_TIMER32_H
 
 #include "driverlib.h"
 
@@ -44,4 +41,4 @@ class Timer32 {
 
 }  // namespace peripheral
 
-#endif /* MKII_TIM32_H */
+#endif /* MKII_PERIPHERAL_TIMER32_H */

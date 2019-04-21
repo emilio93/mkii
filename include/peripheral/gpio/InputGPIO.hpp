@@ -1,8 +1,6 @@
 
-#ifndef MKII_PERIPHERAL_GPIO_INPUT_GPIO_H
-#define MKII_PERIPHERAL_GPIO_INPUT_GPIO_H
-
-#include <iostream>
+#ifndef MKII_PERIPHERAL_GPIO_INPUTGPIO_H
+#define MKII_PERIPHERAL_GPIO_INPUTGPIO_H
 
 #include "driverlib.h"
 
@@ -39,4 +37,4 @@ class InputGPIO : public GPIO {
 }  // namespace gpio
 }  // namespace peripheral
 
-#endif /* MKII_PERIPHERAL_GPIO_INPUT_GPIO_H */
+#endif /* MKII_PERIPHERAL_GPIO_INPUTGPIO_H */

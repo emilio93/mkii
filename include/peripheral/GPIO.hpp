@@ -2,9 +2,6 @@
 #ifndef MKII_PERIPHERAL_GPIO_H
 #define MKII_PERIPHERAL_GPIO_H
 
-#include <stdbool.h>
-#include <stdint.h>
-
 #include "driverlib.h"
 
 #include "peripheral/GPIO.hpp"
