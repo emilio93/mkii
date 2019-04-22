@@ -5,35 +5,50 @@
 
 #include <peripheral/Adc14.hpp>
 
-peripheral::Adc14::Adc14(uint32_t i_u32ClockSource,
-                         uint32_t i_u32ClockPredivider,
-                         uint32_t i_u32ClockDivider,
-                         uint32_t i_u32InternalChannelMask)
+peripheral::Adc14::Adc14(peripheral::adc::AnalogInputDevice i_eDevice)
     : m_bHasInterrupt(false),
       m_uf64InterruptMask(0),
       m_u32SimpleMemoryMap(0),
-      m_u32AnalogMeasureDevice(peripheral::adc::AnalogInputDevice::NONE) {
-	bool l_bAdcStarted = false;
-	bool l_bAdcPowered = false;
-
+      m_u32AnalogMeasureDevice(i_eDevice) {
 	ADC14_enableModule();
 
+	bool l_bAdcPowered = false;
 	do {
 		waitForAdcModule();
 		l_bAdcPowered = ADC14_setPowerMode(ADC_UNRESTRICTED_POWER_MODE);
 	} while (false == l_bAdcPowered);
 
-	do {
-		waitForAdcModule();
-		l_bAdcStarted =
-		    ADC14_initModule(i_u32ClockSource, i_u32ClockPredivider,
-		                     i_u32ClockDivider, i_u32InternalChannelMask);
-	} while (false == l_bAdcStarted);
+	bool l_bAdcStarted = false;
+
+	switch (this->m_u32AnalogMeasureDevice) {
+		case peripheral::adc::AnalogInputDevice::NONE:
+			break;
+		case peripheral::adc::AnalogInputDevice::JOYSTICK:
+			break;
+		case peripheral::adc::AnalogInputDevice::ACCELEREROMETER:
+			break;
+		case peripheral::adc::AnalogInputDevice::MICROPHONE:
+			do {
+				waitForAdcModule();
+				l_bAdcStarted = ADC14_initModule(
+				    peripheral::adc::g_stMicrophoneAdcInitConfiguration.u32ClockSource,
+				    peripheral::adc::g_stMicrophoneAdcInitConfiguration
+				        .u32ClockPreDivider,
+				    peripheral::adc::g_stMicrophoneAdcInitConfiguration.u32ClockDivider,
+				    peripheral::adc::g_stMicrophoneAdcInitConfiguration
+				        .u32InternalChannelMask);
+			} while (false == l_bAdcStarted);
+			break;
+		case peripheral::adc::AnalogInputDevice::TEMP_SENSOR:
+			break;
+		case peripheral::adc::AnalogInputDevice::AMBIENT_LIGHT:
+			break;
+		default:
+			break;
+	}
 }
 
 peripheral::Adc14::~Adc14() {
-	bool l_bAdcDisabled = false;
-
 	ADC14_disableConversion();
 	ADC14_disableSampleTimer();
 
@@ -42,6 +57,7 @@ peripheral::Adc14::~Adc14() {
 		ADC14_unregisterInterrupt();
 	}
 
+	bool l_bAdcDisabled = false;
 	do {
 		waitForAdcModule();
 		l_bAdcDisabled = ADC14_disableModule();
@@ -54,11 +70,6 @@ void peripheral::Adc14::SetMemoryMap(uint32_t i_u32MemoryMap) {
 
 void peripheral::Adc14::SetResolution(uint32_t i_u32Resolution) {
 	ADC14_setResolution(i_u32Resolution);
-}
-
-void peripheral::Adc14::SetAnalogMeasureDevice(
-    peripheral::adc::AnalogInputDevice i_eAnalogMeasure) {
-	this->m_u32AnalogMeasureDevice = i_eAnalogMeasure;
 }
 
 void peripheral::Adc14::SetSimpleSampleMode(const bool i_bRepeat) {
@@ -75,15 +86,12 @@ uint_fast16_t peripheral::Adc14::GetSimpleSampleModeResult() {
 	return ADC14_getResult(this->m_u32SimpleMemoryMap);
 }
 
-bool peripheral::Adc14::ConfigureDevice(const uint32_t i_u32VoltageRef) {
+bool peripheral::Adc14::ConfigureDevice() {
 	if (!this->m_u32AnalogMeasureDevice ||
 	    peripheral::adc::AnalogInputDevice::NONE ==
 	        this->m_u32AnalogMeasureDevice) {
 		return false;
 	}
-
-	uint32_t l_u32AdcInput = 0;
-	bool l_bDifferentialMode = false;
 
 	switch (this->m_u32AnalogMeasureDevice) {
 		case peripheral::adc::AnalogInputDevice::NONE:
@@ -99,15 +107,32 @@ bool peripheral::Adc14::ConfigureDevice(const uint32_t i_u32VoltageRef) {
 			// the X, Y and Z ACCELEROMETER components
 			return false;
 		case peripheral::adc::AnalogInputDevice::MICROPHONE:
-			l_u32AdcInput = ADC_INPUT_A10;
-			l_bDifferentialMode = false;  // microphone is a single input
+			// TODO: [brjmm] adc should take measurement each ~1s
 
+			// microphone is a single input
+			const bool l_bDifferentialMode = false;
+			const bool l_bRepeatSimpleSample = false;
+
+			SetResolution(ADC_14BIT);
 			SetInterruptMask(ADC_INT10);
 			SetMemoryMap(ADC_MEM10);
 
-			// setting gpio as analog input
 			MAP_GPIO_setAsPeripheralModuleFunctionInputPin(
 			    GPIO_PORT_P4, GPIO_PIN3, GPIO_TERTIARY_MODULE_FUNCTION);
+
+			// configure memory map to adc save result in
+			bool l_bConfigurationSuccess = false;
+
+			do {
+				waitForAdcModule();
+				l_bConfigurationSuccess = ADC14_configureConversionMemory(
+				    this->m_u32SimpleMemoryMap, ADC_VREFPOS_AVCC_VREFNEG_VSS,
+				    ADC_INPUT_A10, l_bDifferentialMode);
+			} while (false == l_bConfigurationSuccess);
+
+			SetSimpleSampleMode(l_bRepeatSimpleSample);
+			SetSampleManualTimer();
+
 			break;
 		case peripheral::adc::AnalogInputDevice::TEMP_SENSOR:
 			// TODO: [brjmm] define an action
@@ -118,16 +143,6 @@ bool peripheral::Adc14::ConfigureDevice(const uint32_t i_u32VoltageRef) {
 		default:
 			return false;
 	}
-
-	bool l_bConfigurationSuccess = false;
-
-	do {
-		waitForAdcModule();
-		l_bConfigurationSuccess = ADC14_configureConversionMemory(
-		    this->m_u32SimpleMemoryMap, i_u32VoltageRef, l_u32AdcInput,
-		    l_bDifferentialMode);
-	} while (false == l_bConfigurationSuccess);
-
 	return true;
 }
 
@@ -155,7 +170,7 @@ void peripheral::Adc14::TriggerSignalConvertion() {
 
 void peripheral::Adc14::EnableAndTriggerConvertion() {
 	ADC14_enableConversion();
-	ADC14_toggleConversionTrigger();
+	TriggerSignalConvertion();
 }
 
 uint_fast32_t peripheral::Adc14::GetResolution() {
@@ -166,6 +181,10 @@ void peripheral::Adc14::waitForAdcModule(void) {
 	static bool l_bAdcIsBusyNow = true;
 	while (l_bAdcIsBusyNow == ADC14_isBusy()) {
 	}
+}
+
+uint_fast64_t peripheral::Adc14::GetInterruptMask() {
+	return this->m_uf64InterruptMask;
 }
 
 void peripheral::Adc14::SetInterruptMask(uint_fast64_t i_uf64InterruptMask) {

@@ -9,8 +9,7 @@
 #define LUNAV_LED_PIN GPIO_PIN0
 #define LUNAV_LED_PORT GPIO_PORT_P1
 
-peripheral::Adc14 converter(ADC_CLOCKSOURCE_ADCOSC, ADC_PREDIVIDER_1,
-                            ADC_DIVIDER_1, ADC_MAPINTCH0);
+peripheral::Adc14 converter(peripheral::adc::AnalogInputDevice::MICROPHONE);
 
 void initLed(void) {
 	MAP_GPIO_setAsOutputPin((uint_fast8_t)LUNAV_LED_PORT,
@@ -33,7 +32,7 @@ void ADC14_IRQHandler(void) {
 	l_u64InterruptStatus = converter.GetInterruptStatus();
 	converter.ClearInterruptFlag();
 
-	if (l_u64InterruptStatus & converter.m_uf64InterruptMask) {
+	if (l_u64InterruptStatus & converter.GetInterruptMask()) {
 		l_u64Result = converter.GetSimpleSampleModeResult();
 
 		if ((peripheral::adc::MaxConvertionValue::SingleEndedMode) / 2 <=
@@ -49,17 +48,7 @@ void main(void) {
 	initLed();
 	setLedHigh();
 
-	// set information
-	converter.SetResolution(ADC_14BIT);
-	converter.SetAnalogMeasureDevice(
-	    peripheral::adc::AnalogInputDevice::MICROPHONE);
-
-	// configure work mode and memory
-	converter.ConfigureDevice(ADC_VREFPOS_AVCC_VREFNEG_VSS);
-	converter.SetSimpleSampleMode(false);  // no repeat
-	converter.SetSampleManualTimer();
-
-	// set interrupt and convertion and start to convert
+	converter.ConfigureDevice();
 	converter.EnableAndTriggerConvertion();
 	converter.EnableAndRegisterInterrupt(ADC14_IRQHandler);
 

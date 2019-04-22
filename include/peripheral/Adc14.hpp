@@ -8,9 +8,12 @@ namespace peripheral {
 
 namespace adc {
 
-enum MaxConvertionValue { SingleEndedMode = 16384, DifferentialMode = 8192 };
+const enum MaxConvertionValue {
+	SingleEndedMode = 16384,
+	DifferentialMode = 8192
+};
 
-enum AnalogInputDevice {
+const enum AnalogInputDevice {
 	NONE,
 	JOYSTICK,
 	ACCELEREROMETER,
@@ -19,20 +22,35 @@ enum AnalogInputDevice {
 	AMBIENT_LIGHT
 };
 
+typedef struct {
+	uint32_t u32ClockSource;
+	uint32_t u32ClockPreDivider;
+	uint32_t u32ClockDivider;
+	uint32_t u32InternalChannelMask;
+} AnalogDeviceAdcConfiguration;
+
+// TODO: [brjmm] adc should take measurement each ~1s
+const AnalogDeviceAdcConfiguration g_stMicrophoneAdcInitConfiguration = {
+    ADC_CLOCKSOURCE_ADCOSC, ADC_PREDIVIDER_1, ADC_DIVIDER_1, 0};
+
 }  // namespace adc
 
 class Adc14 {
  public:
-	uint_fast64_t m_uf64InterruptMask;
-
-	Adc14(uint32_t i_u32ClockSource, uint32_t i_u32ClockPredivider,
-	      uint32_t i_u32ClockDivider, uint32_t i_u32InternalChannelMask);
+	Adc14(peripheral::adc::AnalogInputDevice i_eDevice);
 	~Adc14();
 
 	/**
 	 * Wait until the adc is not busy
 	 */
 	void waitForAdcModule(void);
+
+	/**
+	 * Get the interrupt mask
+	 *
+	 * @return Return the value of m_uf64InterruptMask
+	 */
+	uint_fast64_t GetInterruptMask(void);
 
 	/**
 	 * Set the adc resolution. Available options:
@@ -59,18 +77,12 @@ class Adc14 {
 	uint_fast16_t GetSimpleSampleModeResult(void);
 
 	/**
-	 * Indicates what analog device will be measured in the current
-	 * adc instance. Every adc instance should be set an
-	 * device to know how work.
+	 * Configure the Adc14 module considering i_eAnalogMeasure. Each
+	 * device has its single/unique configuration
 	 *
-	 * @param i_eAnalogMeasure Indicates what supported analog input
-	 * device will be measure.
+	 * @return True if the configuration is success
 	 */
-	void SetAnalogMeasureDevice(
-	    const peripheral::adc::AnalogInputDevice i_eAnalogMeasure);
-
-	// Return true if the memory configuration is success
-	bool ConfigureDevice(const uint32_t i_u32VoltageRef);
+	bool ConfigureDevice();
 
 	/**
 	 * Set the convertion timer in manual mode. The user has to trigger
@@ -126,6 +138,7 @@ class Adc14 {
  private:
 	bool m_bHasInterrupt;
 	uint32_t m_u32SimpleMemoryMap;
+	uint_fast64_t m_uf64InterruptMask;
 	peripheral::adc::AnalogInputDevice m_u32AnalogMeasureDevice;
 
 	/**
