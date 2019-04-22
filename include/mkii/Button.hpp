@@ -4,6 +4,7 @@
 #include <cstddef>
 
 #include "mkii/Led.hpp"
+#include "mkii/event/Push.hpp"
 #include "peripheral/GPIO.hpp"
 #include "peripheral/Timer32.hpp"
 #include "peripheral/gpio/InputGPIO.hpp"
@@ -13,8 +14,7 @@ namespace mkii {
 namespace button {
 
 /**
- * @brief
- *
+ * Existing buttons.
  */
 enum ButtonId { S1, S2 };
 }  // namespace button
@@ -45,22 +45,39 @@ class Button {
 	Button(mkii::button::ButtonId i_eButtonId);
 
 	/**
-	 * Enables interrupts on button push.
+	 * Obtains the Button's GPIO.
 	 *
-	 * @param i_pTimer32 Timer used for the push event.
+	 * @return peripheral::gpio::InputGPIO* Button's GPIO.
 	 */
-	void StartTrackPush(peripheral::Timer32* i_pTimer32, mkii::Led* i_pLed);
-
-	/**
-	 * Disables interrupts on button push.
-	 */
-	void StopTrackPush();
-
 	peripheral::gpio::InputGPIO* GetGPIO();
 
+	/**
+	 * Sets the button ID.
+	 *
+	 * @param i_eButtonId The button ID.
+	 */
 	void SetButtonId(mkii::button::ButtonId i_eButtonId);
 
+	/**
+	 * Obtain the button ID.
+	 *
+	 * @return mkii::button::ButtonId The button ID.
+	 */
 	mkii::button::ButtonId GetButtonId();
+
+	/**
+	 * Start listening for a button push to trigger an interrupt which will
+	 * trigger the Push Event.
+	 *
+	 * @param i_pLed The led to toggle on push.
+	 * @param i_pTimer32 The timer used.
+	 */
+	void TrackButtonPush(mkii::Led* i_pLed, peripheral::Timer32* i_pTimer32);
+
+	/**
+	 * Disables the interrupts for the Push Event and reset it's variables.
+	 */
+	void IgnoreButtonPush();
 
  private:
 	/**
@@ -72,65 +89,6 @@ class Button {
 	 * Id of the limited buttons available.
 	 */
 	mkii::button::ButtonId m_eButtonId;
-
-	/****************************************************************************
-	 *                                                                          *
-	 * PUSH EVENT                                                               *
-	 *                                                                          *
-	 * As many buttons, push events can exist and its variables and handlers    *
-	 * are identified  by its ID(S1, S2, ...) at the end of the name.           *
-	 * Diferent handlers mught need extra variables which should be named       *
-	 * properly as well.                                                        *
-	 * Requires a timer with enabled interrupts                                 *
-	 *                                                                          *
-	 * S1                                                                       *
-	 * Toggles led state independently of it's current state. If state is on,   *
-	 * the Led will turn off until a on condition or a button push. If state is *
-	 * off, the Led will turn on for 30 minutes or until the buton is pushed.   *
-	 *                                                                          *
-	 * S2                                                                       *
-	 * Not in use.                                                              *
-	 *                                                                          *
-	 ****************************************************************************/
-
-	/**
-	 * Indicates if the button push tracking is on.
-	 */
-	static bool m_bIsTrackingS1;
-
-	/**
-	 * Indicates a button push has just happened avoiding multiple unwanted fast
-	 * interrupts.
-	 */
-	static bool m_bIsPushActiveS1;
-
-	/**
-	 * Button used to trigger the event.
-	 */
-	static mkii::Button* m_pPushButtonS1;
-
-	/**
-	 * Count to wait before listening to another event.
-	 */
-	static const uint32_t m_u32PushTimeoutCountS1;
-
-	/**
-	 * Indicates if a safe wait has been done after push.
-	 */
-	static bool m_bPushHasTimeoutS1;
-
-	/**
-	 * Timer used to time the event.
-	 */
-	static peripheral::Timer32* m_pTimer32S1;
-
-	static mkii::Led* m_pLed;
-
-	/**
-	 * Handler for the event occurrance.
-	 */
-	static void PushInterruptHandlerS1(void);
-	// static void pushInterruptHandlerS2(void);
 };
 }  // namespace mkii
 

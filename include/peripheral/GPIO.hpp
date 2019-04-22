@@ -84,17 +84,20 @@ class GPIO {
  public:
 	/**
 	 * Init a GPIO.
+	 *
+	 * @param i_u8Port The GPIO's Port.
+	 * @param i_u32Pin The GPIO's Pin.
 	 */
-	GPIO(uint8_t i_u8Port, uint32_t u32Pin);
+	GPIO(uint8_t i_u8Port, uint32_t i_u32Pin);
 
 	/**
 	 * Init a GPIO with a mode of operation.
 	 *
-	 * @param i_u8Port
-	 * @param u32Pin
-	 * @param i_eMode
+	 * @param i_u8Port The GPIO's Port.
+	 * @param i_u32Pin The GPIO's Pin.
+	 * @param i_eMode The GPIO mode.
 	 */
-	GPIO(uint8_t i_u8Port, uint32_t u32Pin, peripheral::gpio::Mode i_eMode);
+	GPIO(uint8_t i_u8Port, uint32_t i_u32Pin, peripheral::gpio::Mode i_eMode);
 
 	/**
 	 * Obtain the GPIO's Port.
@@ -121,30 +124,12 @@ class GPIO {
 	void SetAsInput();
 
 	/**
-	 * @breif
-	 *
-	 * @TODO [emilio]
-	 */
-	void SetAsPeripheralModuleFunctionOutput();
-
-	/**
-	 * @breif
-	 *
-	 * @TODO [emilio]
-	 */
-	void SetAsPeripheralModuleFunctionInput();
-
-	/**
-	 * @breif
-	 *
-	 * @TODO [emilio]
+	 * Set given GPIO as input pin with pull down resistor.
 	 */
 	void SetAsInputWithPullDownResistor();
 
 	/**
-	 * @breif
-	 *
-	 * @TODO [emilio]
+	 * Set given GPIO as input pin with pull up resistor.
 	 */
 	void SetAsInputWithPullUpResistor();
 
@@ -159,68 +144,56 @@ class GPIO {
 	void DisableInterrupt();
 
 	/**
-	 * @breif
-	 *
-	 * @TODO [emilio]
+	 * @TODO [emilio] Not in use.
 	 */
 	uint_fast16_t GetInterruptStatus();
 
 	/**
-	 * @breif
-	 *
-	 * @TODO [emilio]
+	 * Clear the interrupt flag for the GPIO.
 	 */
 	void ClearInterruptFlag();
 
 	/**
-	 * @breif
-	 *
-	 * @TODO [emilio]
+	 * @TODO [emilio] Not in use.
 	 */
-	void InterruptEdgeSelect(uint_fast8_t edgeSelect);
+	void InterruptEdgeSelect(uint_fast8_t i_u8EdgeSelect);
 
 	/**
-	 * @breif
-	 *
-	 * @TODO [emilio]
+	 * @TODO [emilio] Not in use.
 	 */
 	void SetDriveStrengthHigh();
 
 	/**
-	 * @breif
-	 *
-	 * @TODO [emilio]
+	 * @TODO [emilio] Not in use.
 	 */
 	void SetDriveStrengthLow();
 
 	/**
-	 * @breif
-	 *
-	 * @TODO [emilio]
+	 * @TODO [emilio] Not in use.
 	 */
-	static uint_fast16_t GetEnabledInterruptStatus(uint_fast8_t selectedPort);
+	static uint_fast16_t GetEnabledInterruptStatus(uint_fast8_t i_u8SelectedPort);
 
 	/**
-	 * @breif
-	 *
-	 * @TODO [emilio]
+	 * @TODO [emilio] Not in use.
 	 */
 	static uint_fast16_t GetEnabledInterruptStatus(GPIO* i_pGPIO);
 
 	/**
-	 * @breif
+	 * Registers an interrupt on the given port.
 	 *
-	 * @TODO [emilio]
+	 * @param i_u8SelectedPort The port on which to register the interrupt.
+	 * @param i_funcHandler The interrupt handler which is registered.
 	 */
-	static void RegisterInterrupt(uint_fast8_t selectedPort,
-	                              void (*intHandler)(void));
+	static void RegisterInterrupt(uint_fast8_t i_u8SelectedPort,
+	                              void (*i_funcHandler)(void));
 
 	/**
-	 * @breif
+	 * Registers an interrupt on the given GPIO.
 	 *
-	 * @TODO [emilio]
+	 * @param i_pGPIO The GPIO on which the interrupt is registered.
+	 * @param i_funcHandler The interrupt handler which is registered.
 	 */
-	static void RegisterInterrupt(GPIO* i_pGPIO, void (*intHandler)(void));
+	static void RegisterInterrupt(GPIO* i_pGPIO, void (*i_funcHandler)(void));
 
 	/**
 	 * Unregisters the interrupt handler and its call for the port in the given

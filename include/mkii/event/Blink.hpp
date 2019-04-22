@@ -63,7 +63,16 @@ class Blink : public mkii::IEvent {
 	 * m_bIsBlinking variable is set to false, enabling a new blinking to start.
 	 */
 	virtual void Handler(void) final override;
+
+	/**
+	 * Calls the actual handler.
+	 */
 	static void HandlerCaller(void);
+
+	/**
+	 * Cleans up Event removing interrupt and setting blinking state to false.
+	 */
+	virtual void End(void) final override;
 
 	/**
 	 * Indicates if a blinking is ongoing.
@@ -121,6 +130,15 @@ class Blink : public mkii::IEvent {
 	mkii::Led* m_pBlinkLed;
 	static mkii::Led* m_pStaticBlinkLed;
 
+	/**
+	 * Construct a new Blink object with the given properties.
+	 *
+	 * @param i_u32BlinkCount The quantity of times to blink.
+	 * @param i_u32TimerCount Counts the timer has to do before triggering a
+	 * toggle.
+	 * @param i_pBlinkTimer32 The timer to be used for the blinking.
+	 * @param i_pBlinkLed The led to be used for the blinking.
+	 */
 	Blink(uint32_t i_u32BlinkCount, uint32_t i_u32TimerCount,
 	      peripheral::Timer32* i_pBlinkTimer32, mkii::Led* i_pBlinkLed);
 

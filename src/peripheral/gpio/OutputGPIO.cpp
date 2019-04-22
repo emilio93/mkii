@@ -5,8 +5,8 @@ peripheral::gpio::OutputGPIO::OutputGPIO(uint8_t i_u8Port, uint32_t i_u32Pin)
 	this->SetAsOutput();
 }
 
-void peripheral::gpio::OutputGPIO::SetOutput(bool value) {
-	this->m_bState = value;
+void peripheral::gpio::OutputGPIO::SetOutput(bool i_bValue) {
+	this->m_bState = i_bValue;
 	this->UpdateState();
 }
 
