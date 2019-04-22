@@ -75,9 +75,10 @@ uint_fast16_t peripheral::Adc14::GetSimpleSampleModeResult() {
 	return ADC14_getResult(this->m_u32SimpleMemoryMap);
 }
 
-bool peripheral::Adc14::ConfigureDeviceMemory(const uint32_t i_u32VoltageRef) {
+bool peripheral::Adc14::ConfigureDevice(const uint32_t i_u32VoltageRef) {
 	if (!this->m_u32AnalogMeasureDevice ||
-	    peripheral::adc::AnalogInputDevice::NONE == this->m_u32AnalogMeasureDevice) {
+	    peripheral::adc::AnalogInputDevice::NONE ==
+	        this->m_u32AnalogMeasureDevice) {
 		return false;
 	}
 
@@ -87,20 +88,15 @@ bool peripheral::Adc14::ConfigureDeviceMemory(const uint32_t i_u32VoltageRef) {
 	switch (this->m_u32AnalogMeasureDevice) {
 		case peripheral::adc::AnalogInputDevice::NONE:
 			return false;
-		case peripheral::adc::AnalogInputDevice::JOYSTICK_HOR_X:
+		case peripheral::adc::AnalogInputDevice::JOYSTICK:
 			// TODO: [brjmm] define an action
+			// TODO: [brjmm] Define if this value will handler
+			// the VERT_Y and HOR_X JOYSTICK components
 			return false;
-		case peripheral::adc::AnalogInputDevice::JOYSTICK_VER_Y:
+		case peripheral::adc::AnalogInputDevice::ACCELEREROMETER:
 			// TODO: [brjmm] define an action
-			return false;
-		case peripheral::adc::AnalogInputDevice::ACCELEREROMETER_X:
-			// TODO: [brjmm] define an action
-			return false;
-		case peripheral::adc::AnalogInputDevice::ACCELEREROMETER_Y:
-			// TODO: [brjmm] define an action
-			return false;
-		case peripheral::adc::AnalogInputDevice::ACCELEREROMETER_Z:
-			// TODO: [brjmm] define an action
+			// TODO: [brjmm] Define if this value will handler
+			// the X, Y and Z ACCELEROMETER components
 			return false;
 		case peripheral::adc::AnalogInputDevice::MICROPHONE:
 			l_u32AdcInput = ADC_INPUT_A10;
@@ -153,7 +149,7 @@ void peripheral::Adc14::SetSampleAutmaticTimer() {
 	} while (false == l_bTimerSetted);
 }
 
-void peripheral::Adc14::JustTriggerConvertion() {
+void peripheral::Adc14::TriggerSignalConvertion() {
 	ADC14_toggleConversionTrigger();
 }
 
@@ -182,7 +178,7 @@ void peripheral::Adc14::EnableAndRegisterInterrupt(
 	ADC14_registerInterrupt(i_funcInterruptHandler);
 }
 
-void peripheral::Adc14::ClearInterruptMask(void) {
+void peripheral::Adc14::ClearInterruptFlag(void) {
 	ADC14_clearInterruptFlag(this->m_uf64InterruptMask);
 }
 

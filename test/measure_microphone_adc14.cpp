@@ -31,16 +31,17 @@ void ADC14_IRQHandler(void) {
 	uint64_t l_u64Result = 0;
 
 	l_u64InterruptStatus = converter.GetInterruptStatus();
-	converter.ClearInterruptMask();
+	converter.ClearInterruptFlag();
 
 	if (l_u64InterruptStatus & converter.m_uf64InterruptMask) {
 		l_u64Result = converter.GetSimpleSampleModeResult();
 
-		if ((peripheral::adc::MaxConvertionValue::SingleEndedMode) / 2 <= l_u64Result) {
+		if ((peripheral::adc::MaxConvertionValue::SingleEndedMode) / 2 <=
+		    l_u64Result) {
 			toggleLed();
 		}
 	}
-	converter.JustTriggerConvertion();
+	converter.TriggerSignalConvertion();
 }
 
 void main(void) {
@@ -50,10 +51,11 @@ void main(void) {
 
 	// set information
 	converter.SetResolution(ADC_14BIT);
-	converter.SetAnalogMeasureDevice(peripheral::adc::AnalogInputDevice::MICROPHONE);
+	converter.SetAnalogMeasureDevice(
+	    peripheral::adc::AnalogInputDevice::MICROPHONE);
 
 	// configure work mode and memory
-	converter.ConfigureDeviceMemory(ADC_VREFPOS_AVCC_VREFNEG_VSS);
+	converter.ConfigureDevice(ADC_VREFPOS_AVCC_VREFNEG_VSS);
 	converter.SetSimpleSampleMode(false);  // no repeat
 	converter.SetSampleManualTimer();
 
