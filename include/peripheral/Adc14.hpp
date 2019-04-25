@@ -61,7 +61,7 @@ class Adc14 {
 	/**
 	 * Wait until the adc is not busy
 	 */
-	void waitForAdcModule(void);
+	void WaitForAdcModule(void);
 
 	/**
 	 * Get the interrupt mask

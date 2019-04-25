@@ -9,7 +9,7 @@ peripheral::Adc14::Adc14(peripheral::adc14::AnalogInputDevice i_eDevice)
 
 	bool l_bAdcPowered = false;
 	do {
-		waitForAdcModule();
+		this->WaitForAdcModule();
 		l_bAdcPowered = ADC14_setPowerMode(ADC_UNRESTRICTED_POWER_MODE);
 	} while (false == l_bAdcPowered);
 
@@ -18,7 +18,7 @@ peripheral::Adc14::Adc14(peripheral::adc14::AnalogInputDevice i_eDevice)
 	switch (this->m_u32AnalogMeasureDevice) {
 		case peripheral::adc14::AnalogInputDevice::MICROPHONE:
 			do {
-				waitForAdcModule();
+				this->WaitForAdcModule();
 				l_bAdcStarted = ADC14_initModule(
 				    peripheral::adc14::g_stMicrophoneAdcInitConfiguration
 				        .u32ClockSource,
@@ -56,7 +56,7 @@ peripheral::Adc14::~Adc14() {
 
 	bool l_bAdcDisabled = false;
 	do {
-		waitForAdcModule();
+		this->WaitForAdcModule();
 		l_bAdcDisabled = ADC14_disableModule();
 	} while (false == l_bAdcDisabled);
 }
@@ -73,7 +73,7 @@ void peripheral::Adc14::SetSimpleSampleMode(const bool i_bRepeat) {
 	bool l_bSampleModeSuccess = false;
 
 	do {
-		waitForAdcModule();
+		this->WaitForAdcModule();
 		l_bSampleModeSuccess =
 		    ADC14_configureSingleSampleMode(this->m_u32SimpleMemoryMap, i_bRepeat);
 	} while (false == l_bSampleModeSuccess);
@@ -107,7 +107,7 @@ bool peripheral::Adc14::ConfigureDevice() {
 			bool l_bConfigurationSuccess = false;
 
 			do {
-				waitForAdcModule();
+				this->WaitForAdcModule();
 				l_bConfigurationSuccess = ADC14_configureConversionMemory(
 				    this->m_u32SimpleMemoryMap, ADC_VREFPOS_AVCC_VREFNEG_VSS,
 				    ADC_INPUT_A10, l_bDifferentialMode);
@@ -137,7 +137,7 @@ void peripheral::Adc14::SetSampleManualTimer() {
 	bool l_bTimerSetted = false;
 
 	do {
-		waitForAdcModule();
+		this->WaitForAdcModule();
 		l_bTimerSetted = ADC14_enableSampleTimer(ADC_MANUAL_ITERATION);
 	} while (false == l_bTimerSetted);
 }
@@ -146,7 +146,7 @@ void peripheral::Adc14::SetSampleAutmaticTimer() {
 	bool l_bTimerSetted = false;
 
 	do {
-		waitForAdcModule();
+		this->WaitForAdcModule();
 		l_bTimerSetted = ADC14_enableSampleTimer(ADC_AUTOMATIC_ITERATION);
 	} while (false == l_bTimerSetted);
 }
@@ -164,7 +164,7 @@ uint_fast32_t peripheral::Adc14::GetResolution() {
 	return ADC14_getResolution();
 }
 
-void peripheral::Adc14::waitForAdcModule(void) {
+void peripheral::Adc14::WaitForAdcModule(void) {
 	static bool l_bAdcIsBusyNow = true;
 	while (l_bAdcIsBusyNow == ADC14_isBusy()) {
 	}
