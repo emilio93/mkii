@@ -9,13 +9,9 @@ peripheral::Adc14::Adc14(peripheral::adc14::AnalogInputDevice i_eDevice)
 
 	ADC14_enableModule();
 
-	bool l_bAdcPowered = false;
-	do {
-		this->WaitForAdcModule();
-		l_bAdcPowered = ADC14_setPowerMode(peripheral::ADC14_POWER_MODE);
-	} while (false == l_bAdcPowered);
-
-	bool l_bAdcStarted = false;
+	while (!ADC14_setPowerMode(peripheral::ADC14_POWER_MODE)) {
+		;
+	}
 
 	switch (this->m_u32AnalogMeasureDevice) {
 		case peripheral::adc14::AnalogInputDevice::MICROPHONE:
@@ -26,7 +22,6 @@ peripheral::Adc14::Adc14(peripheral::adc14::AnalogInputDevice i_eDevice)
 				                             peripheral::ADC14_CLOCK_DIVIDER,
 				                             peripheral::ADC14_INTERNAL_CHANNEL_MASK);
 			} while (!l_bIsInit);
-
 			break;
 		case peripheral::adc14::AnalogInputDevice::JOYSTICK:
 			// TODO
@@ -52,11 +47,9 @@ peripheral::Adc14::~Adc14() {
 		ADC14_unregisterInterrupt();
 	}
 
-	bool l_bAdcDisabled = false;
-	do {
-		this->WaitForAdcModule();
-		l_bAdcDisabled = ADC14_disableModule();
-	} while (false == l_bAdcDisabled);
+	while (!ADC14_disableModule()) {
+		;
+	}
 }
 
 void peripheral::Adc14::SetMemoryMap(uint32_t i_u32MemoryMap) {
@@ -68,13 +61,11 @@ void peripheral::Adc14::SetResolution(uint32_t i_u32Resolution) {
 }
 
 void peripheral::Adc14::SetSimpleSampleMode(const bool i_bRepeat) {
-	bool l_bSampleModeSuccess = false;
-
+	bool l_bIsSampleMode = false;
 	do {
-		this->WaitForAdcModule();
-		l_bSampleModeSuccess =
+		l_bIsSampleMode =
 		    ADC14_configureSingleSampleMode(this->m_u32SimpleMemoryMap, i_bRepeat);
-	} while (false == l_bSampleModeSuccess);
+	} while (!l_bIsSampleMode);
 }
 
 uint_fast16_t peripheral::Adc14::GetSimpleSampleModeResult() {
@@ -94,7 +85,7 @@ bool peripheral::Adc14::ConfigureDevice() {
 			const bool l_bDifferentialMode = false;
 			const bool l_bRepeatSimpleSample = false;
 
-			SetResolution(ADC_14BIT);
+			SetResolution(peripheral::ADC14_PRECISION);
 			SetInterruptMask(ADC_INT10);
 			SetMemoryMap(ADC_MEM10);
 
@@ -132,21 +123,15 @@ bool peripheral::Adc14::ConfigureDevice() {
 }
 
 void peripheral::Adc14::SetSampleManualTimer() {
-	bool l_bTimerSetted = false;
-
-	do {
-		this->WaitForAdcModule();
-		l_bTimerSetted = ADC14_enableSampleTimer(ADC_MANUAL_ITERATION);
-	} while (false == l_bTimerSetted);
+	while (!ADC14_enableSampleTimer(ADC_MANUAL_ITERATION)) {
+		;
+	}
 }
 
 void peripheral::Adc14::SetSampleAutmaticTimer() {
-	bool l_bTimerSetted = false;
-
-	do {
-		this->WaitForAdcModule();
-		l_bTimerSetted = ADC14_enableSampleTimer(ADC_AUTOMATIC_ITERATION);
-	} while (false == l_bTimerSetted);
+	while (!ADC14_enableSampleTimer(ADC_AUTOMATIC_ITERATION)) {
+		;
+	}
 }
 
 void peripheral::Adc14::TriggerSignalConversion() {
