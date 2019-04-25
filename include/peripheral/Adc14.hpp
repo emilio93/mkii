@@ -2,7 +2,11 @@
 #ifndef MKII_PERIPHERAL_ADC14_H
 #define MKII_PERIPHERAL_ADC14_H
 
+#include <cstdbool>
+
 #include "driverlib.h"
+
+#include "peripheral/GPIO.hpp"
 
 namespace peripheral {
 

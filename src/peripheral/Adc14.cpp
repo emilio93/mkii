@@ -1,9 +1,4 @@
-
-#include <stdbool.h>
-
-#include "driverlib.h"
-
-#include <peripheral/Adc14.hpp>
+#include "peripheral/Adc14.hpp"
 
 peripheral::Adc14::Adc14(peripheral::adc::AnalogInputDevice i_eDevice)
     : m_bHasInterrupt(false),
