@@ -10,7 +10,7 @@
 
 namespace peripheral {
 
-namespace adc {
+namespace adc14 {
 
 const enum MaxConvertionValue {
 	SingleEndedMode = 16384,
@@ -37,11 +37,11 @@ typedef struct {
 const AnalogDeviceAdcConfiguration g_stMicrophoneAdcInitConfiguration = {
     ADC_CLOCKSOURCE_ADCOSC, ADC_PREDIVIDER_1, ADC_DIVIDER_1, 0};
 
-}  // namespace adc
+}  // namespace adc14
 
 class Adc14 {
  public:
-	Adc14(peripheral::adc::AnalogInputDevice i_eDevice);
+	Adc14(peripheral::adc14::AnalogInputDevice i_eDevice);
 	~Adc14();
 
 	/**
@@ -143,7 +143,7 @@ class Adc14 {
 	bool m_bHasInterrupt;
 	uint32_t m_u32SimpleMemoryMap;
 	uint_fast64_t m_uf64InterruptMask;
-	peripheral::adc::AnalogInputDevice m_u32AnalogMeasureDevice;
+	peripheral::adc14::AnalogInputDevice m_u32AnalogMeasureDevice;
 
 	/**
 	 * Set the memory map.

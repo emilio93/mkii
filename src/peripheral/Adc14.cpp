@@ -1,6 +1,6 @@
 #include "peripheral/Adc14.hpp"
 
-peripheral::Adc14::Adc14(peripheral::adc::AnalogInputDevice i_eDevice)
+peripheral::Adc14::Adc14(peripheral::adc14::AnalogInputDevice i_eDevice)
     : m_bHasInterrupt(false),
       m_uf64InterruptMask(0),
       m_u32SimpleMemoryMap(0),
@@ -16,28 +16,30 @@ peripheral::Adc14::Adc14(peripheral::adc::AnalogInputDevice i_eDevice)
 	bool l_bAdcStarted = false;
 
 	switch (this->m_u32AnalogMeasureDevice) {
-		case peripheral::adc::AnalogInputDevice::NONE:
-			break;
-		case peripheral::adc::AnalogInputDevice::JOYSTICK:
-			break;
-		case peripheral::adc::AnalogInputDevice::ACCELEREROMETER:
-			break;
-		case peripheral::adc::AnalogInputDevice::MICROPHONE:
+		case peripheral::adc14::AnalogInputDevice::MICROPHONE:
 			do {
 				waitForAdcModule();
 				l_bAdcStarted = ADC14_initModule(
-				    peripheral::adc::g_stMicrophoneAdcInitConfiguration.u32ClockSource,
-				    peripheral::adc::g_stMicrophoneAdcInitConfiguration
+				    peripheral::adc14::g_stMicrophoneAdcInitConfiguration
+				        .u32ClockSource,
+				    peripheral::adc14::g_stMicrophoneAdcInitConfiguration
 				        .u32ClockPreDivider,
-				    peripheral::adc::g_stMicrophoneAdcInitConfiguration.u32ClockDivider,
-				    peripheral::adc::g_stMicrophoneAdcInitConfiguration
+				    peripheral::adc14::g_stMicrophoneAdcInitConfiguration
+				        .u32ClockDivider,
+				    peripheral::adc14::g_stMicrophoneAdcInitConfiguration
 				        .u32InternalChannelMask);
 			} while (false == l_bAdcStarted);
 			break;
-		case peripheral::adc::AnalogInputDevice::TEMP_SENSOR:
-			break;
-		case peripheral::adc::AnalogInputDevice::AMBIENT_LIGHT:
-			break;
+		case peripheral::adc14::AnalogInputDevice::JOYSTICK:
+			// TODO
+		case peripheral::adc14::AnalogInputDevice::ACCELEREROMETER:
+			// TODO
+		case peripheral::adc14::AnalogInputDevice::TEMP_SENSOR:
+			// TODO
+		case peripheral::adc14::AnalogInputDevice::AMBIENT_LIGHT:
+			// TODO
+		case peripheral::adc14::AnalogInputDevice::NONE:
+			// TODO
 		default:
 			break;
 	}
@@ -83,28 +85,14 @@ uint_fast16_t peripheral::Adc14::GetSimpleSampleModeResult() {
 
 bool peripheral::Adc14::ConfigureDevice() {
 	if (!this->m_u32AnalogMeasureDevice ||
-	    peripheral::adc::AnalogInputDevice::NONE ==
+	    peripheral::adc14::AnalogInputDevice::NONE ==
 	        this->m_u32AnalogMeasureDevice) {
 		return false;
 	}
 
 	switch (this->m_u32AnalogMeasureDevice) {
-		case peripheral::adc::AnalogInputDevice::NONE:
-			return false;
-		case peripheral::adc::AnalogInputDevice::JOYSTICK:
-			// TODO: [brjmm] define an action
-			// TODO: [brjmm] Define if this value will handler
-			// the VERT_Y and HOR_X JOYSTICK components
-			return false;
-		case peripheral::adc::AnalogInputDevice::ACCELEREROMETER:
-			// TODO: [brjmm] define an action
-			// TODO: [brjmm] Define if this value will handler
-			// the X, Y and Z ACCELEROMETER components
-			return false;
-		case peripheral::adc::AnalogInputDevice::MICROPHONE:
-			// TODO: [brjmm] adc should take measurement each ~1s
-
-			// microphone is a single input
+		case peripheral::adc14::AnalogInputDevice::MICROPHONE:
+			// TODO
 			const bool l_bDifferentialMode = false;
 			const bool l_bRepeatSimpleSample = false;
 
@@ -129,12 +117,16 @@ bool peripheral::Adc14::ConfigureDevice() {
 			SetSampleManualTimer();
 
 			break;
-		case peripheral::adc::AnalogInputDevice::TEMP_SENSOR:
-			// TODO: [brjmm] define an action
-			return false;
-		case peripheral::adc::AnalogInputDevice::AMBIENT_LIGHT:
-			// TODO: [brjmm] define an action
-			return false;
+		case peripheral::adc14::AnalogInputDevice::JOYSTICK:
+			// TODO
+		case peripheral::adc14::AnalogInputDevice::ACCELEREROMETER:
+			// TODO
+		case peripheral::adc14::AnalogInputDevice::TEMP_SENSOR:
+			// TODO
+		case peripheral::adc14::AnalogInputDevice::AMBIENT_LIGHT:
+			// TODO
+		case peripheral::adc14::AnalogInputDevice::NONE:
+			// TODO
 		default:
 			return false;
 	}

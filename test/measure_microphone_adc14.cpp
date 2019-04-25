@@ -9,7 +9,7 @@
 #define LUNAV_LED_PIN GPIO_PIN0
 #define LUNAV_LED_PORT GPIO_PORT_P1
 
-peripheral::Adc14 converter(peripheral::adc::AnalogInputDevice::MICROPHONE);
+peripheral::Adc14 converter(peripheral::adc14::AnalogInputDevice::MICROPHONE);
 
 void initLed(void) {
 	MAP_GPIO_setAsOutputPin((uint_fast8_t)LUNAV_LED_PORT,
@@ -35,7 +35,7 @@ void ADC14_IRQHandler(void) {
 	if (l_u64InterruptStatus & converter.GetInterruptMask()) {
 		l_u64Result = converter.GetSimpleSampleModeResult();
 
-		if ((peripheral::adc::MaxConvertionValue::SingleEndedMode) / 2 <=
+		if ((peripheral::adc14::MaxConvertionValue::SingleEndedMode) / 2 <=
 		    l_u64Result) {
 			toggleLed();
 		}
