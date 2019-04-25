@@ -19,18 +19,14 @@ peripheral::Adc14::Adc14(peripheral::adc14::AnalogInputDevice i_eDevice)
 
 	switch (this->m_u32AnalogMeasureDevice) {
 		case peripheral::adc14::AnalogInputDevice::MICROPHONE:
+			bool l_bIsInit = false;
 			do {
-				this->WaitForAdcModule();
-				l_bAdcStarted = ADC14_initModule(
-				    peripheral::adc14::g_stMicrophoneAdcInitConfiguration
-				        .u32ClockSource,
-				    peripheral::adc14::g_stMicrophoneAdcInitConfiguration
-				        .u32ClockPreDivider,
-				    peripheral::adc14::g_stMicrophoneAdcInitConfiguration
-				        .u32ClockDivider,
-				    peripheral::adc14::g_stMicrophoneAdcInitConfiguration
-				        .u32InternalChannelMask);
-			} while (false == l_bAdcStarted);
+				l_bIsInit = ADC14_initModule(peripheral::ADC14_CLOCK_SOURCE,
+				                             peripheral::adc14_CLOCK_PRE_DIVIDER,
+				                             peripheral::ADC14_CLOCK_DIVIDER,
+				                             peripheral::ADC14_INTERNAL_CHANNEL_MASK);
+			} while (!l_bIsInit);
+
 			break;
 		case peripheral::adc14::AnalogInputDevice::JOYSTICK:
 			// TODO

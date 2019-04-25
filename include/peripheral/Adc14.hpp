@@ -34,18 +34,6 @@ enum AnalogInputDevice {
 	TEMP_SENSOR,
 	AMBIENT_LIGHT
 };
-
-typedef struct {
-	uint32_t u32ClockSource;
-	uint32_t u32ClockPreDivider;
-	uint32_t u32ClockDivider;
-	uint32_t u32InternalChannelMask;
-} AnalogDeviceAdcConfiguration;
-
-// TODO: [brjmm] adc should take measurement each ~1s
-const AnalogDeviceAdcConfiguration g_stMicrophoneAdcInitConfiguration = {
-    ADC_CLOCKSOURCE_ADCOSC, ADC_PREDIVIDER_1, ADC_DIVIDER_1, 0};
-
 }  // namespace adc14
 
 /**
@@ -75,6 +63,26 @@ const peripheral::adc14::Precision ADC14_PRECISION =
  */
 const peripheral::adc14::PowerMode ADC14_POWER_MODE =
     peripheral::adc14::PowerMode::UNRESTRICTED;
+
+/**
+ * Default ADC14 clock source.
+ */
+const uint32_t ADC14_CLOCK_SOURCE = ADC_CLOCKSOURCE_ADCOSC;
+
+/**
+ * Default ADC14 predivider.
+ */
+const uint32_t adc14_CLOCK_PRE_DIVIDER = ADC_PREDIVIDER_1;
+
+/**
+ * Default ADC14 divider.
+ */
+const uint32_t ADC14_CLOCK_DIVIDER = ADC_DIVIDER_1;
+
+/**
+ * Default ADC14 channel mask.
+ */
+const uint32_t ADC14_INTERNAL_CHANNEL_MASK = 0;
 
 class Adc14 {
  public:
