@@ -5,12 +5,14 @@ peripheral::Adc14::Adc14(peripheral::adc14::AnalogInputDevice i_eDevice)
       m_uf64InterruptMask(0),
       m_u32SimpleMemoryMap(0),
       m_u32AnalogMeasureDevice(i_eDevice) {
+	this->m_pGPIO = new GPIO(peripheral::ADC14_PORT, peripheral::ADC14_PIN);
+
 	ADC14_enableModule();
 
 	bool l_bAdcPowered = false;
 	do {
 		this->WaitForAdcModule();
-		l_bAdcPowered = ADC14_setPowerMode(ADC_UNRESTRICTED_POWER_MODE);
+		l_bAdcPowered = ADC14_setPowerMode(peripheral::ADC14_POWER_MODE);
 	} while (false == l_bAdcPowered);
 
 	bool l_bAdcStarted = false;
@@ -100,8 +102,8 @@ bool peripheral::Adc14::ConfigureDevice() {
 			SetInterruptMask(ADC_INT10);
 			SetMemoryMap(ADC_MEM10);
 
-			MAP_GPIO_setAsPeripheralModuleFunctionInputPin(
-			    GPIO_PORT_P4, GPIO_PIN3, GPIO_TERTIARY_MODULE_FUNCTION);
+			this->m_pGPIO->SetAsPeripheralModuleFunctionInput(
+			    peripheral::ADC14_MODULE_FUNCTION);
 
 			// configure memory map to adc save result in
 			bool l_bConfigurationSuccess = false;

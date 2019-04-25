@@ -25,10 +25,8 @@ enum Precision {
 };
 
 enum PowerMode {
-	UNRESTRICTED = (0x00000001),  // PWRMD Bit 0
-	ULTRA_LOW = (0x00000002),     // PWRMD Bit 1
-	REGULAR =
-	    (0x00000000)  // Regular power mode for use with any resolution setting
+	ULTRA_LOW = (0x00000002),
+	UNRESTRICTED = (0x00000000)
 };
 
 enum AnalogInputDevice {
@@ -52,6 +50,34 @@ const AnalogDeviceAdcConfiguration g_stMicrophoneAdcInitConfiguration = {
     ADC_CLOCKSOURCE_ADCOSC, ADC_PREDIVIDER_1, ADC_DIVIDER_1, 0};
 
 }  // namespace adc14
+
+/**
+ * Default ADC14 gpio port.
+ */
+const peripheral::gpio::Port ADC14_PORT = peripheral::gpio::Port::PORT4;
+
+/**
+ * Default ADC14 gpio pin.
+ */
+const peripheral::gpio::Pin ADC14_PIN = peripheral::gpio::Pin::PIN3;
+
+/**
+ * Default ADC14 module function.
+ */
+const peripheral::gpio::ModuleFunction ADC14_MODULE_FUNCTION =
+    peripheral::gpio::ModuleFunction::TERTIARY;
+
+/**
+ * Default ADC14 presicion.
+ */
+const peripheral::adc14::Precision ADC14_PRECISION =
+        peripheral::adc14::Precision::P14BIT;
+
+/**
+ * Default ADC14 power mode.
+ */
+const peripheral::adc14::PowerMode ADC14_POWER_MODE =
+    peripheral::adc14::PowerMode::UNRESTRICTED;
 
 class Adc14 {
  public:
@@ -154,6 +180,8 @@ class Adc14 {
 	uint_fast64_t GetInterruptStatus(void);
 
  private:
+	peripheral::GPIO* m_pGPIO;
+
 	bool m_bHasInterrupt;
 	uint32_t m_u32SimpleMemoryMap;
 	uint_fast64_t m_uf64InterruptMask;
