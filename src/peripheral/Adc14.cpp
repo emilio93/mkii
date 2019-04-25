@@ -163,8 +163,8 @@ uint_fast32_t peripheral::Adc14::GetResolution() {
 }
 
 void peripheral::Adc14::WaitForAdcModule(void) {
-	static bool l_bAdcIsBusyNow = true;
-	while (l_bAdcIsBusyNow == ADC14_isBusy()) {
+	while (ADC14_isBusy()) {
+		;
 	}
 }
 
