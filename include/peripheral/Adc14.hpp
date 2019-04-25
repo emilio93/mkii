@@ -53,7 +53,7 @@ const peripheral::gpio::ModuleFunction ADC14_MODULE_FUNCTION =
     peripheral::gpio::ModuleFunction::TERTIARY;
 
 /**
- * Default ADC14 presicion.
+ * Default ADC14 precision.
  */
 const peripheral::adc14::Precision ADC14_PRECISION =
     peripheral::adc14::Precision::P14BIT;
@@ -90,7 +90,7 @@ class Adc14 {
 	~Adc14();
 
 	/**
-	 * Wait until the adc is not busy
+	 * Wait until the adc is not busy.
 	 */
 	void WaitForAdcModule(void);
 
