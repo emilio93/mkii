@@ -49,8 +49,8 @@ void peripheral::GPIO::SetAsPeripheralModuleFunctionOutput() {
 }
 
 void peripheral::GPIO::SetAsPeripheralModuleFunctionInput(uint8_t i_u8Mode) {
-	GPIO_setAsPeripheralModuleFunctionInputPin(this->GetPort(),
-	                                           this->GetPin(), i_u8Mode);
+	GPIO_setAsPeripheralModuleFunctionInputPin(this->GetPort(), this->GetPin(),
+	                                           i_u8Mode);
 }
 
 void peripheral::GPIO::SetAsInputWithPullDownResistor() {

@@ -24,10 +24,7 @@ enum Precision {
 	P14BIT = (0x00000030)   // 14 bit (16 clock cycle conversion time)
 };
 
-enum PowerMode {
-	ULTRA_LOW = (0x00000002),
-	UNRESTRICTED = (0x00000000)
-};
+enum PowerMode { ULTRA_LOW = (0x00000002), UNRESTRICTED = (0x00000000) };
 
 enum AnalogInputDevice {
 	NONE,
@@ -71,7 +68,7 @@ const peripheral::gpio::ModuleFunction ADC14_MODULE_FUNCTION =
  * Default ADC14 presicion.
  */
 const peripheral::adc14::Precision ADC14_PRECISION =
-        peripheral::adc14::Precision::P14BIT;
+    peripheral::adc14::Precision::P14BIT;
 
 /**
  * Default ADC14 power mode.
