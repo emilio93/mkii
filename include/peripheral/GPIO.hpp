@@ -46,6 +46,10 @@ enum Port {
 };
 
 /**
+ * Available module functions. Copied values from driverlib for ease of access.
+ */
+enum ModuleFunction { PRIMARY = (0x01), SECONDARY = (0x02), TERTIARY = (0x03) };
+/**
  * Available GPIO pins. Copied values from driverlib for ease of access.
  */
 enum Pin {
@@ -124,7 +128,19 @@ class GPIO {
 	void SetAsInput();
 
 	/**
-	 * Set given GPIO as input pin with pull down resistor.
+	 * @TODO [emilio]
+	 */
+	void SetAsPeripheralModuleFunctionOutput();
+
+	/**
+	 * @TODO [emilio]
+	 */
+	void SetAsPeripheralModuleFunctionInput(uint8_t i_u8Mode);
+
+	/**
+	 * @breif
+	 *
+	 * @TODO [emilio]
 	 */
 	void SetAsInputWithPullDownResistor();
 
@@ -167,6 +183,10 @@ class GPIO {
 	 * @TODO [emilio] Not in use.
 	 */
 	void SetDriveStrengthLow();
+
+	/******************
+	 * STATIC FUNCTIONS
+	 ******************/
 
 	/**
 	 * @TODO [emilio] Not in use.

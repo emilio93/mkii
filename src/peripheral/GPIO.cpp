@@ -43,6 +43,15 @@ void peripheral::GPIO::SetAsOutput() {
 	GPIO_setAsOutputPin(this->m_u8Port, this->m_u32Pin);
 }
 
+void peripheral::GPIO::SetAsPeripheralModuleFunctionOutput() {
+	// TODO [emilio]
+}
+
+void peripheral::GPIO::SetAsPeripheralModuleFunctionInput(uint8_t i_u8Mode) {
+	GPIO_setAsPeripheralModuleFunctionInputPin(this->GetPort(), this->GetPin(),
+	                                           i_u8Mode);
+}
+
 void peripheral::GPIO::SetAsInputWithPullDownResistor() {
 	GPIO_setAsInputPinWithPullDownResistor(this->GetPort(), this->GetPin());
 }
