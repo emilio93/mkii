@@ -74,17 +74,17 @@ class Adc14 {
 	 * Set the adc resolution. Available options:
 	 * 	 ADC_8BIT, ADC_10BIT, ADC_12BIT, ADC_14BIT
 	 *
-	 * @param i_u32Resolution The adc convertion resolution.
+	 * @param i_u32Resolution The adc  resolution.
 	 */
 	void SetResolution(const uint32_t i_u32Resolution);
 
 	/**
 	 * Configure the adc to use a simple memory location for the
-	 * convertion/sample. The memory used is m_u32SimpleMemoryMap
+	 * conversion/sample. The memory used is m_u32SimpleMemoryMap
 	 * member
 	 *
-	 * @param i_bRepeat Indicates if repeat the convertion/sample
-	 *	after the first sample/convertion
+	 * @param i_bRepeat Indicates if repeat the conversion/sample
+	 * after the first sample/conversion
 	 */
 	void SetSimpleSampleMode(const bool i_bRepeat);
 
@@ -103,37 +103,37 @@ class Adc14 {
 	bool ConfigureDevice();
 
 	/**
-	 * Set the convertion timer in manual mode. The user has to trigger
-	 * the convertion signal after aeach converion/sample using
-	 * EnableAndTriggerConvertion or TriggerSignalConvertion.
+	 * Set the conversion timer in manual mode. The user has to trigger
+	 * the conversion signal after aeach converion/sample using
+	 * EnableAndTriggerConversion or TriggerSignalConversion.
 	 */
 	void SetSampleManualTimer(void);
 
 	/**
-	 * Set the convertion timer in automatic mode. After every the adc
+	 * Set the conversion timer in automatic mode. After every the adc
 	 * will automatically continue with the next sample
 	 */
 	void SetSampleAutmaticTimer(void);
 
 	/**
-	 * Trigger the convertion signal and start the next covertion/sample.
+	 * Trigger the conversion signal and start the next covertion/sample.
 	 */
-	void TriggerSignalConvertion(void);
+	void TriggerSignalConversion(void);
 
 	/**
-	 * Enable convertion and start with the first convertion/sample
+	 * Enable conversion and start with the first conversion/sample
 	 */
-	void EnableAndTriggerConvertion(void);
+	void EnableAndTriggerConversion(void);
 
 	/**
-	 * Get the adc convertion resolution
+	 * Get the adc conversion resolution
 	 *
 	 * @return Adc resolution
 	 */
 	uint_fast32_t GetResolution(void);
 
 	/**
-	 * Enable convertion and start with the first convertion/sample
+	 * Enable conversion and start with the first conversion/sample
 	 *
 	 * @param i_funcInterruptHandler Function to handler the interruption
 	 */

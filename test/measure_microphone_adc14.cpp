@@ -40,7 +40,7 @@ void ADC14_IRQHandler(void) {
 			toggleLed();
 		}
 	}
-	converter.TriggerSignalConvertion();
+	converter.TriggerSignalConversion();
 }
 
 void main(void) {
@@ -49,7 +49,7 @@ void main(void) {
 	setLedHigh();
 
 	converter.ConfigureDevice();
-	converter.EnableAndTriggerConvertion();
+	converter.EnableAndTriggerConversion();
 	converter.EnableAndRegisterInterrupt(ADC14_IRQHandler);
 
 	while (true) {

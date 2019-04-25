@@ -151,13 +151,13 @@ void peripheral::Adc14::SetSampleAutmaticTimer() {
 	} while (false == l_bTimerSetted);
 }
 
-void peripheral::Adc14::TriggerSignalConvertion() {
+void peripheral::Adc14::TriggerSignalConversion() {
 	ADC14_toggleConversionTrigger();
 }
 
-void peripheral::Adc14::EnableAndTriggerConvertion() {
+void peripheral::Adc14::EnableAndTriggerConversion() {
 	ADC14_enableConversion();
-	TriggerSignalConvertion();
+	TriggerSignalConversion();
 }
 
 uint_fast32_t peripheral::Adc14::GetResolution() {
