@@ -35,7 +35,7 @@ void ADC14_IRQHandler(void) {
 	if (l_u64InterruptStatus & converter.GetInterruptMask()) {
 		l_u64Result = converter.GetSimpleSampleModeResult();
 
-		if ((peripheral::adc14::MaxConvertionValue::SingleEndedMode) / 2 <=
+		if ((peripheral::adc14::MaxConversionValue::SINGLE_ENDED_MODE) / 2 <=
 		    l_u64Result) {
 			toggleLed();
 		}

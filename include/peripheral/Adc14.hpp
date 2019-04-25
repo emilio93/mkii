@@ -12,12 +12,26 @@ namespace peripheral {
 
 namespace adc14 {
 
-const enum MaxConvertionValue {
-	SingleEndedMode = 16384,
-	DifferentialMode = 8192
+enum MaxConversionValue {
+	SINGLE_ENDED_MODE = 0X4000,
+	DIFFERENTIAL_MODE = 0X2000
 };
 
-const enum AnalogInputDevice {
+enum Precision {
+	P8BIT = (0x00000000),   // 8 bit (9 clock cycle conversion time)
+	P10BIT = (0x00000010),  // 10 bit (11 clock cycle conversion time)
+	P12BIT = (0x00000020),  // 12 bit (14 clock cycle conversion time)
+	P14BIT = (0x00000030)   // 14 bit (16 clock cycle conversion time)
+};
+
+enum PowerMode {
+	UNRESTRICTED = (0x00000001),  // PWRMD Bit 0
+	ULTRA_LOW = (0x00000002),     // PWRMD Bit 1
+	REGULAR =
+	    (0x00000000)  // Regular power mode for use with any resolution setting
+};
+
+enum AnalogInputDevice {
 	NONE,
 	JOYSTICK,
 	ACCELEREROMETER,
