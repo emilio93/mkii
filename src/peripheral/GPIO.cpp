@@ -6,7 +6,9 @@ peripheral::GPIO::GPIO(uint8_t i_u8Port, uint32_t i_u32Pin) {
 }
 
 peripheral::GPIO::GPIO(uint8_t i_u8Port, uint32_t i_u32Pin,
-                       peripheral::gpio::Mode i_eMode) {
+                       peripheral::gpio::Mode i_eMode,
+                       peripheral::gpio::ModuleFunction i_eModuleFunction =
+                           peripheral::gpio::ModuleFunction::PRIMARY) {
 	peripheral::GPIO(i_u8Port, i_u32Pin);
 	switch (i_eMode) {
 		case peripheral::gpio::Mode::INPUT:
@@ -22,8 +24,10 @@ peripheral::GPIO::GPIO(uint8_t i_u8Port, uint32_t i_u32Pin,
 			this->SetAsInputWithPullUpResistor();
 			break;
 		case peripheral::gpio::Mode::PERIPHERAL_MODULE_FUNCTION_INPUT:
+			this->SetAsPeripheralModuleFunctionInput(i_eModuleFunction);
 			break;
 		case peripheral::gpio::Mode::PERIPHERAL_MODULE_FUNCTION_OUTPUT:
+			this->SetAsPeripheralModuleFunctionOutput(i_eModuleFunction);
 			break;
 		case peripheral::gpio::Mode::NONE:
 		default:
@@ -43,8 +47,9 @@ void peripheral::GPIO::SetAsOutput() {
 	GPIO_setAsOutputPin(this->m_u8Port, this->m_u32Pin);
 }
 
-void peripheral::GPIO::SetAsPeripheralModuleFunctionOutput() {
-	// TODO [emilio]
+void peripheral::GPIO::SetAsPeripheralModuleFunctionOutput(uint8_t i_u8Mode) {
+	GPIO_setAsPeripheralModuleFunctionOutputPin(this->GetPort(), this->GetPin(),
+	                                            i_u8Mode);
 }
 
 void peripheral::GPIO::SetAsPeripheralModuleFunctionInput(uint8_t i_u8Mode) {

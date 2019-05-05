@@ -101,7 +101,8 @@ class GPIO {
 	 * @param i_u32Pin The GPIO's Pin.
 	 * @param i_eMode The GPIO mode.
 	 */
-	GPIO(uint8_t i_u8Port, uint32_t i_u32Pin, peripheral::gpio::Mode i_eMode);
+	GPIO(uint8_t i_u8Port, uint32_t i_u32Pin, peripheral::gpio::Mode i_eMode,
+	     peripheral::gpio::ModuleFunction i_eModuleFunction);
 
 	/**
 	 * Obtain the GPIO's Port.
@@ -130,7 +131,7 @@ class GPIO {
 	/**
 	 * @TODO [emilio]
 	 */
-	void SetAsPeripheralModuleFunctionOutput();
+	void SetAsPeripheralModuleFunctionOutput(uint8_t i_u8Mode);
 
 	/**
 	 * @TODO [emilio]
