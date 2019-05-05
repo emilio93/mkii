@@ -38,8 +38,8 @@ void mkii::event::Blink::Init() {
 		// Current behaviour is to not execute blink.
 		return;
 	}
-	if (mkii::event::Blink::m_u32StaticBlinkCount == 0 ||
-	    mkii::event::Blink::m_u32StaticTimerCount == 0) {
+	if (this->m_u32BlinkCount == 0 ||
+	    this->m_u32TimerCount == 0) {
 		return;
 	}
 
