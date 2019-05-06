@@ -39,6 +39,9 @@ class OPT3001 {
 
  private:
 	peripheral::opt3001::I2C* m_pI2C;
+
+	unsigned int ReadReg(uint16_t i_u16Reg);
+	void WriteReg(uint16_t i_u16Reg, unsigned int i_uValue);
 };
 
 }  // namespace peripheral
