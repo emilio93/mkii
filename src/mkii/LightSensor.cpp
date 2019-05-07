@@ -7,5 +7,5 @@ mkii::LightSensor::LightSensor() {
 float mkii::LightSensor::GetLux() { return this->m_pOPT3001->GetLux(); }
 
 peripheral::OPT3001* mkii::LightSensor::GetOPT3001() {
-	return 	this->m_pOPT3001;
+	return this->m_pOPT3001;
 }

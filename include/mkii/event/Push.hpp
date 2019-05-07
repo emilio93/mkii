@@ -78,7 +78,6 @@ class Push : public mkii::IEvent {
 	virtual void End();
 
  private:
-
 	/**
 	 * Singleton instance of the Push Event.
 	 */

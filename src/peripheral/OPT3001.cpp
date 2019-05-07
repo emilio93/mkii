@@ -9,7 +9,7 @@ void peripheral::OPT3001::Init() {
 	this->GetI2C()->Init();
 
 	this->WriteReg(peripheral::opt3001::CONFIG_REG,
-	                        peripheral::opt3001::DEFAULT_CONFIG_100);
+	               peripheral::opt3001::DEFAULT_CONFIG_100);
 }
 
 unsigned int peripheral::OPT3001::ReadManufacturerId() {
