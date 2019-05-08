@@ -162,6 +162,8 @@ class LedTimeout : public mkii::IEvent {
 	 */
 	static bool m_bStaticIsTimeoutOn;
 
+	static bool m_bStaticIsInterruptOn;
+
 	/**
 	 * @brief Construct a new LedTimeout object and asign it's parameters.
 	 *

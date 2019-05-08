@@ -7,6 +7,7 @@ mkii::Timer* mkii::event::LedTimeout::m_pStaticTimer = NULL;
 
 uint32_t mkii::event::LedTimeout::m_u32StaticTimerCount = 0;
 bool mkii::event::LedTimeout::m_bStaticIsTimeoutOn = false;
+bool mkii::event::LedTimeout::m_bStaticIsInterruptOn = false;
 
 /******************************************************************************
  * GET LED TIMEOUT                                                            *
@@ -54,32 +55,19 @@ void mkii::event::LedTimeout::Init(void) {
 	mkii::event::LedTimeout::m_pStaticTimer = this->GetTimer();
 	mkii::event::LedTimeout::m_u32StaticTimerCount = this->GetTimerCount();
 
-	// clean interrupt systems
-	mkii::event::LedTimeout::m_pStaticTimer->EndInterrupt();
-	mkii::event::LedTimeout::m_pStaticLed->EndInterrupt();
-
 	// lock event as it is ongoing from now on
 	mkii::event::LedTimeout::m_bStaticIsTimeoutOn = true;
+	mkii::event::LedTimeout::m_bStaticIsInterruptOn = false;
 
-	// set led interrupt
-	mkii::event::LedTimeout::m_pStaticLed->SetInterruptDirection(
-	    peripheral::gpio::Edge::HIGH_TO_LOW_TRANSITION);
-	mkii::event::LedTimeout::m_pStaticLed->SetInterrupt(
-	    mkii::event::LedTimeout::HandlerCaller);
-
-	// set timer interrupt
-	mkii::event::LedTimeout::m_pStaticTimer->SetCounter(
-	    mkii::event::LedTimeout::m_u32StaticTimerCount);
-	mkii::event::LedTimeout::m_pStaticTimer->SetInterrupt(
-	    mkii::event::LedTimeout::HandlerCaller);
-	return;
+	mkii::event::LedTimeout::HandlerCaller();
 }
 
 /******************************************************************************
  * HANDLER CALLER                                                             *
  ******************************************************************************/
 void mkii::event::LedTimeout::HandlerCaller(void) {
-	if (mkii::event::LedTimeout::GetLedTimeout() == NULL) {
+	if (mkii::event::LedTimeout::GetLedTimeout() == NULL ||
+	    !mkii::event::LedTimeout::m_bStaticIsTimeoutOn) {
 		return;
 	}
 	mkii::event::LedTimeout::GetLedTimeout()->Handler();
@@ -89,29 +77,26 @@ void mkii::event::LedTimeout::HandlerCaller(void) {
  * HANDLER                                                                    *
  ******************************************************************************/
 void mkii::event::LedTimeout::Handler(void) {
-	if (!mkii::event::LedTimeout::m_bStaticIsTimeoutOn) {
-		return;
+	if (mkii::event::LedTimeout::m_bStaticIsTimeoutOn) {
+		if (!mkii::event::LedTimeout::m_bStaticIsInterruptOn) {
+			// set timer interrupt
+			mkii::event::LedTimeout::m_pStaticTimer->SetCounter(
+			    this->GetTimerCount());
+			mkii::event::LedTimeout::m_pStaticTimer->SetInterrupt(
+			    mkii::event::LedTimeout::HandlerCaller);
+			mkii::event::LedTimeout::m_bStaticIsInterruptOn = true;
+		} else {
+			mkii::event::LedTimeout::GetLedTimeout()->End();
+		}
 	}
-	if (mkii::event::LedTimeout::GetLedTimeout() == NULL) {
-		return;
-	}
-	mkii::event::LedTimeout::GetLedTimeout()->End();
 }
 
 /******************************************************************************
  * END                                                                        *
  ******************************************************************************/
 void mkii::event::LedTimeout::End(void) {
-	// clean interrupt system for timer
 	mkii::event::LedTimeout::m_pStaticTimer->EndInterrupt();
-
-	// clean interrupt system for led
-	mkii::event::LedTimeout::m_pStaticLed->EndInterrupt();
-
-	// turn led off
-	mkii::event::LedTimeout::m_pLed->SetState(false);
-
-	// set timeout event ongoin flag low
+	mkii::event::LedTimeout::m_pStaticLed->SetState(false);
 	mkii::event::LedTimeout::m_bStaticIsTimeoutOn = false;
 }
 
