@@ -166,7 +166,7 @@ class Adc14 {
 	/**
 	 * Enable conversion and start with the first conversion/sample
 	 *
-	 * @param i_funcInterruptHandler Function to handler the interruption
+	 * @param i_funcInterruptHandler Function to handler the interrupt
 	 */
 	void EnableAndRegisterInterrupt(void (*i_funcInterruptHandler)(void) = 0);
 

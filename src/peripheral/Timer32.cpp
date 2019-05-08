@@ -13,7 +13,7 @@ peripheral::Timer32::Timer32(mkii_timer32 i_mkiiTimer, uint32_t i_u32PreScaler,
 peripheral::Timer32::~Timer32() {
 	Timer32_haltTimer(this->m_mkiiTimer);
 	if (this->m_bHasInterrupt) {
-		this->RegisterInterrupt(false);  // unregister the interruption
+		this->RegisterInterrupt(false);  // unregister the interrupt
 	}
 }
 

@@ -17,18 +17,18 @@ class Timer32 {
 	uint32_t GetCurrentValue();
 
 	/**
-	 * Enables the timer interruption
+	 * Enables the timer interrupt
 	 * @param i_bEnable Defines whether interrupt is enabled(true) or
 	 * disabled(false).
 	 */
 	void EnableInterrupt(const bool i_bEnable);
 
 	/**
-	 * Register the timer interruption
+	 * Register the timer interrupt
 	 * @param i_bRegister Defines whether interrupt is register(true) or
 	 * unregister(false).
 	 * @param i_funcInterruptHandler Function of the interrupt vector to handler
-	 * the interruption
+	 * the interrupt
 	 */
 	void RegisterInterrupt(const bool i_bRegister,
 	                       void (*i_funcInterruptHandler)(void) = 0);

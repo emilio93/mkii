@@ -33,7 +33,7 @@ class Timer {
 	void SetCounter(uint32_t i_u32TimerCount);
 
 	/**
-	 * Set and enable an interrupt handler and start timer.
+	 * Set and enable an interrupt handler.
 	 */
 	void SetInterrupt(void (*i_funcHandler)(void));
 

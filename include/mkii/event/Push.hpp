@@ -51,7 +51,7 @@ class Push : public mkii::IEvent {
 	virtual void Init();
 
 	/**
-	 * Manages an interruption. Toggles the Led.
+	 * Manages an interrupt. Toggles the Led.
 	 */
 	virtual void Handler();
 

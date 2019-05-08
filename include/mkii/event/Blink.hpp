@@ -50,7 +50,7 @@ class Blink : public mkii::IEvent {
 	                                    mkii::Led* i_pBlinkLed);
 
 	/**
-	 * Set up the Event and enable the interruption.
+	 * Set up the Event and enable the interrupt.
 	 * Assigns object properties to the static variables.
 	 */
 	virtual void Init(void);
