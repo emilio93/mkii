@@ -63,6 +63,13 @@ class Led {
 	 */
 	bool IsBlinking();
 
+	/**
+	 * Get the OutputGPIO object.
+	 *
+	 * @return peripheral::gpio::OutputGPIO* The OuptutGPIO object for the Led.
+	 */
+	peripheral::gpio::OutputGPIO* GetOutputGPIO(void);
+
  private:
 	/**
 	 * GPIO of the Led.

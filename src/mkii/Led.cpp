@@ -6,12 +6,12 @@ mkii::Led::Led() {
 }
 
 void mkii::Led::SetState(bool i_bState) {
-	this->m_pLedGPIO->SetOutput(i_bState);
+	this->GetOutputGPIO()->SetOutput(i_bState);
 }
 
-bool mkii::Led::GetState(void) { return this->m_pLedGPIO->GetOutput(); }
+bool mkii::Led::GetState(void) { return this->GetOutputGPIO()->GetOutput(); }
 
-void mkii::Led::Toggle() { this->m_pLedGPIO->Toggle(); }
+void mkii::Led::Toggle() { this->GetOutputGPIO()->Toggle(); }
 
 bool mkii::Led::IsBlinking() {
 	if (mkii::event::Blink::GetBlink() == NULL) {
@@ -26,4 +26,8 @@ void mkii::Led::Blink(uint32_t i_u32BlinkCount, uint32_t i_u32TimerCount,
 	mkii::event::Blink::GetBlink(i_u32BlinkCount, i_u32TimerCount, i_pTimer32,
 	                             this)
 	    ->Init();
+}
+
+peripheral::gpio::OutputGPIO* mkii::Led::GetOutputGPIO() {
+	return this->m_pLedGPIO;
 }
