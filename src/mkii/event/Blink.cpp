@@ -32,6 +32,9 @@ mkii::event::Blink* mkii::event::Blink::GetBlink(uint32_t i_u32BlinkCount,
 	return mkii::event::Blink::m_pInstance;
 }
 
+/******************************************************************************
+ * INIT                                                                       *
+ ******************************************************************************/
 void mkii::event::Blink::Init() {
 	if (mkii::event::Blink::m_bStaticIsBlinking) {
 		// Another blink is in course.
@@ -61,15 +64,16 @@ bool mkii::event::Blink::IsBlinking(void) {
 	return mkii::event::Blink::m_bStaticIsBlinking;
 }
 
+/******************************************************************************
+ * HANDLER CALLER                                                             *
+ ******************************************************************************/
 void mkii::event::Blink::HandlerCaller(void) {
 	mkii::event::Blink::GetBlink()->Handler();
 }
 
-void mkii::event::Blink::End(void) {
-	mkii::event::Blink::m_pStaticBlinkTimer->EndInterrupt();
-	mkii::event::Blink::m_bStaticIsBlinking = false;
-}
-
+/******************************************************************************
+ * HANDLER                                                                    *
+ ******************************************************************************/
 void mkii::event::Blink::Handler(void) {
 	if (mkii::event::Blink::m_bStaticIsBlinking) {
 		if (mkii::event::Blink::m_u32StaticBlinkCount <= 0 &&
@@ -104,6 +108,14 @@ void mkii::event::Blink::Handler(void) {
 		// Shouldn't be blinking then
 		return;
 	}
+}
+
+/******************************************************************************
+ * END                                                                        *
+ ******************************************************************************/
+void mkii::event::Blink::End(void) {
+	mkii::event::Blink::m_pStaticBlinkTimer->EndInterrupt();
+	mkii::event::Blink::m_bStaticIsBlinking = false;
 }
 
 mkii::event::Blink::Blink(uint32_t i_u32BlinkCount, uint32_t i_u32TimerCount,
