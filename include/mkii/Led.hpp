@@ -5,6 +5,7 @@
 
 #include "mkii/Timer.hpp"
 #include "mkii/event/Blink.hpp"
+#include "mkii/event/LedTimeout.hpp"
 #include "peripheral/gpio/OutputGPIO.hpp"
 
 namespace mkii {
@@ -32,7 +33,7 @@ class Led {
 	/**
 	 * Set led output.
 	 */
-	void SetState(bool i_bState);
+	void SetState(bool i_bState, bool i_bSetTimeout = false);
 
 	/**
 	 * Obtain current led output.
@@ -42,7 +43,7 @@ class Led {
 	/**
 	 * Toggle output of led. If out value is 0, sets it to 1, else sets it to 0.
 	 */
-	void Toggle();
+	void Toggle(bool i_bSetTimeout = false);
 
 	/**
 	 * Blink led i_u32BlinkCount times for a timer count i_u32TimerCount.

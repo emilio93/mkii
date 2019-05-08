@@ -5,13 +5,22 @@ mkii::Led::Led() {
 	    new peripheral::gpio::OutputGPIO(mkii::LED_PORT, mkii::LED_PIN);
 }
 
-void mkii::Led::SetState(bool i_bState) {
+void mkii::Led::SetState(bool i_bState, bool i_bSetTimeout) {
 	this->GetOutputGPIO()->SetOutput(i_bState);
+	if (i_bState && i_bSetTimeout &&
+	    mkii::event::LedTimeout::GetLedTimeout() != NULL) {
+		mkii::event::LedTimeout::GetLedTimeout()->Init();
+	} else if (!i_bState && i_bSetTimeout && mkii::event::LedTimeout::GetLedTimeout() != NULL &&
+	           mkii::event::LedTimeout::GetLedTimeout()->IsTimeoutOn()) {
+		mkii::event::LedTimeout::GetLedTimeout()->End();
+	}
 }
 
 bool mkii::Led::GetState(void) { return this->GetOutputGPIO()->GetOutput(); }
 
-void mkii::Led::Toggle() { this->GetOutputGPIO()->Toggle(); }
+void mkii::Led::Toggle(bool i_bSetTimeout) {
+	this->SetState(!this->GetState(), i_bSetTimeout);
+}
 
 bool mkii::Led::IsBlinking() {
 	if (mkii::event::Blink::GetBlink() == NULL) {
