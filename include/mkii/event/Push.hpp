@@ -4,21 +4,12 @@
 #include "mkii/Button.hpp"
 #include "mkii/IEvent.hpp"
 #include "mkii/Led.hpp"
-#include "mkii/Timer.hpp"
 
 namespace mkii {
 
 class Button;
 
 namespace event {
-
-namespace push {
-/**
- * The counts the timer does as guard before another button push triggers the
- * event.
- */
-const uint32_t TIMEOUT_COUNT = 500;
-}  // namespace push
 
 /****************************************************************************
  *                                                                          *
@@ -28,7 +19,6 @@ const uint32_t TIMEOUT_COUNT = 500;
  * are identified  by its ID(S1, S2, ...) at the end of the name.           *
  * Diferent handlers mught need extra variables which should be named       *
  * properly as well.                                                        *
- * Requires a timer with enabled interrupts                                 *
  *                                                                          *
  * Toggles led state independently of it's current state. If state is on,   *
  * the Led will turn off until a on condition or a button push. If state is *
@@ -42,11 +32,9 @@ class Push : public mkii::IEvent {
 	 *
 	 * @param i_pButton The button to track.
 	 * @param i_pLed The led to toggle.
-	 * @param i_pTimer The timer to use.
 	 * @return mkii::event::Push* The Push Event.
 	 */
-	static mkii::event::Push* GetPush(mkii::Button* i_pButton, mkii::Led* i_pLed,
-	                                  mkii::Timer* i_pTimer);
+	static mkii::event::Push* GetPush(mkii::Button* i_pButton, mkii::Led* i_pLed);
 
 	/**
 	 * Obtain Push Event with previously set  properties, or NULL if class has not
@@ -111,12 +99,6 @@ class Push : public mkii::IEvent {
 	static mkii::Button* m_pStaticButton;
 
 	/**
-	 * Timer used to time the event.
-	 */
-	mkii::Timer* m_pTimer;
-	static mkii::Timer* m_pStaticTimer;
-
-	/**
 	 * Led to be used in the event.
 	 */
 	mkii::Led* m_pLed;
@@ -127,9 +109,8 @@ class Push : public mkii::IEvent {
 	 *
 	 * @param i_pButton The button to use.
 	 * @param i_pLed The led to use.
-	 * @param i_pTimer The timer to use.
 	 */
-	Push(mkii::Button* i_pButton, mkii::Led* i_pLed, mkii::Timer* i_pTimer);
+	Push(mkii::Button* i_pButton, mkii::Led* i_pLed);
 
 	/**
 	 * Set the Button object.
@@ -144,13 +125,6 @@ class Push : public mkii::IEvent {
 	 * @param i_pLed The Led.
 	 */
 	void SetLed(mkii::Led* i_pLed);
-
-	/**
-	 * Set the Timer object.
-	 *
-	 * @param i_pTimer The Timer.
-	 */
-	void SetTimer(mkii::Timer* i_pTimer);
 };
 
 }  // namespace event

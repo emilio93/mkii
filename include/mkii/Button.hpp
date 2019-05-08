@@ -70,9 +70,8 @@ class Button {
 	 * trigger the Push Event.
 	 *
 	 * @param i_pLed The led to toggle on push.
-	 * @param i_pTimer The timer used.
 	 */
-	void TrackButtonPush(mkii::Led* i_pLed, mkii::Timer* i_pTimer);
+	void TrackButtonPush(mkii::Led* i_pLed);
 
 	/**
 	 * Disables the interrupts for the Push Event and reset it's variables.
