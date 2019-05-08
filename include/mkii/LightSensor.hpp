@@ -11,6 +11,7 @@ namespace mkii {
 class LightSensor {
  public:
 	LightSensor();
+	void Init();
 	float GetLux();
 
  private:
