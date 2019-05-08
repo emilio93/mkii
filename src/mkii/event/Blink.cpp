@@ -85,7 +85,7 @@ void mkii::event::Blink::Handler(void) {
 			// have happened.
 			// No further interrupt is done and handler is unregistered. Blinking
 			// state is turned off.
-			mkii::event::Blink::End();
+			mkii::event::Blink::GetBlink()->End();
 			return;
 		} else {
 			// toggle led and clear interrupt flag
