@@ -12,10 +12,10 @@ class LightSensor {
  public:
 	LightSensor();
 	float GetLux();
-	peripheral::OPT3001* GetOPT3001();
 
  private:
 	peripheral::OPT3001* m_pOPT3001;
+	peripheral::OPT3001* GetOPT3001();
 };
 
 }  // namespace mkii
