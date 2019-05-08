@@ -40,10 +40,9 @@ void mkii::event::Push::Init() {
 
 		mkii::event::Push::m_bStaticIsTracking = true;
 
-		mkii::event::Push::m_pStaticButton->GetGPIO()->ClearInterruptFlag();
-		mkii::event::Push::m_pStaticButton->GetGPIO()->EnableInterrupt();
-		peripheral::GPIO::RegisterInterrupt(
-		    mkii::event::Push::m_pStaticButton->GetGPIO(),
+		mkii::event::Push::m_pStaticButton->SetInterruptDirection(
+		    peripheral::gpio::Edge::HIGH_TO_LOW_TRANSITION);
+		mkii::event::Push::m_pStaticButton->SetInterrupt(
 		    mkii::event::Push::HandlerCaller);
 	}
 }
@@ -54,13 +53,12 @@ void mkii::event::Push::HandlerCaller(void) {
 
 void mkii::event::Push::Handler(void) {
 	mkii::event::Push::m_pStaticButton->GetGPIO()->ClearInterruptFlag();
-	mkii::event::Push::m_pStaticLed->Toggle();
+	mkii::event::Push::m_pStaticLed->Toggle(true);
 }
 
 void mkii::event::Push::End(void) {
 	if (mkii::event::Push::m_bStaticIsTracking) {
-		peripheral::GPIO::UnregisterInterrupt(
-		    mkii::event::Push::m_pStaticButton->GetGPIO());
+		mkii::event::Push::m_pStaticButton->EndInterrupt();
 
 		mkii::event::Push::m_pStaticButton = NULL;
 		mkii::event::Push::m_pStaticLed = NULL;

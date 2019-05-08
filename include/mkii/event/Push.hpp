@@ -4,6 +4,7 @@
 #include "mkii/Button.hpp"
 #include "mkii/IEvent.hpp"
 #include "mkii/Led.hpp"
+#include "mkii/event/LedTimeout.hpp"
 
 namespace mkii {
 
