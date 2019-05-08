@@ -32,7 +32,7 @@ class Blink : public mkii::IEvent {
 	 *
 	 * @return Blink* the blink Event with previous parameters or NULL if not set.
 	 */
-	static Blink* GetBlink();
+	static mkii::event::Blink* GetBlink();
 
 	/**
 	 * Get the Blink event with new parameters.
