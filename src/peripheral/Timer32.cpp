@@ -18,8 +18,9 @@ peripheral::Timer32::~Timer32() {
 }
 
 void peripheral::Timer32::SetCounter(const uint32_t i_u32Count) {
+	Timer32_haltTimer(this->m_mkiiTimer);
 	Timer32_setCount(this->m_mkiiTimer, i_u32Count);
-	Timer32_setCountInBackground(this->m_mkiiTimer, i_u32Count);
+	Timer32_startTimer(this->m_mkiiTimer, false);
 }
 
 uint32_t peripheral::Timer32::GetCurrentValue(void) {
