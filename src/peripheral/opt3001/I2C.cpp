@@ -11,12 +11,6 @@ void peripheral::opt3001::I2C::Init_GPIO() {
 	                                                GPIO_PRIMARY_MODULE_FUNCTION);
 }
 
-/***************************************************************************/ /**
-                                                                               * @brief  Configures I2C
-                                                                               * @param  none
-                                                                               * @return none
-                                                                               ******************************************************************************/
-
 void peripheral::opt3001::I2C::Init(void) {
 	/* Initialize USCI_B0 and I2C Master to communicate with slave devices*/
 	MAP_I2C_initMaster(EUSCI_B1_BASE, &peripheral::opt3001::i2cConfig);
@@ -29,12 +23,6 @@ void peripheral::opt3001::I2C::Init(void) {
 
 	return;
 }
-
-/***************************************************************************/ /**
-                                                                               * @brief  Reads data from the sensor
-                                                                               * @param  i_cWriteByte Address of register to read from
-                                                                               * @return Register contents
-                                                                               ******************************************************************************/
 
 int peripheral::opt3001::I2C::Read16(unsigned char i_cWriteByte) {
 	int val = 0;
@@ -92,13 +80,6 @@ int peripheral::opt3001::I2C::Read16(unsigned char i_cWriteByte) {
 	/* Return temperature value */
 	return (int16_t)val;
 }
-
-/***************************************************************************/ /**
-                                                                               * @brief  Writes data to the sensor
-                                                                               * @param  i_cPointer  Address of register you want to modify
-                                                                               * @param  i_uWriteByte Data to be written to the specified register
-                                                                               * @return none
-                                                                               ******************************************************************************/
 
 void peripheral::opt3001::I2C::Write16(unsigned char i_cPointer,
                                        unsigned int i_uWriteByte) {
