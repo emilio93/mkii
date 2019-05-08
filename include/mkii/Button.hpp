@@ -78,6 +78,25 @@ class Button {
 	 */
 	void IgnoreButtonPush();
 
+	/**
+	 * Set when the interrupt is triggered, on low to high or high to low
+	 * transition.
+	 *
+	 * @param i_eEdge The direction.
+	 */
+	void SetInterruptDirection(peripheral::gpio::Edge i_eEdge);
+
+	/**
+	 * Set and enable an interrupt handler.
+	 */
+	void SetInterrupt(void (*i_funcHandler)(void));
+
+	/**
+	 * Clears interrupt flag, disables interrupt and unregisters handler.
+	 *
+	 */
+	void EndInterrupt();
+
  private:
 	/**
 	 * GPIO of the Button.

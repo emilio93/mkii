@@ -33,3 +33,20 @@ void mkii::Button::SetButtonId(mkii::button::ButtonId i_eButtonId) {
 }
 
 mkii::button::ButtonId mkii::Button::GetButtonId() { return this->m_eButtonId; }
+
+
+void mkii::Button::SetInterruptDirection(peripheral::gpio::Edge i_eEdge) {
+	this->GetGPIO()->InterruptEdgeSelect(i_eEdge);
+
+}
+
+void mkii::Button::SetInterrupt(void (*i_funcHandler)(void)) {
+	peripheral::GPIO::RegisterInterrupt(this->GetGPIO(), i_funcHandler);
+	this->GetGPIO()->EnableInterrupt();
+}
+
+void mkii::Button::EndInterrupt() {
+	this->GetGPIO()->ClearInterruptFlag();
+	peripheral::GPIO::UnregisterInterrupt(this->GetGPIO());
+	this->GetGPIO()->DisableInterrupt();
+}
