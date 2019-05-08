@@ -4,9 +4,9 @@
 #include <cstddef>
 
 #include "mkii/Led.hpp"
+#include "mkii/Timer.hpp"
 #include "mkii/event/Push.hpp"
 #include "peripheral/GPIO.hpp"
-#include "mkii/Timer.hpp"
 #include "peripheral/gpio/InputGPIO.hpp"
 
 namespace mkii {

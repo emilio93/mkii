@@ -16,9 +16,10 @@ mkii::event::Blink* mkii::event::Blink::GetBlink() {
 	return mkii::event::Blink::m_pInstance;
 }
 
-mkii::event::Blink* mkii::event::Blink::GetBlink(
-    uint32_t i_u32BlinkCount, uint32_t i_u32TimerCount,
-    mkii::Timer* i_pBlinkTimer, mkii::Led* i_pBlinkLed) {
+mkii::event::Blink* mkii::event::Blink::GetBlink(uint32_t i_u32BlinkCount,
+                                                 uint32_t i_u32TimerCount,
+                                                 mkii::Timer* i_pBlinkTimer,
+                                                 mkii::Led* i_pBlinkLed) {
 	if (mkii::event::Blink::m_pInstance == 0) {
 		mkii::event::Blink::m_pInstance = new mkii::event::Blink(
 		    i_u32BlinkCount, i_u32TimerCount, i_pBlinkTimer, i_pBlinkLed);
@@ -95,7 +96,8 @@ void mkii::event::Blink::Handler(void) {
 			// Reset interrupt
 			mkii::event::Blink::m_pStaticBlinkTimer->SetCounter(
 			    mkii::event::Blink::m_u32StaticTimerCount);
-			mkii::event::Blink::m_pStaticBlinkTimer->SetInterrupt(mkii::event::Blink::HandlerCaller);
+			mkii::event::Blink::m_pStaticBlinkTimer->SetInterrupt(
+			    mkii::event::Blink::HandlerCaller);
 			return;
 		}
 	} else {
@@ -105,8 +107,7 @@ void mkii::event::Blink::Handler(void) {
 }
 
 mkii::event::Blink::Blink(uint32_t i_u32BlinkCount, uint32_t i_u32TimerCount,
-                          mkii::Timer* i_pBlinkTimer,
-                          mkii::Led* i_pBlinkLed) {
+                          mkii::Timer* i_pBlinkTimer, mkii::Led* i_pBlinkLed) {
 	this->SetBlinkCount(i_u32BlinkCount);
 	this->SetTimerCount(i_u32TimerCount);
 	this->SetTimer(i_pBlinkTimer);

@@ -3,8 +3,8 @@
 
 #include <cstddef>
 
-#include "mkii/event/Blink.hpp"
 #include "mkii/Timer.hpp"
+#include "mkii/event/Blink.hpp"
 #include "peripheral/gpio/OutputGPIO.hpp"
 
 namespace mkii {

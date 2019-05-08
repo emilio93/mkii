@@ -129,8 +129,7 @@ class Push : public mkii::IEvent {
 	 * @param i_pLed The led to use.
 	 * @param i_pTimer The timer to use.
 	 */
-	Push(mkii::Button* i_pButton, mkii::Led* i_pLed,
-	     mkii::Timer* i_pTimer);
+	Push(mkii::Button* i_pButton, mkii::Led* i_pLed, mkii::Timer* i_pTimer);
 
 	/**
 	 * Set the Button object.

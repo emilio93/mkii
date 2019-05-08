@@ -14,7 +14,6 @@ namespace mkii {
  */
 class LightSensor {
  public:
-
 	/**
 	 * @brief Construct a new Light Sensor object initializing the OPT3001 object.
 	 *
