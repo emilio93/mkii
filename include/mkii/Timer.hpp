@@ -3,12 +3,14 @@
 
 #include <cstddef>
 
+#include "driverlib.h"
+
 #include "peripheral/Timer32.hpp"
 
 namespace mkii {
 
 namespace timer {
-enum TimerTypes { TIMER_32 };
+enum TimerTypes { TIMER_32_0, TIMER_32_1 };
 }
 
 /**
@@ -65,7 +67,9 @@ class Timer {
 	 * manage individually.
 	 */
 	static peripheral::Timer32* m_pStaticTimer32_0;
+	static mkii::Timer* m_pStaticTimer_0;
 	static peripheral::Timer32* m_pStaticTimer32_1;
+	static mkii::Timer* m_pStaticTimer_1;
 };
 
 }  // namespace mkii
