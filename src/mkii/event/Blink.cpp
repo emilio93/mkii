@@ -79,8 +79,8 @@ void mkii::event::Blink::End(void) {
 
 void mkii::event::Blink::Handler(void) {
 	if (mkii::event::Blink::m_bStaticIsBlinking) {
-		if (mkii::event::Blink::m_u32StaticBlinkCount <= 1 &&
-		    mkii::event::Blink::m_bStaticBlinkCountHasToggle) {
+		if (mkii::event::Blink::m_u32StaticBlinkCount <= 0 &&
+		    !mkii::event::Blink::m_bStaticBlinkCountHasToggle) {
 			// Stop condition: counter has reached 0 and both toggles for last blink
 			// have happened.
 			// No further interrupt is done and handler is unregistered. Blinking
