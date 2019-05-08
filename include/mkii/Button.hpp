@@ -35,7 +35,7 @@ const peripheral::gpio::Pin BUTTON_S1_PIN = peripheral::gpio::Pin::PIN1;
 const peripheral::gpio::Pin BUTTON_S2_PIN = peripheral::gpio::Pin::PIN4;
 
 /**
- * Representation of a Button and useful events to apply on it.
+ * Representation of a Button.
  */
 class Button {
  public:

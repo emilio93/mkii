@@ -11,7 +11,7 @@ class IEvent {
 	virtual ~IEvent() {}
 
 	/**
-	 * Set up the Event and enable the interruption.
+	 * Set up the Event and enable the interrupt.
 	 */
 	virtual void Init(void) = 0;
 
@@ -21,7 +21,7 @@ class IEvent {
 	virtual void Handler(void) = 0;
 
 	/**
-	 * Cleans up the Event and disable the interruption.
+	 * Cleans up the Event and disable the interrupt.
 	 */
 	virtual void End(void) = 0;
 };
