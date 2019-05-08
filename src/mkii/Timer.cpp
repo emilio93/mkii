@@ -10,8 +10,8 @@ mkii::Timer* mkii::Timer::GetTimer(mkii::timer::TimerTypes i_eTimerType) {
 	if (i_eTimerType == mkii::timer::TimerTypes::TIMER_32_0) {
 		if (mkii::Timer::m_pStaticTimer32_0 == NULL) {
 			mkii::Timer::m_pStaticTimer32_0 =
-			    new peripheral::Timer32(TIMER32_0_BASE, TIMER32_PRESCALER_256, TIMER32_32BIT
-			                            , TIMER32_PERIODIC_MODE);
+			    new peripheral::Timer32(TIMER32_0_BASE, TIMER32_PRESCALER_256,
+			                            TIMER32_32BIT, TIMER32_PERIODIC_MODE);
 		}
 		if (mkii::Timer::m_pStaticTimer_0 == NULL) {
 			mkii::Timer::m_pStaticTimer_0 =

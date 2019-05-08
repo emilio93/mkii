@@ -10,7 +10,8 @@ void mkii::Led::SetState(bool i_bState, bool i_bSetTimeout) {
 	if (i_bState && i_bSetTimeout &&
 	    mkii::event::LedTimeout::GetLedTimeout() != NULL) {
 		mkii::event::LedTimeout::GetLedTimeout()->Init();
-	} else if (!i_bState && i_bSetTimeout && mkii::event::LedTimeout::GetLedTimeout() != NULL &&
+	} else if (!i_bState && i_bSetTimeout &&
+	           mkii::event::LedTimeout::GetLedTimeout() != NULL &&
 	           mkii::event::LedTimeout::GetLedTimeout()->IsTimeoutOn()) {
 		mkii::event::LedTimeout::GetLedTimeout()->End();
 	}
