@@ -5,7 +5,7 @@
 
 #include "mkii/IEvent.hpp"
 #include "mkii/Led.hpp"
-#include "peripheral/Timer32.hpp"
+#include "mkii/Timer.hpp"
 
 namespace mkii {
 
@@ -40,13 +40,13 @@ class Blink : public mkii::IEvent {
 	 * @param i_u32BlinkCount The quantity of times to blink.
 	 * @param i_u32TimerCount Counts the timer has to do before triggering a
 	 * toggle.
-	 * @param i_pBlinkTimer32 The timer to be used for the blinking.
+	 * @param i_pBlinkTimer The timer to be used for the blinking.
 	 * @param i_pBlinkLed The led to be used for the blinking.
 	 * @return Blink* The Blink event with new parameters.
 	 */
 	static mkii::event::Blink* GetBlink(uint32_t i_u32BlinkCount,
 	                                    uint32_t i_u32TimerCount,
-	                                    peripheral::Timer32* i_pBlinkTimer32,
+	                                    mkii::Timer* i_pBlinkTimer,
 	                                    mkii::Led* i_pBlinkLed);
 
 	/**
@@ -121,8 +121,8 @@ class Blink : public mkii::IEvent {
 	/**
 	 * Timer used for the blinking event.
 	 */
-	peripheral::Timer32* m_pBlinkTimer32;
-	static peripheral::Timer32* m_pStaticBlinkTimer32;
+	mkii::Timer* m_pBlinkTimer;
+	static mkii::Timer* m_pStaticBlinkTimer;
 
 	/**
 	 * Led used for the blinking event.
@@ -136,11 +136,11 @@ class Blink : public mkii::IEvent {
 	 * @param i_u32BlinkCount The quantity of times to blink.
 	 * @param i_u32TimerCount Counts the timer has to do before triggering a
 	 * toggle.
-	 * @param i_pBlinkTimer32 The timer to be used for the blinking.
+	 * @param i_pBlinkTimer The timer to be used for the blinking.
 	 * @param i_pBlinkLed The led to be used for the blinking.
 	 */
 	Blink(uint32_t i_u32BlinkCount, uint32_t i_u32TimerCount,
-	      peripheral::Timer32* i_pBlinkTimer32, mkii::Led* i_pBlinkLed);
+	      mkii::Timer* i_pBlinkTimer, mkii::Led* i_pBlinkLed);
 
 	/**
 	 * Set the blink count.
@@ -158,11 +158,11 @@ class Blink : public mkii::IEvent {
 	void SetTimerCount(uint32_t i_u32TimerCount);
 
 	/**
-	 * Set the Timer32 object.
+	 * Set the Timer object.
 	 *
 	 * @param i_pTimer32 The timer to be used for the blinking.
 	 */
-	void SetTimer32(peripheral::Timer32* i_pTimer32);
+	void SetTimer(mkii::Timer* i_pTimer);
 
 	/**
 	 * Set the Led object.

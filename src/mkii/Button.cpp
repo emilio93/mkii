@@ -19,8 +19,8 @@ mkii::Button::Button(mkii::button::ButtonId i_eButtonId) {
 }
 
 void mkii::Button::TrackButtonPush(mkii::Led* i_pLed,
-                                   peripheral::Timer32* i_pTimer32) {
-	mkii::event::Push::GetPush(this, i_pLed, i_pTimer32)->Init();
+                                   mkii::Timer* i_pTimer) {
+	mkii::event::Push::GetPush(this, i_pLed, i_pTimer)->Init();
 }
 
 void mkii::Button::IgnoreButtonPush() { mkii::event::Push::GetPush()->End(); }

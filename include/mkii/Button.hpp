@@ -6,7 +6,7 @@
 #include "mkii/Led.hpp"
 #include "mkii/event/Push.hpp"
 #include "peripheral/GPIO.hpp"
-#include "peripheral/Timer32.hpp"
+#include "mkii/Timer.hpp"
 #include "peripheral/gpio/InputGPIO.hpp"
 
 namespace mkii {
@@ -70,9 +70,9 @@ class Button {
 	 * trigger the Push Event.
 	 *
 	 * @param i_pLed The led to toggle on push.
-	 * @param i_pTimer32 The timer used.
+	 * @param i_pTimer The timer used.
 	 */
-	void TrackButtonPush(mkii::Led* i_pLed, peripheral::Timer32* i_pTimer32);
+	void TrackButtonPush(mkii::Led* i_pLed, mkii::Timer* i_pTimer);
 
 	/**
 	 * Disables the interrupts for the Push Event and reset it's variables.

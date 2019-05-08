@@ -4,7 +4,7 @@ bool mkii::event::Blink::m_bStaticIsBlinking = false;
 uint32_t mkii::event::Blink::m_u32StaticBlinkCount = 0;
 uint32_t mkii::event::Blink::m_u32StaticTimerCount = 0;
 bool mkii::event::Blink::m_bStaticBlinkCountHasToggle = false;
-peripheral::Timer32* mkii::event::Blink::m_pStaticBlinkTimer32 = NULL;
+mkii::Timer* mkii::event::Blink::m_pStaticBlinkTimer = NULL;
 mkii::Led* mkii::event::Blink::m_pStaticBlinkLed = NULL;
 
 mkii::event::Blink* mkii::event::Blink::m_pInstance = 0;
@@ -18,14 +18,14 @@ mkii::event::Blink* mkii::event::Blink::GetBlink() {
 
 mkii::event::Blink* mkii::event::Blink::GetBlink(
     uint32_t i_u32BlinkCount, uint32_t i_u32TimerCount,
-    peripheral::Timer32* i_pBlinkTimer32, mkii::Led* i_pBlinkLed) {
+    mkii::Timer* i_pBlinkTimer, mkii::Led* i_pBlinkLed) {
 	if (mkii::event::Blink::m_pInstance == 0) {
 		mkii::event::Blink::m_pInstance = new mkii::event::Blink(
-		    i_u32BlinkCount, i_u32TimerCount, i_pBlinkTimer32, i_pBlinkLed);
+		    i_u32BlinkCount, i_u32TimerCount, i_pBlinkTimer, i_pBlinkLed);
 	} else {
 		mkii::event::Blink::m_pInstance->SetBlinkCount(i_u32BlinkCount);
 		mkii::event::Blink::m_pInstance->SetTimerCount(i_u32TimerCount);
-		mkii::event::Blink::m_pInstance->SetTimer32(i_pBlinkTimer32);
+		mkii::event::Blink::m_pInstance->SetTimer(i_pBlinkTimer);
 		mkii::event::Blink::m_pInstance->SetLed(i_pBlinkLed);
 	}
 	return mkii::event::Blink::m_pInstance;
@@ -48,14 +48,8 @@ void mkii::event::Blink::Init() {
 	mkii::event::Blink::m_bStaticBlinkCountHasToggle = false;
 	mkii::event::Blink::m_u32StaticBlinkCount = this->m_u32BlinkCount;
 	mkii::event::Blink::m_u32StaticTimerCount = this->m_u32TimerCount;
-	mkii::event::Blink::m_pStaticBlinkTimer32 = this->m_pBlinkTimer32;
+	mkii::event::Blink::m_pStaticBlinkTimer = this->m_pBlinkTimer;
 	mkii::event::Blink::m_pStaticBlinkLed = this->m_pBlinkLed;
-
-	// Set interrupt handler
-	mkii::event::Blink::m_pBlinkTimer32->RegisterInterrupt(
-	    true, mkii::event::Blink::HandlerCaller);
-	mkii::event::Blink::m_pStaticBlinkTimer32->SetCounter(
-	    mkii::event::Blink::m_u32StaticTimerCount);
 
 	// First call as soon as posible
 	// This call will manage following calls
@@ -71,9 +65,7 @@ void mkii::event::Blink::HandlerCaller(void) {
 }
 
 void mkii::event::Blink::End(void) {
-	mkii::event::Blink::m_pStaticBlinkTimer32->ClearInterruptFlag();
-	mkii::event::Blink::m_pStaticBlinkTimer32->EnableInterrupt(false);
-	mkii::event::Blink::m_pStaticBlinkTimer32->RegisterInterrupt(false);
+	mkii::event::Blink::m_pStaticBlinkTimer->EndInterrupt();
 	mkii::event::Blink::m_bStaticIsBlinking = false;
 }
 
@@ -90,7 +82,7 @@ void mkii::event::Blink::Handler(void) {
 		} else {
 			// toggle led and clear interrupt flag
 			mkii::event::Blink::m_pStaticBlinkLed->Toggle();
-			mkii::event::Blink::m_pStaticBlinkTimer32->ClearInterruptFlag();
+			mkii::event::Blink::m_pStaticBlinkTimer->EndInterrupt();
 
 			// Regular operation: do both toggles for each count and reset timer and
 			// interrupt.
@@ -101,9 +93,9 @@ void mkii::event::Blink::Handler(void) {
 			mkii::event::Blink::m_bStaticBlinkCountHasToggle =
 			    !mkii::event::Blink::m_bStaticBlinkCountHasToggle;
 			// Reset interrupt
-			mkii::event::Blink::m_pStaticBlinkTimer32->SetCounter(
+			mkii::event::Blink::m_pStaticBlinkTimer->SetCounter(
 			    mkii::event::Blink::m_u32StaticTimerCount);
-			mkii::event::Blink::m_pStaticBlinkTimer32->EnableInterrupt(true);
+			mkii::event::Blink::m_pStaticBlinkTimer->SetInterrupt(mkii::event::Blink::HandlerCaller);
 			return;
 		}
 	} else {
@@ -113,11 +105,11 @@ void mkii::event::Blink::Handler(void) {
 }
 
 mkii::event::Blink::Blink(uint32_t i_u32BlinkCount, uint32_t i_u32TimerCount,
-                          peripheral::Timer32* i_pBlinkTimer32,
+                          mkii::Timer* i_pBlinkTimer,
                           mkii::Led* i_pBlinkLed) {
 	this->SetBlinkCount(i_u32BlinkCount);
 	this->SetTimerCount(i_u32TimerCount);
-	this->SetTimer32(i_pBlinkTimer32);
+	this->SetTimer(i_pBlinkTimer);
 	this->SetLed(i_pBlinkLed);
 }
 
@@ -129,8 +121,8 @@ void mkii::event::Blink::SetTimerCount(uint32_t i_u32TimerCount) {
 	this->m_u32TimerCount = i_u32TimerCount;
 }
 
-void mkii::event::Blink::SetTimer32(peripheral::Timer32* i_pTimer32) {
-	this->m_pBlinkTimer32 = i_pTimer32;
+void mkii::event::Blink::SetTimer(mkii::Timer* i_pTimer) {
+	this->m_pBlinkTimer = i_pTimer;
 }
 
 void mkii::event::Blink::SetLed(mkii::Led* i_pLed) {

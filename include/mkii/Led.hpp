@@ -4,7 +4,7 @@
 #include <cstddef>
 
 #include "mkii/event/Blink.hpp"
-#include "peripheral/Timer32.hpp"
+#include "mkii/Timer.hpp"
 #include "peripheral/gpio/OutputGPIO.hpp"
 
 namespace mkii {
@@ -51,9 +51,10 @@ class Led {
 	 * The blinking event will be launched upon calling this function.
 	 * @param i_u32BlinkCount Quantity of times the led blinks.
 	 * @param i_u32TimerCount Timer Count.
+	 * @param i_pTimer the timer to use.
 	 */
 	void Blink(uint32_t i_u32BlinkCount, uint32_t i_u32TimerCount,
-	           peripheral::Timer32* i_pTimer32);
+	           mkii::Timer* i_pTimer);
 
 	/**
 	 * Indicates if there is an ongoing blinking event.

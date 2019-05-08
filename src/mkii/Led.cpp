@@ -22,8 +22,8 @@ bool mkii::Led::IsBlinking() {
 }
 
 void mkii::Led::Blink(uint32_t i_u32BlinkCount, uint32_t i_u32TimerCount,
-                      peripheral::Timer32* i_pTimer32) {
-	mkii::event::Blink::GetBlink(i_u32BlinkCount, i_u32TimerCount, i_pTimer32,
+                      mkii::Timer* i_pTimer) {
+	mkii::event::Blink::GetBlink(i_u32BlinkCount, i_u32TimerCount, i_pTimer,
 	                             this)
 	    ->Init();
 }

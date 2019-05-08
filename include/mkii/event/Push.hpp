@@ -4,7 +4,7 @@
 #include "mkii/Button.hpp"
 #include "mkii/IEvent.hpp"
 #include "mkii/Led.hpp"
-#include "peripheral/Timer32.hpp"
+#include "mkii/Timer.hpp"
 
 namespace mkii {
 
@@ -42,11 +42,11 @@ class Push : public mkii::IEvent {
 	 *
 	 * @param i_pButton The button to track.
 	 * @param i_pLed The led to toggle.
-	 * @param i_pTimer32 The timer to use.
+	 * @param i_pTimer The timer to use.
 	 * @return mkii::event::Push* The Push Event.
 	 */
 	static mkii::event::Push* GetPush(mkii::Button* i_pButton, mkii::Led* i_pLed,
-	                                  peripheral::Timer32* i_pTimer32);
+	                                  mkii::Timer* i_pTimer);
 
 	/**
 	 * Obtain Push Event with previously set  properties, or NULL if class has not
@@ -113,8 +113,8 @@ class Push : public mkii::IEvent {
 	/**
 	 * Timer used to time the event.
 	 */
-	peripheral::Timer32* m_pTimer32;
-	static peripheral::Timer32* m_pStaticTimer32;
+	mkii::Timer* m_pTimer;
+	static mkii::Timer* m_pStaticTimer;
 
 	/**
 	 * Led to be used in the event.
@@ -127,10 +127,10 @@ class Push : public mkii::IEvent {
 	 *
 	 * @param i_pButton The button to use.
 	 * @param i_pLed The led to use.
-	 * @param i_pTimer32 The timer to use.
+	 * @param i_pTimer The timer to use.
 	 */
 	Push(mkii::Button* i_pButton, mkii::Led* i_pLed,
-	     peripheral::Timer32* i_pTimer32);
+	     mkii::Timer* i_pTimer);
 
 	/**
 	 * Set the Button object.
@@ -147,11 +147,11 @@ class Push : public mkii::IEvent {
 	void SetLed(mkii::Led* i_pLed);
 
 	/**
-	 * Set the Timer32 object.
+	 * Set the Timer object.
 	 *
-	 * @param i_pTimer32 The Timer32.
+	 * @param i_pTimer The Timer.
 	 */
-	void SetTimer32(peripheral::Timer32* i_pTimer32);
+	void SetTimer(mkii::Timer* i_pTimer);
 };
 
 }  // namespace event
