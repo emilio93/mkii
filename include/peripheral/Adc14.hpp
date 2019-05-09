@@ -154,7 +154,7 @@ class Adc14 {
 	/**
 	 * Enable conversion and start with the first conversion/sample
 	 */
-	void EnableAndTriggerConversion(void);
+	void EnableConversion(void);
 
 	/**
 	 * Get the adc conversion resolution

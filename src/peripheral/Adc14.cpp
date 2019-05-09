@@ -138,9 +138,8 @@ void peripheral::Adc14::TriggerSignalConversion() {
 	ADC14_toggleConversionTrigger();
 }
 
-void peripheral::Adc14::EnableAndTriggerConversion() {
+void peripheral::Adc14::EnableConversion() {
 	ADC14_enableConversion();
-	TriggerSignalConversion();
 }
 
 uint_fast32_t peripheral::Adc14::GetResolution() {
