@@ -12,6 +12,8 @@ namespace peripheral {
 
 namespace adc14 {
 
+const uint8_t MAX_GPIO_PINS = 3;
+
 enum MaxConversionValue {
 	SINGLE_ENDED_MODE = 0X4000,
 	DIFFERENTIAL_MODE = 0X2000
@@ -34,17 +36,48 @@ enum AnalogInputDevice {
 	TEMP_SENSOR,
 	AMBIENT_LIGHT
 };
+
+enum DevicePort {
+	PORT_NONE = peripheral::gpio::Port::PORT1,
+	PORT_JOYSTICK = peripheral::gpio::Port::PORT1,
+	PORT_ACCELEREROMETER_X = peripheral::gpio::Port::PORT6,
+	PORT_ACCELEREROMETER_Y = peripheral::gpio::Port::PORT4,
+	PORT_ACCELEREROMETER_Z = peripheral::gpio::Port::PORT4,
+	PORT_MICROPHONE = peripheral::gpio::Port::PORT4,
+	PORT_TEMP_SENSOR = peripheral::gpio::Port::PORT1,
+	PORT_AMBIENT_LIGHT = peripheral::gpio::Port::PORT1
+};
+
+enum DevicePin {
+	PIN_NONE = peripheral::gpio::Pin::PIN0,
+	PIN_JOYSTICK = peripheral::gpio::Pin::PIN0,
+	PIN_ACCELEREROMETER_X = peripheral::gpio::Pin::PIN1,
+	PIN_ACCELEREROMETER_Y = peripheral::gpio::Pin::PIN0,
+	PIN_ACCELEREROMETER_Z = peripheral::gpio::Pin::PIN2,
+	PIN_MICROPHONE = peripheral::gpio::Pin::PIN3,
+	PIN_TEMP_SENSOR = peripheral::gpio::Pin::PIN0,
+	PIN_AMBIENT_LIGHT = peripheral::gpio::Pin::PIN0
+};
+
+enum DeviceDivider {
+	DIV_NONE = ADC_DIVIDER_1,
+	DIV_JOYSTICK = ADC_DIVIDER_1,
+	DIV_ACCELEREROMETER = ADC_DIVIDER_8,
+	DIV_MICROPHONE = ADC_DIVIDER_1,
+	DIV_TEMP_SENSOR = ADC_DIVIDER_1,
+	DIV_AMBIENT_LIGHT = ADC_DIVIDER_1
+};
+
+enum DevicePredivider {
+	PREDIV_NONE = ADC_PREDIVIDER_1,
+	PREDIV_JOYSTICK = ADC_PREDIVIDER_1,
+	PREDIV_ACCELEREROMETER = ADC_PREDIVIDER_64,
+	PREDIV_MICROPHONE = ADC_PREDIVIDER_1,
+	PREDIV_TEMP_SENSOR = ADC_PREDIVIDER_1,
+	PREDIV_AMBIENT_LIGHT = ADC_PREDIVIDER_1
+};
+
 }  // namespace adc14
-
-/**
- * Default ADC14 gpio port.
- */
-const peripheral::gpio::Port ADC14_PORT = peripheral::gpio::Port::PORT4;
-
-/**
- * Default ADC14 gpio pin.
- */
-const peripheral::gpio::Pin ADC14_PIN = peripheral::gpio::Pin::PIN3;
 
 /**
  * Default ADC14 module function.
@@ -68,16 +101,6 @@ const peripheral::adc14::PowerMode ADC14_POWER_MODE =
  * Default ADC14 clock source.
  */
 const uint32_t ADC14_CLOCK_SOURCE = ADC_CLOCKSOURCE_ADCOSC;
-
-/**
- * Default ADC14 predivider.
- */
-const uint32_t adc14_CLOCK_PRE_DIVIDER = ADC_PREDIVIDER_1;
-
-/**
- * Default ADC14 divider.
- */
-const uint32_t ADC14_CLOCK_DIVIDER = ADC_DIVIDER_1;
 
 /**
  * Default ADC14 channel mask.
@@ -191,7 +214,7 @@ class Adc14 {
 	uint_fast64_t GetInterruptStatus(void);
 
  private:
-	peripheral::GPIO* m_pGPIO;
+	peripheral::GPIO* m_pGPIO[peripheral::adc14::MAX_GPIO_PINS];
 
 	bool m_bHasInterrupt;
 	uint32_t m_u32SimpleMemoryMap;

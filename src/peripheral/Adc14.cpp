@@ -13,24 +13,80 @@ peripheral::Adc14::Adc14(peripheral::adc14::AnalogInputDevice i_eDevice)
 		;
 	}
 
+	bool l_bIsInit = false;
 	switch (this->m_u32AnalogMeasureDevice) {
+		/***************************************************************************
+		 * Microphone
+		 **************************************************************************/
 		case peripheral::adc14::AnalogInputDevice::MICROPHONE:
-			bool l_bIsInit = false;
+			this->m_pGPIO[0] =
+			    new GPIO(peripheral::adc14::DevicePort::PORT_MICROPHONE,
+			             peripheral::adc14::DevicePin::PIN_MICROPHONE);
+
+			ADC14_enableModule();
+
 			do {
-				l_bIsInit = ADC14_initModule(peripheral::ADC14_CLOCK_SOURCE,
-				                             peripheral::adc14_CLOCK_PRE_DIVIDER,
-				                             peripheral::ADC14_CLOCK_DIVIDER,
-				                             peripheral::ADC14_INTERNAL_CHANNEL_MASK);
+				l_bIsInit = ADC14_initModule(
+				    peripheral::ADC14_CLOCK_SOURCE,
+				    peripheral::adc14::DevicePredivider::PREDIV_MICROPHONE,
+				    peripheral::adc14::DeviceDivider::DIV_MICROPHONE,
+				    peripheral::ADC14_INTERNAL_CHANNEL_MASK);
 			} while (!l_bIsInit);
+
 			break;
+
+		/***************************************************************************
+		 * Joystick
+		 **************************************************************************/
 		case peripheral::adc14::AnalogInputDevice::JOYSTICK:
 			// TODO
+
+		/***************************************************************************
+		 * Accelerometer
+		 **************************************************************************/
 		case peripheral::adc14::AnalogInputDevice::ACCELEREROMETER:
-			// TODO
+			this->m_pGPIO[0] =
+			    new GPIO(peripheral::adc14::DevicePort::PORT_ACCELEREROMETER_X,
+			             peripheral::adc14::DevicePin::PIN_ACCELEREROMETER_X);
+			this->m_pGPIO[1] =
+			    new GPIO(peripheral::adc14::DevicePort::PORT_ACCELEREROMETER_Y,
+			             peripheral::adc14::DevicePin::PIN_ACCELEREROMETER_Y);
+			this->m_pGPIO[2] =
+			    new GPIO(peripheral::adc14::DevicePort::PORT_ACCELEREROMETER_Z,
+			             peripheral::adc14::DevicePin::PIN_ACCELEREROMETER_Z);
+
+			for (uint8_t i = 0; i < 3; i++) {
+				this->m_pGPIO[i]->SetAsPeripheralModuleFunctionInput(
+				    peripheral::gpio::ModuleFunction::TERTIARY);
+			}
+
+			ADC14_enableModule();
+
+			do {
+				l_bIsInit = ADC14_initModule(
+				    peripheral::ADC14_CLOCK_SOURCE,
+				    peripheral::adc14::DevicePredivider::PREDIV_ACCELEREROMETER,
+				    peripheral::adc14::DeviceDivider::DIV_ACCELEREROMETER,
+				    peripheral::ADC14_INTERNAL_CHANNEL_MASK);
+			} while (!l_bIsInit);
+
+			break;
+
+		/***************************************************************************
+		 * Temp Sensor
+		 **************************************************************************/
 		case peripheral::adc14::AnalogInputDevice::TEMP_SENSOR:
 			// TODO
+
+		/***************************************************************************
+		 * Ambient Light
+		 **************************************************************************/
 		case peripheral::adc14::AnalogInputDevice::AMBIENT_LIGHT:
 			// TODO
+
+		/***************************************************************************
+		 * None
+		 **************************************************************************/
 		case peripheral::adc14::AnalogInputDevice::NONE:
 			// TODO
 		default:
@@ -80,8 +136,10 @@ bool peripheral::Adc14::ConfigureDevice() {
 	}
 
 	switch (this->m_u32AnalogMeasureDevice) {
+		/***************************************************************************
+		 * Microphone
+		 **************************************************************************/
 		case peripheral::adc14::AnalogInputDevice::MICROPHONE:
-			// TODO
 			const bool l_bDifferentialMode = false;
 			const bool l_bRepeatSimpleSample = false;
 
@@ -106,14 +164,53 @@ bool peripheral::Adc14::ConfigureDevice() {
 			SetSampleManualTimer();
 
 			break;
+
+		/***************************************************************************
+		 * Joystick
+		 **************************************************************************/
 		case peripheral::adc14::AnalogInputDevice::JOYSTICK:
 			// TODO
+
+		/***************************************************************************
+		 * Accelerometer
+		 **************************************************************************/
 		case peripheral::adc14::AnalogInputDevice::ACCELEREROMETER:
-			// TODO
+
+			/* Configuring ADC Memory (ADC_MEM0 - ADC_MEM2 (A11, A13, A14)  with no
+			 * repeat) with internal 2.5v reference */
+			ADC14_configureMultiSequenceMode(ADC_MEM0, ADC_MEM2, true);
+			ADC14_configureConversionMemory(ADC_MEM0, ADC_VREFPOS_AVCC_VREFNEG_VSS,
+			                                ADC_INPUT_A14,
+			                                ADC_NONDIFFERENTIAL_INPUTS);
+
+			ADC14_configureConversionMemory(ADC_MEM1, ADC_VREFPOS_AVCC_VREFNEG_VSS,
+			                                ADC_INPUT_A13,
+			                                ADC_NONDIFFERENTIAL_INPUTS);
+
+			ADC14_configureConversionMemory(ADC_MEM2, ADC_VREFPOS_AVCC_VREFNEG_VSS,
+			                                ADC_INPUT_A11,
+			                                ADC_NONDIFFERENTIAL_INPUTS);
+
+			this->SetResolution(peripheral::ADC14_PRECISION);
+
+			this->SetSampleAutmaticTimer();
+			this->EnableConversion();
+
+		/***************************************************************************
+		 * Temp Sensor
+		 **************************************************************************/
 		case peripheral::adc14::AnalogInputDevice::TEMP_SENSOR:
 			// TODO
+
+		/***************************************************************************
+		 * Ambient Light
+		 **************************************************************************/
 		case peripheral::adc14::AnalogInputDevice::AMBIENT_LIGHT:
 			// TODO
+
+		/***************************************************************************
+		 * None
+		 **************************************************************************/
 		case peripheral::adc14::AnalogInputDevice::NONE:
 			// TODO
 		default:
