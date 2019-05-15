@@ -89,7 +89,7 @@ bool peripheral::Adc14::ConfigureDevice() {
 			SetInterruptMask(ADC_INT10);
 			SetMemoryMap(ADC_MEM10);
 
-			this->m_pGPIO->SetAsPeripheralModuleFunctionInput(
+			this->m_pGPIO[0]->SetAsPeripheralModuleFunctionInput(
 			    peripheral::ADC14_MODULE_FUNCTION);
 
 			// configure memory map to adc save result in
@@ -158,14 +158,18 @@ void peripheral::Adc14::SetInterruptMask(uint_fast64_t i_uf64InterruptMask) {
 	this->m_uf64InterruptMask = i_uf64InterruptMask;
 }
 
-void peripheral::Adc14::EnableAndRegisterInterrupt(
-    void (*i_funcInterruptHandler)(void)) {
+void peripheral::Adc14::EnableInterrupt(void) {
 	ADC14_enableInterrupt(this->m_uf64InterruptMask);
+}
+
+void peripheral::Adc14::RegisterInterrupt(
+    void (*i_funcInterruptHandler)(void)) {
 	ADC14_registerInterrupt(i_funcInterruptHandler);
 }
 
 void peripheral::Adc14::ClearInterruptFlag(void) {
-	ADC14_clearInterruptFlag(this->m_uf64InterruptMask);
+	uint_fast64_t status = MAP_ADC14_getEnabledInterruptStatus();
+	ADC14_clearInterruptFlag(status);
 }
 
 uint_fast64_t peripheral::Adc14::GetInterruptStatus() {

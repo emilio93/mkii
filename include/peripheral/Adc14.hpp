@@ -164,11 +164,17 @@ class Adc14 {
 	uint_fast32_t GetResolution(void);
 
 	/**
-	 * Enable conversion and start with the first conversion/sample
+	 * Enable interrupt
+	 *
+	 */
+	void EnableInterrupt(void);
+
+	/**
+	 * Register interrupt
 	 *
 	 * @param i_funcInterruptHandler Function to handler the interrupt
 	 */
-	void EnableAndRegisterInterrupt(void (*i_funcInterruptHandler)(void) = 0);
+	void RegisterInterrupt(void (*i_funcInterruptHandler)(void) = 0);
 
 	/**
 	 * Clear the interrupt flag using m_uf64InterruptMask as mask
