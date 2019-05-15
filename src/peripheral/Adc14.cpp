@@ -1,13 +1,10 @@
 #include "peripheral/Adc14.hpp"
 
-peripheral::Adc14::Adc14(peripheral::adc14::AnalogInputDevice i_eDevice)
-    : m_bHasInterrupt(false),
-      m_uf64InterruptMask(0),
-      m_u32SimpleMemoryMap(0),
-      m_u32AnalogMeasureDevice(i_eDevice) {
-	this->m_pGPIO = new GPIO(peripheral::ADC14_PORT, peripheral::ADC14_PIN);
-
-	ADC14_enableModule();
+peripheral::Adc14::Adc14(peripheral::adc14::AnalogInputDevice i_eDevice) {
+	this->m_bHasInterrupt = false;
+	this->m_uf64InterruptMask = 0;
+	this->m_u32SimpleMemoryMap = 0;
+	this->m_u32AnalogMeasureDevice = i_eDevice;
 
 	while (!ADC14_setPowerMode(peripheral::ADC14_POWER_MODE)) {
 		;
