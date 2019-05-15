@@ -23,8 +23,9 @@ class OutputGPIO : public GPIO {
 	 *
 	 * @param i_u8Port Port of the GPIO.
 	 * @param i_u32Pin Pin mask for the GPIO.
+	 * @param i_bInit Indicates if the GPIO is to be set as output.
 	 */
-	OutputGPIO(uint8_t i_u8Port, uint32_t i_u32Pin);
+	OutputGPIO(uint8_t i_u8Port, uint32_t i_u32Pin, bool i_bInit = true);
 
 	/**
 	 * Set the Output value of the gpio.

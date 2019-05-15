@@ -1,8 +1,11 @@
 #include "peripheral/gpio/OutputGPIO.hpp"
 
-peripheral::gpio::OutputGPIO::OutputGPIO(uint8_t i_u8Port, uint32_t i_u32Pin)
+peripheral::gpio::OutputGPIO::OutputGPIO(uint8_t i_u8Port, uint32_t i_u32Pin,
+                                         bool i_bInit)
     : peripheral::GPIO(i_u8Port, i_u32Pin) {
-	this->SetAsOutput();
+	if (i_bInit) {
+		this->SetAsOutput();
+	}
 }
 
 void peripheral::gpio::OutputGPIO::SetOutput(bool i_bValue) {

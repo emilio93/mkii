@@ -28,7 +28,8 @@ class Led {
 	/**
 	 * Class constructor obtains corresponding GPIO.
 	 */
-	Led();
+	Led(peripheral::gpio::Port i_ePort = mkii::LED_PORT,
+	    peripheral::gpio::Pin i_ePin = mkii::LED_PIN, bool i_bInit = true);
 
 	/**
 	 * Set led output.

@@ -1,8 +1,8 @@
 #include "mkii/Led.hpp"
 
-mkii::Led::Led() {
-	this->m_pLedGPIO =
-	    new peripheral::gpio::OutputGPIO(mkii::LED_PORT, mkii::LED_PIN);
+mkii::Led::Led(peripheral::gpio::Port i_ePort, peripheral::gpio::Pin i_ePin,
+               bool i_bInit) {
+	this->m_pLedGPIO = new peripheral::gpio::OutputGPIO(i_ePort, i_ePin, i_bInit);
 }
 
 void mkii::Led::SetState(bool i_bState, bool i_bSetTimeout) {
