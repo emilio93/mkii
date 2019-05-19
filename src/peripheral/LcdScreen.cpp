@@ -380,8 +380,9 @@ void peripheral::LcdScreen::LineDrawH(const Graphics_Display* pDisplay,
 	}
 }
 
-void peripheral::LcdScreen::LineDrawV(const Graphics_Display* pDisplay, int16_t lX, int16_t lY1,
-               int16_t lY2, uint16_t ulValue) {
+void peripheral::LcdScreen::LineDrawV(const Graphics_Display* pDisplay,
+                                      int16_t lX, int16_t lY1, int16_t lY2,
+                                      uint16_t ulValue) {
 	peripheral::LcdScreen::SetDrawFrame(lX, lY1, lX, lY2);
 
 	//
@@ -396,8 +397,9 @@ void peripheral::LcdScreen::LineDrawV(const Graphics_Display* pDisplay, int16_t 
 	}
 }
 
-void peripheral::LcdScreen::RectFill(const Graphics_Display* pDisplay, const Graphics_Rectangle* pRect,
-              uint16_t ulValue) {
+void peripheral::LcdScreen::RectFill(const Graphics_Display* pDisplay,
+                                     const Graphics_Rectangle* pRect,
+                                     uint16_t ulValue) {
 	int16_t x0 = pRect->sXMin;
 	int16_t x1 = pRect->sXMax;
 	int16_t y0 = pRect->sYMin;
