@@ -1,8 +1,26 @@
 #include "peripheral/LcdScreen.hpp"
 
+Graphics_Display peripheral::LcdScreen::m_stCrystalfontz128x128 = {
+    sizeof(Graphics_Display), 0, peripheral::lcdScreen::VERTICAL_MAX,
+    peripheral::lcdScreen::HORIZONTAL_MAX};
+
+const Graphics_Display_Functions
+    peripheral::LcdScreen::m_stCrystalfontz128x128_funcs = {
+        peripheral::LcdScreen::PixelDraw,
+        peripheral::LcdScreen::PixelDrawMultiple,
+        peripheral::LcdScreen::LineDrawH,
+        peripheral::LcdScreen::LineDrawV,
+        peripheral::LcdScreen::RectFill,
+        peripheral::LcdScreen::ColorTranslate,
+        peripheral::LcdScreen::Flush,
+        peripheral::LcdScreen::ClearScreen};
+
 peripheral::LcdScreen::LcdScreen(peripheral::lcdScreen::Spi* i_pSpi) {
 	this->SetSpi(i_pSpi);
 }
+
+peripheral::lcdScreen::Spi* peripheral::LcdScreen::m_pSpi = NULL;
+uint8_t peripheral::LcdScreen::m_u8Orientation = 0;
 
 void peripheral::LcdScreen::Init(void) {
 	peripheral::LcdScreen::GetSpi()->PortInit();
@@ -141,6 +159,14 @@ void peripheral::LcdScreen::SetOrientation(uint8_t i_u8orientation) {
 	}
 }
 
+peripheral::lcdScreen::Spi* peripheral::LcdScreen::GetSpi(void) {
+	return peripheral::LcdScreen::m_pSpi;
+}
+
+void peripheral::LcdScreen::SetSpi(peripheral::lcdScreen::Spi* i_pSpi) {
+	peripheral::LcdScreen::m_pSpi = i_pSpi;
+}
+
 uint8_t peripheral::LcdScreen::GetOrientation(void) {
 	return peripheral::LcdScreen::m_u8Orientation;
 }
@@ -181,6 +207,15 @@ uint16_t peripheral::LcdScreen::GetTouchTrim(void) {
 }
 void peripheral::LcdScreen::SetTouchTrim(uint16_t i_u16TouchTrim) {
 	this->m_u16TouchTrim = i_u16TouchTrim;
+}
+
+Graphics_Display peripheral::LcdScreen::GetCrystalfontz128x128() {
+	return peripheral::LcdScreen::m_stCrystalfontz128x128;
+}
+
+Graphics_Display_Functions
+peripheral::LcdScreen::GetCrystalfontz128x128_funcs() {
+	return peripheral::LcdScreen::m_stCrystalfontz128x128_funcs;
 }
 
 void peripheral::LcdScreen::PixelDraw(const Graphics_Display* pDisplay,
@@ -345,7 +380,7 @@ void peripheral::LcdScreen::LineDrawH(const Graphics_Display* pDisplay,
 	}
 }
 
-void LineDrawV(const Graphics_Display* pDisplay, int16_t lX, int16_t lY1,
+void peripheral::LcdScreen::LineDrawV(const Graphics_Display* pDisplay, int16_t lX, int16_t lY1,
                int16_t lY2, uint16_t ulValue) {
 	peripheral::LcdScreen::SetDrawFrame(lX, lY1, lX, lY2);
 
@@ -361,7 +396,7 @@ void LineDrawV(const Graphics_Display* pDisplay, int16_t lX, int16_t lY1,
 	}
 }
 
-void RectFill(const Graphics_Display* pDisplay, const Graphics_Rectangle* pRect,
+void peripheral::LcdScreen::RectFill(const Graphics_Display* pDisplay, const Graphics_Rectangle* pRect,
               uint16_t ulValue) {
 	int16_t x0 = pRect->sXMin;
 	int16_t x1 = pRect->sXMax;

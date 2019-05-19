@@ -96,17 +96,8 @@ class LcdScreen {
 	uint16_t GetTouchTrim(void);
 	void SetTouchTrim(uint16_t i_u16TouchTrim);
 
- private:
-	static peripheral::lcdScreen::Spi* m_pSpi;
-
-	uint16_t m_u16ScreenWidth;
-	uint16_t m_u16ScreenHeigth;
-	uint8_t m_u8PenSolid;
-	uint8_t m_u8FontSolid;
-	uint8_t m_u8FlagRead;
-	uint16_t m_u16TouchTrim;
-
-	static uint8_t m_u8Orientation;
+	static Graphics_Display GetCrystalfontz128x128();
+	static Graphics_Display_Functions GetCrystalfontz128x128_funcs();
 
 	static void PixelDraw(const Graphics_Display* pDisplay, int16_t lX,
 	                      int16_t lY, uint16_t ulValue);
@@ -125,24 +116,21 @@ class LcdScreen {
 	static void Flush(const Graphics_Display* pDisplay);
 	static void ClearScreen(const Graphics_Display* pDisplay, uint16_t ulValue);
 
-	Graphics_Display m_stCrystalfontz128x128 = {
-	    sizeof(Graphics_Display),
-	    0,
-	    peripheral::lcdScreen::VERTICAL_MAX,
-	    peripheral::lcdScreen::HORIZONTAL_MAX,
-	};
+ private:
+	static peripheral::lcdScreen::Spi* m_pSpi;
+	static uint8_t m_u8Orientation;
 
-	const Graphics_Display_Functions m_stCrystalfontz128x128_funcs = {
-	    peripheral::LcdScreen::PixelDraw,
-	    peripheral::LcdScreen::PixelDrawMultiple,
-	    peripheral::LcdScreen::LineDrawH,
-	    peripheral::LcdScreen::LineDrawV,
-	    peripheral::LcdScreen::RectFill,
-	    peripheral::LcdScreen::ColorTranslate,
-	    peripheral::LcdScreen::Flush,
-	    peripheral::LcdScreen::ClearScreen};
+	uint16_t m_u16ScreenWidth;
+	uint16_t m_u16ScreenHeigth;
+	uint8_t m_u8PenSolid;
+	uint8_t m_u8FontSolid;
+	uint8_t m_u8FlagRead;
+	uint16_t m_u16TouchTrim;
+
+	static Graphics_Display m_stCrystalfontz128x128;
+
+	static const Graphics_Display_Functions m_stCrystalfontz128x128_funcs;
 };
-
 }  // namespace peripheral
 
 #endif /* MKII_PERIPHERAL_LCDSCREEN_H */
