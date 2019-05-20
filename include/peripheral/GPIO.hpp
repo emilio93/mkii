@@ -243,14 +243,6 @@ class GPIO {
 	 */
 	uint32_t m_u32Pin;
 
-	/**
-	 * Indicates if GPIOs port has interrupt capability. Only ports 1, 2 and A do.
-	 *
-	 * @return true Indicates that the GPIOs port has interrupt capability.
-	 * @return false Indicates that the GPIOs port doesn't have interrupt
-	 * capability.
-	 */
-	bool HasInterruptFunction();
 };
 
 }  // namespace peripheral

@@ -66,29 +66,19 @@ void peripheral::GPIO::SetAsInputWithPullUpResistor() {
 }
 
 void peripheral::GPIO::EnableInterrupt() {
-	if (this->HasInterruptFunction()) {
 		GPIO_enableInterrupt(this->GetPort(), this->GetPin());
-	}
 }
 
 void peripheral::GPIO::DisableInterrupt() {
-	if (this->HasInterruptFunction()) {
 		GPIO_getInterruptStatus(this->GetPort(), this->GetPin());
-	}
 }
 
 uint_fast16_t peripheral::GPIO::GetInterruptStatus() {
-	if (this->HasInterruptFunction()) {
 		return GPIO_getInterruptStatus(this->GetPort(), this->GetPin());
-	} else {
-		return 0xff;
 	}
-}
 
 void peripheral::GPIO::ClearInterruptFlag() {
-	if (this->HasInterruptFunction()) {
 		GPIO_clearInterrupt(this->GetPort(), this->GetPin());
-	}
 }
 
 void peripheral::GPIO::InterruptEdgeSelect(uint_fast8_t i_u8EdgeSelect) {
@@ -101,12 +91,6 @@ void peripheral::GPIO::SetDriveStrengthHigh() {
 
 void peripheral::GPIO::SetDriveStrengthLow() {
 	GPIO_setDriveStrengthHigh(this->m_u8Port, this->m_u32Pin);
-}
-
-bool peripheral::GPIO::HasInterruptFunction() {
-	return this->GetPort() == peripheral::gpio::Port::PORT1 ||
-	       this->GetPort() == peripheral::gpio::Port::PORT2 ||
-	       this->GetPort() == peripheral::gpio::Port::PORTA;
 }
 
 /******************
