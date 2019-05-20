@@ -209,13 +209,13 @@ void peripheral::LcdScreen::SetTouchTrim(uint16_t i_u16TouchTrim) {
 	this->m_u16TouchTrim = i_u16TouchTrim;
 }
 
-Graphics_Display peripheral::LcdScreen::GetCrystalfontz128x128() {
-	return peripheral::LcdScreen::m_stCrystalfontz128x128;
+Graphics_Display* peripheral::LcdScreen::GetCrystalfontz128x128() {
+	return &peripheral::LcdScreen::m_stCrystalfontz128x128;
 }
 
-Graphics_Display_Functions
+const Graphics_Display_Functions*
 peripheral::LcdScreen::GetCrystalfontz128x128_funcs() {
-	return peripheral::LcdScreen::m_stCrystalfontz128x128_funcs;
+	return &peripheral::LcdScreen::m_stCrystalfontz128x128_funcs;
 }
 
 void peripheral::LcdScreen::PixelDraw(const Graphics_Display* pDisplay,

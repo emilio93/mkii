@@ -96,8 +96,8 @@ class LcdScreen {
 	uint16_t GetTouchTrim(void);
 	void SetTouchTrim(uint16_t i_u16TouchTrim);
 
-	static Graphics_Display GetCrystalfontz128x128();
-	static Graphics_Display_Functions GetCrystalfontz128x128_funcs();
+	static Graphics_Display* GetCrystalfontz128x128();
+	static const Graphics_Display_Functions* GetCrystalfontz128x128_funcs();
 
 	static void PixelDraw(const Graphics_Display* pDisplay, int16_t lX,
 	                      int16_t lY, uint16_t ulValue);
