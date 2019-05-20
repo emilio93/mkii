@@ -13,15 +13,15 @@ class Accelerometer {
 
 	void TriggerConversion(void);
 	void UpdateResults(void);
- 	static uint16_t GetX(void);
+	static uint16_t GetX(void);
 	static uint16_t GetY(void);
 	static uint16_t GetZ(void);
 
  private:
- 	static uint16_t m_u16X;
+	static uint16_t m_u16X;
 	static uint16_t m_u16Y;
 	static uint16_t m_u16Z;
- 	peripheral::Adc14* m_pAdc14;
+	peripheral::Adc14* m_pAdc14;
 };
 
 }  // namespace mkii

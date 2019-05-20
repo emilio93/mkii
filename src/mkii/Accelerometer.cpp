@@ -19,12 +19,6 @@ void mkii::Accelerometer::UpdateResults(void) {
 	mkii::Accelerometer::m_u16Z = ADC14_getResult(ADC_MEM2);
 }
 
-uint16_t mkii::Accelerometer::GetX(void) {
-	return mkii::Accelerometer::m_u16X;
-}
-uint16_t mkii::Accelerometer::GetY(void) {
-	return mkii::Accelerometer::m_u16Y;
-}
-uint16_t mkii::Accelerometer::GetZ(void) {
-	return mkii::Accelerometer::m_u16Z;
-}
+uint16_t mkii::Accelerometer::GetX(void) { return mkii::Accelerometer::m_u16X; }
+uint16_t mkii::Accelerometer::GetY(void) { return mkii::Accelerometer::m_u16Y; }
+uint16_t mkii::Accelerometer::GetZ(void) { return mkii::Accelerometer::m_u16Z; }
