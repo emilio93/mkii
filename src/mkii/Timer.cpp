@@ -30,6 +30,7 @@ mkii::Timer* mkii::Timer::GetTimer(mkii::timer::TimerTypes i_eTimerType) {
 		}
 		return mkii::Timer::m_pStaticTimer_1;
 	}
+	return NULL;
 }
 
 void mkii::Timer::SetCounter(uint32_t i_u32TimerCount) {

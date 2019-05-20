@@ -126,6 +126,7 @@ uint_fast16_t peripheral::Adc14::GetSimpleSampleModeResult() {
 }
 
 bool peripheral::Adc14::ConfigureDevice() {
+	bool l_bConfigurationSuccess = false;
 	if (!this->m_u32AnalogMeasureDevice ||
 	    peripheral::adc14::AnalogInputDevice::NONE ==
 	        this->m_u32AnalogMeasureDevice) {
@@ -137,8 +138,6 @@ bool peripheral::Adc14::ConfigureDevice() {
 		 * Microphone
 		 **************************************************************************/
 		case peripheral::adc14::AnalogInputDevice::MICROPHONE:
-			const bool l_bDifferentialMode = false;
-			const bool l_bRepeatSimpleSample = false;
 
 			SetResolution(peripheral::ADC14_PRECISION);
 			SetInterruptMask(ADC_INT10);
@@ -148,16 +147,16 @@ bool peripheral::Adc14::ConfigureDevice() {
 			    peripheral::ADC14_MODULE_FUNCTION);
 
 			// configure memory map to adc save result in
-			bool l_bConfigurationSuccess = false;
+			l_bConfigurationSuccess = false;
 
 			do {
 				this->WaitForAdcModule();
 				l_bConfigurationSuccess = ADC14_configureConversionMemory(
 				    this->m_u32SimpleMemoryMap, ADC_VREFPOS_AVCC_VREFNEG_VSS,
-				    ADC_INPUT_A10, l_bDifferentialMode);
+				    ADC_INPUT_A10, false);
 			} while (false == l_bConfigurationSuccess);
 
-			SetSimpleSampleMode(l_bRepeatSimpleSample);
+			SetSimpleSampleMode(false);
 			SetSampleManualTimer();
 
 			break;
