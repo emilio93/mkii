@@ -21,6 +21,11 @@ class Accelerometer {
 	static uint16_t m_u16X;
 	static uint16_t m_u16Y;
 	static uint16_t m_u16Z;
+
+	void setX(uint16_t i_u16X);
+	void setY(uint16_t i_u16Y);
+	void setZ(uint16_t i_u16Z);
+
 	peripheral::Adc14* m_pAdc14;
 };
 

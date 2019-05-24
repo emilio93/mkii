@@ -14,11 +14,22 @@ void mkii::Accelerometer::TriggerConversion(void) {
 }
 
 void mkii::Accelerometer::UpdateResults(void) {
-	mkii::Accelerometer::m_u16X = ADC14_getResult(ADC_MEM0);
-	mkii::Accelerometer::m_u16Y = ADC14_getResult(ADC_MEM1);
-	mkii::Accelerometer::m_u16Z = ADC14_getResult(ADC_MEM2);
+	this->setX(ADC14_getResult(ADC_MEM0));
+	this->setY(ADC14_getResult(ADC_MEM1));
+	this->setZ(ADC14_getResult(ADC_MEM2));
 }
 
 uint16_t mkii::Accelerometer::GetX(void) { return mkii::Accelerometer::m_u16X; }
 uint16_t mkii::Accelerometer::GetY(void) { return mkii::Accelerometer::m_u16Y; }
 uint16_t mkii::Accelerometer::GetZ(void) { return mkii::Accelerometer::m_u16Z; }
+
+
+void mkii::Accelerometer::setX(uint16_t i_u16X) {
+	mkii::Accelerometer::m_u16X = i_u16X;
+}
+void mkii::Accelerometer::setY(uint16_t i_u16Y) {
+	mkii::Accelerometer::m_u16Y = i_u16Y;
+}
+void mkii::Accelerometer::setZ(uint16_t i_u16Z) {
+	mkii::Accelerometer::m_u16Z = i_u16Z;
+}
